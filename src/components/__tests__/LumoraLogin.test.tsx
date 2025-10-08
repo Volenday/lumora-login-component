@@ -1,0 +1,518 @@
+import { render, screen, waitFor } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import LumoraLogin from '../LumoraLogin';
+import { LumoraLoginProps } from '../../types';
+
+// Create a test theme
+const testTheme = createTheme();
+
+// Mock props for testing
+const createMockProps = (
+	overrides: Partial<LumoraLoginProps> = {}
+): LumoraLoginProps => ({
+	onLocalLogin: jest.fn().mockResolvedValue({ success: true }),
+	onGoogleLogin: jest.fn(),
+	onLoginSuccess: jest.fn(),
+	onLoginError: jest.fn(),
+	googleClientId: 'test-google-client-id',
+	enableGoogleSignIn: true,
+	enableLocalSignIn: true,
+	...overrides
+});
+
+// Helper function to render component with theme
+const renderWithTheme = (props: LumoraLoginProps) => {
+	return render(
+		<ThemeProvider theme={testTheme}>
+			<LumoraLogin {...props} />
+		</ThemeProvider>
+	);
+};
+
+describe('LumoraLogin Component', () => {
+	beforeEach(() => {
+		jest.clearAllMocks();
+	});
+
+	describe('Basic Rendering', () => {
+		it('should render the login form with default branding', () => {
+			const props = createMockProps();
+			renderWithTheme(props);
+
+			expect(
+				screen.getByRole('heading', { name: 'Sign In' })
+			).toBeInTheDocument();
+			expect(screen.getByLabelText('Email Address')).toBeInTheDocument();
+			expect(screen.getByLabelText('Password')).toBeInTheDocument();
+			expect(
+				screen.getByRole('button', { name: 'Sign In' })
+			).toBeInTheDocument();
+		});
+
+		it('should render with custom company name and tagline', () => {
+			const props = createMockProps({
+				branding: {
+					companyName: 'Test Company',
+					tagline: 'Welcome to our platform'
+				}
+			});
+			renderWithTheme(props);
+
+			expect(
+				screen.getByText('Welcome to Test Company')
+			).toBeInTheDocument();
+			expect(
+				screen.getByText('Welcome to our platform')
+			).toBeInTheDocument();
+		});
+
+		it('should render Google sign-in button when enabled', () => {
+			const props = createMockProps({
+				enableGoogleSignIn: true,
+				googleClientId: 'test-client-id'
+			});
+			renderWithTheme(props);
+
+			expect(
+				screen.getByRole('button', { name: 'Continue with Google' })
+			).toBeInTheDocument();
+		});
+
+		it('should not render Google sign-in button when disabled', () => {
+			const props = createMockProps({
+				enableGoogleSignIn: false
+			});
+			renderWithTheme(props);
+
+			expect(
+				screen.queryByRole('button', { name: 'Continue with Google' })
+			).not.toBeInTheDocument();
+		});
+
+		it('should not render local sign-in form when disabled', () => {
+			const props = createMockProps({
+				enableLocalSignIn: false
+			});
+			renderWithTheme(props);
+
+			expect(
+				screen.queryByLabelText('Email Address')
+			).not.toBeInTheDocument();
+			expect(screen.queryByLabelText('Password')).not.toBeInTheDocument();
+			expect(
+				screen.queryByRole('button', { name: 'Sign In' })
+			).not.toBeInTheDocument();
+		});
+
+		it('should throw error when both sign-in methods are disabled', () => {
+			const props = createMockProps({
+				enableLocalSignIn: false,
+				enableGoogleSignIn: false
+			});
+
+			// Suppress console.error for this test
+			const consoleSpy = jest
+				.spyOn(console, 'error')
+				.mockImplementation(() => {});
+
+			expect(() => renderWithTheme(props)).toThrow(
+				'At least one sign-in method must be enabled (enableLocalSignIn or enableGoogleSignIn)'
+			);
+
+			consoleSpy.mockRestore();
+		});
+	});
+
+	describe('Form Validation', () => {
+		it('should show validation errors for empty form submission', async () => {
+			const user = userEvent.setup();
+			const props = createMockProps();
+			renderWithTheme(props);
+
+			const submitButton = screen.getByRole('button', {
+				name: 'Sign In'
+			});
+			await user.click(submitButton);
+
+			await waitFor(() => {
+				expect(
+					screen.getByText('Email is required')
+				).toBeInTheDocument();
+			});
+		});
+
+		it('should show validation error for short password', async () => {
+			const user = userEvent.setup();
+			const props = createMockProps();
+			renderWithTheme(props);
+
+			const emailInput = screen.getByLabelText('Email Address');
+			const passwordInput = screen.getByLabelText('Password');
+
+			await user.type(emailInput, 'test@example.com');
+			await user.type(passwordInput, '123');
+
+			const submitButton = screen.getByRole('button', {
+				name: 'Sign In'
+			});
+			await user.click(submitButton);
+
+			await waitFor(() => {
+				expect(
+					screen.getByText('Password must be at least 6 characters')
+				).toBeInTheDocument();
+			});
+		});
+
+		it('should clear validation errors when user starts typing', async () => {
+			const user = userEvent.setup();
+			const props = createMockProps();
+			renderWithTheme(props);
+
+			// Submit empty form to trigger validation errors
+			const submitButton = screen.getByRole('button', {
+				name: 'Sign In'
+			});
+			await user.click(submitButton);
+
+			await waitFor(() => {
+				expect(
+					screen.getByText('Email is required')
+				).toBeInTheDocument();
+			});
+
+			// Start typing in email field
+			const emailInput = screen.getByLabelText('Email Address');
+			await user.type(emailInput, 'test@example.com');
+
+			await waitFor(() => {
+				expect(
+					screen.queryByText('Email is required')
+				).not.toBeInTheDocument();
+			});
+		});
+	});
+
+	describe('Local Login Flow', () => {
+		it('should call onLocalLogin with correct credentials', async () => {
+			const user = userEvent.setup();
+			const mockOnLocalLogin = jest
+				.fn()
+				.mockResolvedValue({ success: true });
+			const props = createMockProps({ onLocalLogin: mockOnLocalLogin });
+			renderWithTheme(props);
+
+			const emailInput = screen.getByLabelText('Email Address');
+			const passwordInput = screen.getByLabelText('Password');
+			const submitButton = screen.getByRole('button', {
+				name: 'Sign In'
+			});
+
+			await user.type(emailInput, 'test@example.com');
+			await user.type(passwordInput, 'password123');
+			await user.click(submitButton);
+
+			await waitFor(() => {
+				expect(mockOnLocalLogin).toHaveBeenCalledWith(
+					'test@example.com',
+					'password123'
+				);
+			});
+		});
+
+		it('should show loading state during login', async () => {
+			const user = userEvent.setup();
+			const mockOnLocalLogin = jest
+				.fn()
+				.mockImplementation(
+					() => new Promise(resolve => setTimeout(resolve, 100))
+				);
+			const props = createMockProps({ onLocalLogin: mockOnLocalLogin });
+			renderWithTheme(props);
+
+			const emailInput = screen.getByLabelText('Email Address');
+			const passwordInput = screen.getByLabelText('Password');
+			const submitButton = screen.getByRole('button', {
+				name: 'Sign In'
+			});
+
+			await user.type(emailInput, 'test@example.com');
+			await user.type(passwordInput, 'password123');
+			await user.click(submitButton);
+
+			// Check for loading spinner
+			expect(screen.getByRole('progressbar')).toBeInTheDocument();
+			expect(submitButton).toBeDisabled();
+		});
+
+		it('should handle login error and show error message', async () => {
+			const user = userEvent.setup();
+			const mockOnLocalLogin = jest
+				.fn()
+				.mockRejectedValue(new Error('Invalid credentials'));
+			const mockOnLoginError = jest.fn();
+			const props = createMockProps({
+				onLocalLogin: mockOnLocalLogin,
+				onLoginError: mockOnLoginError
+			});
+			renderWithTheme(props);
+
+			const emailInput = screen.getByLabelText('Email Address');
+			const passwordInput = screen.getByLabelText('Password');
+			const submitButton = screen.getByRole('button', {
+				name: 'Sign In'
+			});
+
+			await user.type(emailInput, 'test@example.com');
+			await user.type(passwordInput, 'password123');
+			await user.click(submitButton);
+
+			await waitFor(() => {
+				expect(
+					screen.getByText('Invalid credentials')
+				).toBeInTheDocument();
+				expect(mockOnLoginError).toHaveBeenCalledWith(
+					expect.any(Error)
+				);
+			});
+		});
+	});
+
+	describe('Google Login Flow', () => {
+		it('should call onGoogleLogin when Google button is clicked', async () => {
+			const user = userEvent.setup();
+			const mockOnGoogleLogin = jest.fn();
+			const props = createMockProps({ onGoogleLogin: mockOnGoogleLogin });
+			renderWithTheme(props);
+
+			const googleButton = screen.getByRole('button', {
+				name: 'Continue with Google'
+			});
+			await user.click(googleButton);
+
+			expect(mockOnGoogleLogin).toHaveBeenCalled();
+		});
+
+		it('should show loading state during Google login', async () => {
+			const user = userEvent.setup();
+			const mockOnGoogleLogin = jest.fn();
+			const props = createMockProps({ onGoogleLogin: mockOnGoogleLogin });
+			renderWithTheme(props);
+
+			const googleButton = screen.getByRole('button', {
+				name: 'Continue with Google'
+			});
+			await user.click(googleButton);
+
+			await waitFor(() => {
+				expect(screen.getByText('Signing in...')).toBeInTheDocument();
+				expect(googleButton).toBeDisabled();
+			});
+		});
+
+		it('should handle Google login error', async () => {
+			const user = userEvent.setup();
+			const mockOnGoogleLogin = jest.fn().mockImplementation(() => {
+				throw new Error('Google login failed');
+			});
+			const mockOnLoginError = jest.fn();
+			const props = createMockProps({
+				onGoogleLogin: mockOnGoogleLogin,
+				onLoginError: mockOnLoginError
+			});
+			renderWithTheme(props);
+
+			const googleButton = screen.getByRole('button', {
+				name: 'Continue with Google'
+			});
+			await user.click(googleButton);
+
+			await waitFor(() => {
+				expect(
+					screen.getByText('Google login failed')
+				).toBeInTheDocument();
+				expect(mockOnLoginError).toHaveBeenCalledWith(
+					expect.any(Error)
+				);
+			});
+		});
+	});
+
+	describe('Password Visibility Toggle', () => {
+		it('should toggle password visibility when show/hide button is clicked', async () => {
+			const user = userEvent.setup();
+			const props = createMockProps();
+			renderWithTheme(props);
+
+			const passwordInput = screen.getByLabelText('Password');
+			const toggleButton = screen.getByRole('button', { name: 'Show' });
+
+			// Initially password should be hidden
+			expect(passwordInput).toHaveAttribute('type', 'password');
+
+			// Click show button
+			await user.click(toggleButton);
+			expect(passwordInput).toHaveAttribute('type', 'text');
+			expect(
+				screen.getByRole('button', { name: 'Hide' })
+			).toBeInTheDocument();
+
+			// Click hide button
+			await user.click(screen.getByRole('button', { name: 'Hide' }));
+			expect(passwordInput).toHaveAttribute('type', 'password');
+			expect(
+				screen.getByRole('button', { name: 'Show' })
+			).toBeInTheDocument();
+		});
+	});
+
+	describe('Custom Branding', () => {
+		it('should apply custom branding colors', () => {
+			const props = createMockProps({
+				branding: {
+					primaryColor: '#ff0000',
+					secondaryColor: '#00ff00',
+					backgroundColor: '#f0f0f0',
+					textColor: '#333333'
+				}
+			});
+			renderWithTheme(props);
+
+			// The component should render without errors with custom branding
+			expect(
+				screen.getByRole('heading', { name: 'Sign In' })
+			).toBeInTheDocument();
+		});
+
+		it('should render custom logo when provided as string', () => {
+			const props = createMockProps({
+				branding: {
+					logo: 'https://example.com/logo.png',
+					logoHeight: 60
+				}
+			});
+			renderWithTheme(props);
+
+			const logoImage = screen.getByAltText('Company Logo');
+			expect(logoImage).toBeInTheDocument();
+			expect(logoImage).toHaveAttribute(
+				'src',
+				'https://example.com/logo.png'
+			);
+		});
+
+		it('should render custom logo when provided as React node', () => {
+			const customLogo = <div data-testid="custom-logo">Custom Logo</div>;
+			const props = createMockProps({
+				branding: {
+					logo: customLogo
+				}
+			});
+			renderWithTheme(props);
+
+			expect(screen.getByTestId('custom-logo')).toBeInTheDocument();
+		});
+	});
+
+	describe('Error Handling', () => {
+		it('should close error alert when close button is clicked', async () => {
+			const user = userEvent.setup();
+			const mockOnLocalLogin = jest
+				.fn()
+				.mockRejectedValue(new Error('Login failed'));
+			const props = createMockProps({ onLocalLogin: mockOnLocalLogin });
+			renderWithTheme(props);
+
+			// Trigger login error
+			const emailInput = screen.getByLabelText('Email Address');
+			const passwordInput = screen.getByLabelText('Password');
+			const submitButton = screen.getByRole('button', {
+				name: 'Sign In'
+			});
+
+			await user.type(emailInput, 'test@example.com');
+			await user.type(passwordInput, 'password123');
+			await user.click(submitButton);
+
+			await waitFor(() => {
+				expect(screen.getByText('Login failed')).toBeInTheDocument();
+			});
+
+			// Close the error alert
+			const closeButton = screen.getByRole('button', { name: 'Close' });
+			await user.click(closeButton);
+
+			await waitFor(() => {
+				expect(
+					screen.queryByText('Login failed')
+				).not.toBeInTheDocument();
+			});
+		});
+
+		it('should show try again button when there is an error', async () => {
+			const user = userEvent.setup();
+			const mockOnLocalLogin = jest
+				.fn()
+				.mockRejectedValue(new Error('Login failed'));
+			const props = createMockProps({ onLocalLogin: mockOnLocalLogin });
+			renderWithTheme(props);
+
+			// Trigger login error
+			const emailInput = screen.getByLabelText('Email Address');
+			const passwordInput = screen.getByLabelText('Password');
+			const submitButton = screen.getByRole('button', {
+				name: 'Sign In'
+			});
+
+			await user.type(emailInput, 'test@example.com');
+			await user.type(passwordInput, 'password123');
+			await user.click(submitButton);
+
+			await waitFor(() => {
+				expect(
+					screen.getByRole('button', { name: 'Try Again' })
+				).toBeInTheDocument();
+			});
+		});
+	});
+
+	describe('Accessibility', () => {
+		it('should have proper form labels and accessibility attributes', () => {
+			const props = createMockProps();
+			renderWithTheme(props);
+
+			const emailInput = screen.getByLabelText('Email Address');
+			const passwordInput = screen.getByLabelText('Password');
+
+			expect(emailInput).toHaveAttribute('type', 'email');
+			expect(passwordInput).toHaveAttribute('type', 'password');
+		});
+
+		it('should disable form inputs during loading states', async () => {
+			const user = userEvent.setup();
+			const mockOnLocalLogin = jest
+				.fn()
+				.mockImplementation(
+					() => new Promise(resolve => setTimeout(resolve, 100))
+				);
+			const props = createMockProps({ onLocalLogin: mockOnLocalLogin });
+			renderWithTheme(props);
+
+			const emailInput = screen.getByLabelText('Email Address');
+			const passwordInput = screen.getByLabelText('Password');
+			const submitButton = screen.getByRole('button', {
+				name: 'Sign In'
+			});
+
+			await user.type(emailInput, 'test@example.com');
+			await user.type(passwordInput, 'password123');
+			await user.click(submitButton);
+
+			// Check that inputs are disabled during loading
+			expect(emailInput).toBeDisabled();
+			expect(passwordInput).toBeDisabled();
+			expect(submitButton).toBeDisabled();
+		});
+	});
+});

@@ -1,0 +1,27 @@
+---
+alwaysApply: true
+---
+
+Comments
+
+- Always use comments for better code readability.
+
+The following rules apply only to React and Next.js projects.
+
+Naming Conventions:
+• Use PascalCase for React components. Example: ChatBot
+• Use camelCase for utility functions and variables. Examples: sendEmail, agentName
+• Use kebab-case for page file names and routing folders inside the app/ directory. Example: agent-configuration
+• Use UPPER_CASE for environment variables. Example: API_KEY
+• Use camelCase for root-level folder names. Example: globalComponents
+• Use PascalCase for database table names. Example: AgentConfigurations
+• Use PascalCase for database field names. Example: AgentId
+• Use camelCase for function names. Example: getAgent()
+
+Code Editor Formatting Rules:
+• All functions should use arrow function syntax
+• Use tabs for indentation
+• Tab width should be 4 spaces
+• Use single quotes for all strings
+• Do not use trailing commas
+• Always use semicolons
