@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
+import { fileURLToPath, URL } from 'node:url';
 
 export default defineConfig(({ command }) => {
 	const isDev = command === 'serve';
@@ -10,13 +11,23 @@ export default defineConfig(({ command }) => {
 		resolve: {
 			dedupe: ['react', 'react-dom'],
 			alias: {
-				react: resolve(__dirname, './node_modules/react'),
-				'react-dom': resolve(__dirname, './node_modules/react-dom')
+				react: resolve(
+					fileURLToPath(
+						new URL('./node_modules/react', import.meta.url)
+					)
+				),
+				'react-dom': resolve(
+					fileURLToPath(
+						new URL('./node_modules/react-dom', import.meta.url)
+					)
+				)
 			}
 		},
 		build: {
 			lib: {
-				entry: resolve(__dirname, 'src/index.ts'),
+				entry: resolve(
+					fileURLToPath(new URL('./src/index.ts', import.meta.url))
+				),
 				name: 'LumoraLogin',
 				fileName: 'lumora-login',
 				formats: ['es', 'umd']

@@ -13,6 +13,7 @@ import {
 	Stack
 } from '@mui/material';
 import { Google as GoogleIcon } from '@mui/icons-material';
+import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
 // Import the OTP component from the private package
 // Note: This requires proper GitHub Packages authentication
 // To set up authentication:
@@ -25,7 +26,8 @@ import {
 	LoginFormData,
 	LoginState,
 	ErrorState,
-	BrandingConfig
+	BrandingConfig,
+	GoogleOAuthResponse
 } from '../types';
 
 // Validation schema for login form
@@ -58,12 +60,14 @@ const getBrandingConfig = (
 	...customBranding
 });
 
-// Main LumoraLogin component
-const LumoraLogin: React.FC<LumoraLoginProps> = ({
+// Internal component that uses the Google OAuth hook
+const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 	onLocalLogin,
 	onGoogleLogin,
 	onLoginSuccess,
 	onLoginError,
+	enableRecaptcha = false,
+	recaptchaSiteKey,
 	googleClientId,
 	enableGoogleSignIn = true,
 	enableLocalSignIn = true,
@@ -77,10 +81,55 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 	// Get merged branding configuration
 	const brandConfig = getBrandingConfig(branding);
 
+	// Google OAuth login hook
+	const googleLogin = useGoogleLogin({
+		onSuccess: response => {
+			setLoginState('google-loading');
+			setError(null);
+			try {
+				// Convert the response to our expected format
+				const googleResponse: GoogleOAuthResponse = {
+					access_token: response.access_token,
+					expires_in: response.expires_in,
+					scope: response.scope,
+					token_type: response.token_type
+				};
+				onGoogleLogin(googleResponse);
+				// In a real implementation, this would be handled by the OAuth flow
+				// For now, we'll simulate the 2FA requirement
+				setTimeout(() => {
+					setLoginState('otp-required');
+				}, 1000);
+			} catch (err) {
+				const error = err as Error;
+				setError({ message: error.message, type: 'google' });
+				setLoginState('error');
+				onLoginError(error);
+			}
+		},
+		onError: error => {
+			setError({
+				message: error.error_description || 'Google sign-in failed',
+				type: 'google'
+			});
+			setLoginState('error');
+			onLoginError(
+				new Error(error.error_description || 'Google sign-in failed')
+			);
+		}
+	});
+
 	// Validate that at least one sign-in method is enabled
 	if (!enableLocalSignIn && !enableGoogleSignIn) {
 		throw new Error(
 			'At least one sign-in method must be enabled (enableLocalSignIn or enableGoogleSignIn)'
+		);
+	}
+
+	// Validate reCAPTCHA configuration
+	if (enableRecaptcha && !recaptchaSiteKey) {
+		throw new Error(
+			'recaptchaSiteKey is required when enableRecaptcha is true'
 		);
 	}
 
@@ -94,12 +143,45 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 		resolver: yupResolver(validationSchema)
 	});
 
+	// Handle reCAPTCHA execution
+	const executeRecaptcha = (): Promise<string> => {
+		return window.grecaptcha
+			.execute(recaptchaSiteKey!, { action: 'login' })
+			.catch(() => {
+				throw new Error('reCAPTCHA verification failed');
+			});
+	};
+
+	// Handle reCAPTCHA verification
+	const verifyRecaptcha = async (): Promise<string> => {
+		if (!enableRecaptcha || !recaptchaSiteKey) {
+			return '';
+		}
+
+		if (typeof window === 'undefined' || !window.grecaptcha) {
+			throw new Error('reCAPTCHA is not loaded');
+		}
+
+		return new Promise((resolve, reject) => {
+			const handleRecaptchaReady = () => {
+				executeRecaptcha().then(resolve).catch(reject);
+			};
+
+			window.grecaptcha.ready(handleRecaptchaReady);
+		});
+	};
+
 	// Handle local login form submission
 	const handleLocalLogin: SubmitHandler<LoginFormData> = async data => {
 		setLoginState('loading');
 		setError(null);
 
 		try {
+			// Verify reCAPTCHA if enabled
+			if (enableRecaptcha) {
+				await verifyRecaptcha();
+			}
+
 			await onLocalLogin(data.email, data.password);
 
 			// Simulate 2FA requirement - in real implementation, this would come from the API response
@@ -114,22 +196,7 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 
 	// Handle Google OAuth login
 	const handleGoogleLogin = () => {
-		setLoginState('google-loading');
-		setError(null);
-
-		try {
-			onGoogleLogin();
-			// In a real implementation, this would be handled by the OAuth flow
-			// For now, we'll simulate the 2FA requirement
-			setTimeout(() => {
-				setLoginState('otp-required');
-			}, 1000);
-		} catch (err) {
-			const error = err as Error;
-			setError({ message: error.message, type: 'google' });
-			setLoginState('error');
-			onLoginError(error);
-		}
+		googleLogin();
 	};
 
 	// Handle OTP verification
@@ -146,7 +213,7 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 	};
 
 	// Handle successful OTP verification
-	const handleOTPSuccess = (response: any) => {
+	const handleOTPSuccess = (response: unknown) => {
 		setLoginState('success');
 		onLoginSuccess(response);
 	};
@@ -174,16 +241,20 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 		reset();
 	};
 
-	// Load Google OAuth script if clientId is provided
+	// Load reCAPTCHA script if enabled and site key is provided
 	useEffect(() => {
-		if (googleClientId && typeof window !== 'undefined') {
+		if (
+			enableRecaptcha &&
+			recaptchaSiteKey &&
+			typeof window !== 'undefined'
+		) {
 			const script = document.createElement('script');
-			script.src = 'https://accounts.google.com/gsi/client';
+			script.src = `https://www.google.com/recaptcha/enterprise.js?render=${recaptchaSiteKey}`;
 			script.async = true;
 			script.defer = true;
 			document.head.appendChild(script);
 		}
-	}, [googleClientId]);
+	}, [enableRecaptcha, recaptchaSiteKey]);
 
 	// Render OTP verification screen
 	if (loginState === 'otp-required' || loginState === 'otp-error') {
@@ -307,7 +378,10 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 				maxWidth: { xs: '100%', sm: '600px' },
 				// Desktop: container with card styling
 				mt: { xs: 0, sm: 4 },
-				boxShadow: { xs: 'none', sm: '0 8px 32px rgba(0, 0, 0, 0.12)' },
+				boxShadow: {
+					xs: 'none',
+					sm: '0 8px 32px rgba(0, 0, 0, 0.12)'
+				},
 				borderRadius: { xs: 0, sm: 2 },
 				border: { xs: 'none', sm: '1px solid rgba(0, 0, 0, 0.08)' },
 				background: brandConfig.backgroundColor,
@@ -642,6 +716,23 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 			</Box>
 		</Box>
 	);
+};
+
+// Main LumoraLogin component with GoogleOAuthProvider wrapper
+const LumoraLogin: React.FC<LumoraLoginProps> = props => {
+	const { googleClientId, enableGoogleSignIn } = props;
+
+	// If Google Sign-In is enabled and clientId is provided, wrap with GoogleOAuthProvider
+	if (enableGoogleSignIn && googleClientId) {
+		return (
+			<GoogleOAuthProvider clientId={googleClientId}>
+				<LumoraLoginInternal {...props} />
+			</GoogleOAuthProvider>
+		);
+	}
+
+	// Otherwise, render the internal component directly
+	return <LumoraLoginInternal {...props} />;
 };
 
 export default LumoraLogin;

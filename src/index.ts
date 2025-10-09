@@ -7,5 +7,6 @@ export type {
 	LoginFormData,
 	LoginState,
 	ErrorState,
-	BrandingConfig
+	BrandingConfig,
+	GoogleOAuthResponse
 } from './types';

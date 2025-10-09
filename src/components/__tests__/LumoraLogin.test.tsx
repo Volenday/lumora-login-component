@@ -4,6 +4,33 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import LumoraLogin from '../LumoraLogin';
 import { LumoraLoginProps } from '../../types';
 
+// Mock @react-oauth/google
+jest.mock('@react-oauth/google', () => ({
+	GoogleOAuthProvider: ({ children }: { children: React.ReactNode }) => (
+		<>{children}</>
+	),
+	useGoogleLogin: (config: {
+		onSuccess: (response: {
+			access_token: string;
+			expires_in: number;
+			scope: string;
+			token_type: string;
+		}) => void;
+		onError: (error: { error_description?: string }) => void;
+	}) => {
+		return () => {
+			// Simulate successful Google OAuth response
+			const mockResponse = {
+				access_token: 'mock-google-access-token',
+				expires_in: 3600,
+				scope: 'openid profile email',
+				token_type: 'Bearer'
+			};
+			config.onSuccess(mockResponse);
+		};
+	}
+}));
+
 // Create a test theme
 const testTheme = createTheme();
 
@@ -29,6 +56,17 @@ const renderWithTheme = (props: LumoraLoginProps) => {
 		</ThemeProvider>
 	);
 };
+
+// Helper function to create delayed promise for testing
+const createDelayedPromise = (delay: number = 100) =>
+	new Promise(resolve => setTimeout(resolve, delay));
+
+// Helper function to get form elements
+const getFormElements = () => ({
+	emailInput: screen.getByLabelText('Email Address'),
+	passwordInput: screen.getByLabelText('Password'),
+	submitButton: screen.getByRole('button', { name: 'Sign In' })
+});
 
 describe('LumoraLogin Component', () => {
 	beforeEach(() => {
@@ -225,23 +263,18 @@ describe('LumoraLogin Component', () => {
 			const user = userEvent.setup();
 			const mockOnLocalLogin = jest
 				.fn()
-				.mockImplementation(
-					() => new Promise(resolve => setTimeout(resolve, 100))
-				);
+				.mockImplementation(() => createDelayedPromise(100));
 			const props = createMockProps({ onLocalLogin: mockOnLocalLogin });
 			renderWithTheme(props);
 
-			const emailInput = screen.getByLabelText('Email Address');
-			const passwordInput = screen.getByLabelText('Password');
-			const submitButton = screen.getByRole('button', {
-				name: 'Sign In'
-			});
+			const { emailInput, passwordInput, submitButton } =
+				getFormElements();
 
 			await user.type(emailInput, 'test@example.com');
 			await user.type(passwordInput, 'password123');
 			await user.click(submitButton);
 
-			// Check for loading spinner
+			// Check for loading spinner immediately after click
 			expect(screen.getByRole('progressbar')).toBeInTheDocument();
 			expect(submitButton).toBeDisabled();
 		});
@@ -291,7 +324,14 @@ describe('LumoraLogin Component', () => {
 			});
 			await user.click(googleButton);
 
-			expect(mockOnGoogleLogin).toHaveBeenCalled();
+			await waitFor(() => {
+				expect(mockOnGoogleLogin).toHaveBeenCalledWith({
+					access_token: 'mock-google-access-token',
+					expires_in: 3600,
+					scope: 'openid profile email',
+					token_type: 'Bearer'
+				});
+			});
 		});
 
 		it('should show loading state during Google login', async () => {
@@ -477,6 +517,147 @@ describe('LumoraLogin Component', () => {
 		});
 	});
 
+	describe('reCAPTCHA Integration', () => {
+		beforeEach(() => {
+			// Mock window.grecaptcha
+			Object.defineProperty(window, 'grecaptcha', {
+				value: {
+					ready: jest.fn((callback: () => void) => callback()),
+					execute: jest.fn().mockResolvedValue('test-recaptcha-token')
+				},
+				writable: true
+			});
+		});
+
+		afterEach(() => {
+			delete (window as unknown as { grecaptcha?: unknown }).grecaptcha;
+		});
+
+		it('should throw error when enableRecaptcha is true but no site key provided', () => {
+			const props = createMockProps({
+				enableRecaptcha: true,
+				recaptchaSiteKey: undefined
+			});
+
+			// Suppress console.error for this test
+			const consoleSpy = jest
+				.spyOn(console, 'error')
+				.mockImplementation(() => {});
+
+			expect(() => renderWithTheme(props)).toThrow(
+				'recaptchaSiteKey is required when enableRecaptcha is true'
+			);
+
+			consoleSpy.mockRestore();
+		});
+
+		it('should not load reCAPTCHA script when disabled', () => {
+			const props = createMockProps({
+				enableRecaptcha: false,
+				recaptchaSiteKey: 'test-site-key'
+			});
+			renderWithTheme(props);
+
+			// Check that no reCAPTCHA script is loaded
+			const scripts = document.querySelectorAll(
+				'script[src*="recaptcha"]'
+			);
+			expect(scripts).toHaveLength(0);
+		});
+
+		it('should load reCAPTCHA script when enabled with valid site key', () => {
+			const props = createMockProps({
+				enableRecaptcha: true,
+				recaptchaSiteKey: 'test-site-key'
+			});
+			renderWithTheme(props);
+
+			// Check that reCAPTCHA script is loaded
+			const scripts = document.querySelectorAll(
+				'script[src*="recaptcha"]'
+			);
+			expect(scripts).toHaveLength(1);
+			expect(scripts[0]).toHaveAttribute(
+				'src',
+				'https://www.google.com/recaptcha/enterprise.js?render=test-site-key'
+			);
+		});
+
+		it('should verify reCAPTCHA during form submission when enabled', async () => {
+			const user = userEvent.setup();
+			const mockOnLocalLogin = jest
+				.fn()
+				.mockResolvedValue({ success: true });
+			const props = createMockProps({
+				enableRecaptcha: true,
+				recaptchaSiteKey: 'test-site-key',
+				onLocalLogin: mockOnLocalLogin
+			});
+			renderWithTheme(props);
+
+			const emailInput = screen.getByLabelText('Email Address');
+			const passwordInput = screen.getByLabelText('Password');
+			const submitButton = screen.getByRole('button', {
+				name: 'Sign In'
+			});
+
+			await user.type(emailInput, 'test@example.com');
+			await user.type(passwordInput, 'password123');
+			await user.click(submitButton);
+
+			await waitFor(() => {
+				expect(window.grecaptcha.execute).toHaveBeenCalledWith(
+					'test-site-key',
+					{ action: 'login' }
+				);
+				expect(mockOnLocalLogin).toHaveBeenCalledWith(
+					'test@example.com',
+					'password123'
+				);
+			});
+		});
+
+		it('should handle reCAPTCHA verification failure', async () => {
+			const user = userEvent.setup();
+			const mockOnLocalLogin = jest
+				.fn()
+				.mockResolvedValue({ success: true });
+			const mockOnLoginError = jest.fn();
+
+			// Mock reCAPTCHA to reject
+			(window.grecaptcha.execute as jest.Mock).mockRejectedValue(
+				new Error('reCAPTCHA failed')
+			);
+
+			const props = createMockProps({
+				enableRecaptcha: true,
+				recaptchaSiteKey: 'test-site-key',
+				onLocalLogin: mockOnLocalLogin,
+				onLoginError: mockOnLoginError
+			});
+			renderWithTheme(props);
+
+			const emailInput = screen.getByLabelText('Email Address');
+			const passwordInput = screen.getByLabelText('Password');
+			const submitButton = screen.getByRole('button', {
+				name: 'Sign In'
+			});
+
+			await user.type(emailInput, 'test@example.com');
+			await user.type(passwordInput, 'password123');
+			await user.click(submitButton);
+
+			await waitFor(() => {
+				expect(
+					screen.getByText('reCAPTCHA verification failed')
+				).toBeInTheDocument();
+				expect(mockOnLoginError).toHaveBeenCalledWith(
+					expect.any(Error)
+				);
+			});
+		});
+	});
+
 	describe('Accessibility', () => {
 		it('should have proper form labels and accessibility attributes', () => {
 			const props = createMockProps();
@@ -493,17 +674,12 @@ describe('LumoraLogin Component', () => {
 			const user = userEvent.setup();
 			const mockOnLocalLogin = jest
 				.fn()
-				.mockImplementation(
-					() => new Promise(resolve => setTimeout(resolve, 100))
-				);
+				.mockImplementation(() => createDelayedPromise(100));
 			const props = createMockProps({ onLocalLogin: mockOnLocalLogin });
 			renderWithTheme(props);
 
-			const emailInput = screen.getByLabelText('Email Address');
-			const passwordInput = screen.getByLabelText('Password');
-			const submitButton = screen.getByRole('button', {
-				name: 'Sign In'
-			});
+			const { emailInput, passwordInput, submitButton } =
+				getFormElements();
 
 			await user.type(emailInput, 'test@example.com');
 			await user.type(passwordInput, 'password123');

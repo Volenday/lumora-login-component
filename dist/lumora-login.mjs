@@ -1,11 +1,11 @@
-import pr, { useState as ve, useEffect as vr } from "react";
-import { appendErrors as br, useForm as xr } from "react-hook-form";
-import { validateFieldsNatively as hr, toNestErrors as yr } from "@hookform/resolvers";
-import * as be from "yup";
-import { Box as T, Typography as H, Button as Y, Alert as Er, Stack as Nr, TextField as We, CircularProgress as $e, Divider as kr } from "@mui/material";
-import { Google as Cr } from "@mui/icons-material";
-import { LumoraOTP as Dr } from "@volenday/lumora-otp-component";
-var K = { exports: {} }, X = {};
+import He, { createContext as No, useMemo as Co, useState as ae, useRef as z, useEffect as Ee, useCallback as $e, useContext as ko } from "react";
+import { appendErrors as wo, useForm as Do } from "react-hook-form";
+import { validateFieldsNatively as Ro, toNestErrors as _o } from "@hookform/resolvers";
+import * as ye from "yup";
+import { Box as F, Typography as re, Button as J, Alert as Lo, Stack as So, TextField as Me, CircularProgress as Ye, Divider as To } from "@mui/material";
+import { Google as jo } from "@mui/icons-material";
+import { LumoraOTP as Po } from "@volenday/lumora-otp-component";
+var ne = { exports: {} }, te = {};
 /**
  * @license React
  * react-jsx-dev-runtime.production.min.js
@@ -15,14 +15,14 @@ var K = { exports: {} }, X = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var Ie;
-function Rr() {
-  if (Ie) return X;
-  Ie = 1;
-  var _ = Symbol.for("react.fragment");
-  return X.Fragment = _, X.jsxDEV = void 0, X;
+var ze;
+function Oo() {
+  if (ze) return te;
+  ze = 1;
+  var g = Symbol.for("react.fragment");
+  return te.Fragment = g, te.jsxDEV = void 0, te;
 }
-var Z = {};
+var ie = {};
 /**
  * @license React
  * react-jsx-dev-runtime.development.js
@@ -32,91 +32,91 @@ var Z = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var Me;
-function wr() {
-  return Me || (Me = 1, process.env.NODE_ENV !== "production" && (function() {
-    var _ = pr, j = Symbol.for("react.element"), L = Symbol.for("react.portal"), C = Symbol.for("react.fragment"), S = Symbol.for("react.strict_mode"), N = Symbol.for("react.profiler"), h = Symbol.for("react.provider"), D = Symbol.for("react.context"), l = Symbol.for("react.forward_ref"), d = Symbol.for("react.suspense"), m = Symbol.for("react.suspense_list"), b = Symbol.for("react.memo"), R = Symbol.for("react.lazy"), Q = Symbol.for("react.offscreen"), n = Symbol.iterator, z = "@@iterator";
-    function ee(e) {
+var Ge;
+function Vo() {
+  return Ge || (Ge = 1, process.env.NODE_ENV !== "production" && (function() {
+    var g = He, b = Symbol.for("react.element"), C = Symbol.for("react.portal"), N = Symbol.for("react.fragment"), k = Symbol.for("react.strict_mode"), v = Symbol.for("react.profiler"), y = Symbol.for("react.provider"), w = Symbol.for("react.context"), c = Symbol.for("react.forward_ref"), f = Symbol.for("react.suspense"), i = Symbol.for("react.suspense_list"), p = Symbol.for("react.memo"), R = Symbol.for("react.lazy"), _ = Symbol.for("react.offscreen"), W = Symbol.iterator, G = "@@iterator";
+    function n(e) {
       if (e === null || typeof e != "object")
         return null;
-      var r = n && e[n] || e[z];
-      return typeof r == "function" ? r : null;
+      var o = W && e[W] || e[G];
+      return typeof o == "function" ? o : null;
     }
-    var k = _.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
-    function p(e) {
+    var D = g.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+    function h(e) {
       {
-        for (var r = arguments.length, o = new Array(r > 1 ? r - 1 : 0), t = 1; t < r; t++)
-          o[t - 1] = arguments[t];
-        re("error", e, o);
+        for (var o = arguments.length, r = new Array(o > 1 ? o - 1 : 0), t = 1; t < o; t++)
+          r[t - 1] = arguments[t];
+        q("error", e, r);
       }
     }
-    function re(e, r, o) {
+    function q(e, o, r) {
       {
-        var t = k.ReactDebugCurrentFrame, u = t.getStackAddendum();
-        u !== "" && (r += "%s", o = o.concat([u]));
-        var c = o.map(function(i) {
-          return String(i);
+        var t = D.ReactDebugCurrentFrame, u = t.getStackAddendum();
+        u !== "" && (o += "%s", r = r.concat([u]));
+        var m = r.map(function(l) {
+          return String(l);
         });
-        c.unshift("Warning: " + r), Function.prototype.apply.call(console[e], console, c);
+        m.unshift("Warning: " + o), Function.prototype.apply.call(console[e], console, m);
       }
     }
-    var oe = !1, ne = !1, te = !1, ae = !1, ie = !1, A;
-    A = Symbol.for("react.module.reference");
-    function v(e) {
-      return !!(typeof e == "string" || typeof e == "function" || e === C || e === N || ie || e === S || e === d || e === m || ae || e === Q || oe || ne || te || typeof e == "object" && e !== null && (e.$$typeof === R || e.$$typeof === b || e.$$typeof === h || e.$$typeof === D || e.$$typeof === l || // This needs to include all possible module reference object
+    var T = !1, V = !1, I = !1, se = !1, le = !1, X;
+    X = Symbol.for("react.module.reference");
+    function ue(e) {
+      return !!(typeof e == "string" || typeof e == "function" || e === N || e === v || le || e === k || e === f || e === i || se || e === _ || T || V || I || typeof e == "object" && e !== null && (e.$$typeof === R || e.$$typeof === p || e.$$typeof === y || e.$$typeof === w || e.$$typeof === c || // This needs to include all possible module reference object
       // types supported by any Flight configuration anywhere since
       // we don't know which Flight build this will end up being used
       // with.
-      e.$$typeof === A || e.getModuleId !== void 0));
+      e.$$typeof === X || e.getModuleId !== void 0));
     }
-    function P(e, r, o) {
+    function ce(e, o, r) {
       var t = e.displayName;
       if (t)
         return t;
-      var u = r.displayName || r.name || "";
-      return u !== "" ? o + "(" + u + ")" : o;
+      var u = o.displayName || o.name || "";
+      return u !== "" ? r + "(" + u + ")" : r;
     }
-    function W(e) {
+    function K(e) {
       return e.displayName || "Context";
     }
-    function w(e) {
+    function j(e) {
       if (e == null)
         return null;
-      if (typeof e.tag == "number" && p("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."), typeof e == "function")
+      if (typeof e.tag == "number" && h("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."), typeof e == "function")
         return e.displayName || e.name || null;
       if (typeof e == "string")
         return e;
       switch (e) {
-        case C:
-          return "Fragment";
-        case L:
-          return "Portal";
         case N:
+          return "Fragment";
+        case C:
+          return "Portal";
+        case v:
           return "Profiler";
-        case S:
+        case k:
           return "StrictMode";
-        case d:
+        case f:
           return "Suspense";
-        case m:
+        case i:
           return "SuspenseList";
       }
       if (typeof e == "object")
         switch (e.$$typeof) {
-          case D:
-            var r = e;
-            return W(r) + ".Consumer";
-          case h:
+          case w:
             var o = e;
-            return W(o._context) + ".Provider";
-          case l:
-            return P(e, e.render, "ForwardRef");
-          case b:
+            return K(o) + ".Consumer";
+          case y:
+            var r = e;
+            return K(r._context) + ".Provider";
+          case c:
+            return ce(e, e.render, "ForwardRef");
+          case p:
             var t = e.displayName || null;
-            return t !== null ? t : w(e.type) || "Memo";
+            return t !== null ? t : j(e.type) || "Memo";
           case R: {
-            var u = e, c = u._payload, i = u._init;
+            var u = e, m = u._payload, l = u._init;
             try {
-              return w(i(c));
+              return j(l(m));
             } catch {
               return null;
             }
@@ -124,18 +124,18 @@ function wr() {
         }
       return null;
     }
-    var O = Object.assign, $ = 0, xe, he, ye, Ee, Ne, ke, Ce;
-    function De() {
+    var A = Object.assign, d = 0, P, U, Ne, Ce, ke, we, De;
+    function Re() {
     }
-    De.__reactDisabledLog = !0;
-    function ze() {
+    Re.__reactDisabledLog = !0;
+    function Xe() {
       {
-        if ($ === 0) {
-          xe = console.log, he = console.info, ye = console.warn, Ee = console.error, Ne = console.group, ke = console.groupCollapsed, Ce = console.groupEnd;
+        if (d === 0) {
+          P = console.log, U = console.info, Ne = console.warn, Ce = console.error, ke = console.group, we = console.groupCollapsed, De = console.groupEnd;
           var e = {
             configurable: !0,
             enumerable: !0,
-            value: De,
+            value: Re,
             writable: !0
           };
           Object.defineProperties(console, {
@@ -148,336 +148,336 @@ function wr() {
             groupEnd: e
           });
         }
-        $++;
+        d++;
       }
     }
-    function qe() {
+    function Ke() {
       {
-        if ($--, $ === 0) {
+        if (d--, d === 0) {
           var e = {
             configurable: !0,
             enumerable: !0,
             writable: !0
           };
           Object.defineProperties(console, {
-            log: O({}, e, {
-              value: xe
+            log: A({}, e, {
+              value: P
             }),
-            info: O({}, e, {
-              value: he
+            info: A({}, e, {
+              value: U
             }),
-            warn: O({}, e, {
-              value: ye
-            }),
-            error: O({}, e, {
-              value: Ee
-            }),
-            group: O({}, e, {
+            warn: A({}, e, {
               value: Ne
             }),
-            groupCollapsed: O({}, e, {
+            error: A({}, e, {
+              value: Ce
+            }),
+            group: A({}, e, {
               value: ke
             }),
-            groupEnd: O({}, e, {
-              value: Ce
+            groupCollapsed: A({}, e, {
+              value: we
+            }),
+            groupEnd: A({}, e, {
+              value: De
             })
           });
         }
-        $ < 0 && p("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
+        d < 0 && h("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
       }
     }
-    var se = k.ReactCurrentDispatcher, le;
-    function q(e, r, o) {
+    var de = D.ReactCurrentDispatcher, fe;
+    function Z(e, o, r) {
       {
-        if (le === void 0)
+        if (fe === void 0)
           try {
             throw Error();
           } catch (u) {
             var t = u.stack.trim().match(/\n( *(at )?)/);
-            le = t && t[1] || "";
+            fe = t && t[1] || "";
           }
         return `
-` + le + e;
+` + fe + e;
       }
     }
-    var ue = !1, B;
+    var me = !1, Q;
     {
-      var Be = typeof WeakMap == "function" ? WeakMap : Map;
-      B = new Be();
+      var Ze = typeof WeakMap == "function" ? WeakMap : Map;
+      Q = new Ze();
     }
-    function Re(e, r) {
-      if (!e || ue)
+    function _e(e, o) {
+      if (!e || me)
         return "";
       {
-        var o = B.get(e);
-        if (o !== void 0)
-          return o;
+        var r = Q.get(e);
+        if (r !== void 0)
+          return r;
       }
       var t;
-      ue = !0;
+      me = !0;
       var u = Error.prepareStackTrace;
       Error.prepareStackTrace = void 0;
-      var c;
-      c = se.current, se.current = null, ze();
+      var m;
+      m = de.current, de.current = null, Xe();
       try {
-        if (r) {
-          var i = function() {
+        if (o) {
+          var l = function() {
             throw Error();
           };
-          if (Object.defineProperty(i.prototype, "props", {
+          if (Object.defineProperty(l.prototype, "props", {
             set: function() {
               throw Error();
             }
           }), typeof Reflect == "object" && Reflect.construct) {
             try {
-              Reflect.construct(i, []);
-            } catch (y) {
-              t = y;
+              Reflect.construct(l, []);
+            } catch (S) {
+              t = S;
             }
-            Reflect.construct(e, [], i);
+            Reflect.construct(e, [], l);
           } else {
             try {
-              i.call();
-            } catch (y) {
-              t = y;
+              l.call();
+            } catch (S) {
+              t = S;
             }
-            e.call(i.prototype);
+            e.call(l.prototype);
           }
         } else {
           try {
             throw Error();
-          } catch (y) {
-            t = y;
+          } catch (S) {
+            t = S;
           }
           e();
         }
-      } catch (y) {
-        if (y && t && typeof y.stack == "string") {
-          for (var a = y.stack.split(`
-`), x = t.stack.split(`
-`), f = a.length - 1, g = x.length - 1; f >= 1 && g >= 0 && a[f] !== x[g]; )
-            g--;
-          for (; f >= 1 && g >= 0; f--, g--)
-            if (a[f] !== x[g]) {
-              if (f !== 1 || g !== 1)
+      } catch (S) {
+        if (S && t && typeof S.stack == "string") {
+          for (var s = S.stack.split(`
+`), L = t.stack.split(`
+`), x = s.length - 1, E = L.length - 1; x >= 1 && E >= 0 && s[x] !== L[E]; )
+            E--;
+          for (; x >= 1 && E >= 0; x--, E--)
+            if (s[x] !== L[E]) {
+              if (x !== 1 || E !== 1)
                 do
-                  if (f--, g--, g < 0 || a[f] !== x[g]) {
-                    var E = `
-` + a[f].replace(" at new ", " at ");
-                    return e.displayName && E.includes("<anonymous>") && (E = E.replace("<anonymous>", e.displayName)), typeof e == "function" && B.set(e, E), E;
+                  if (x--, E--, E < 0 || s[x] !== L[E]) {
+                    var O = `
+` + s[x].replace(" at new ", " at ");
+                    return e.displayName && O.includes("<anonymous>") && (O = O.replace("<anonymous>", e.displayName)), typeof e == "function" && Q.set(e, O), O;
                   }
-                while (f >= 1 && g >= 0);
+                while (x >= 1 && E >= 0);
               break;
             }
         }
       } finally {
-        ue = !1, se.current = c, qe(), Error.prepareStackTrace = u;
+        me = !1, de.current = m, Ke(), Error.prepareStackTrace = u;
       }
-      var F = e ? e.displayName || e.name : "", V = F ? q(F) : "";
-      return typeof e == "function" && B.set(e, V), V;
+      var Y = e ? e.displayName || e.name : "", $ = Y ? Z(Y) : "";
+      return typeof e == "function" && Q.set(e, $), $;
     }
-    function Je(e, r, o) {
-      return Re(e, !1);
+    function Qe(e, o, r) {
+      return _e(e, !1);
     }
-    function Ge(e) {
-      var r = e.prototype;
-      return !!(r && r.isReactComponent);
+    function eo(e) {
+      var o = e.prototype;
+      return !!(o && o.isReactComponent);
     }
-    function J(e, r, o) {
+    function ee(e, o, r) {
       if (e == null)
         return "";
       if (typeof e == "function")
-        return Re(e, Ge(e));
+        return _e(e, eo(e));
       if (typeof e == "string")
-        return q(e);
+        return Z(e);
       switch (e) {
-        case d:
-          return q("Suspense");
-        case m:
-          return q("SuspenseList");
+        case f:
+          return Z("Suspense");
+        case i:
+          return Z("SuspenseList");
       }
       if (typeof e == "object")
         switch (e.$$typeof) {
-          case l:
-            return Je(e.render);
-          case b:
-            return J(e.type, r, o);
+          case c:
+            return Qe(e.render);
+          case p:
+            return ee(e.type, o, r);
           case R: {
-            var t = e, u = t._payload, c = t._init;
+            var t = e, u = t._payload, m = t._init;
             try {
-              return J(c(u), r, o);
+              return ee(m(u), o, r);
             } catch {
             }
           }
         }
       return "";
     }
-    var I = Object.prototype.hasOwnProperty, we = {}, Te = k.ReactDebugCurrentFrame;
-    function G(e) {
+    var B = Object.prototype.hasOwnProperty, Le = {}, Se = D.ReactDebugCurrentFrame;
+    function oe(e) {
       if (e) {
-        var r = e._owner, o = J(e.type, e._source, r ? r.type : null);
-        Te.setExtraStackFrame(o);
+        var o = e._owner, r = ee(e.type, e._source, o ? o.type : null);
+        Se.setExtraStackFrame(r);
       } else
-        Te.setExtraStackFrame(null);
+        Se.setExtraStackFrame(null);
     }
-    function He(e, r, o, t, u) {
+    function oo(e, o, r, t, u) {
       {
-        var c = Function.call.bind(I);
-        for (var i in e)
-          if (c(e, i)) {
-            var a = void 0;
+        var m = Function.call.bind(B);
+        for (var l in e)
+          if (m(e, l)) {
+            var s = void 0;
             try {
-              if (typeof e[i] != "function") {
-                var x = Error((t || "React class") + ": " + o + " type `" + i + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof e[i] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
-                throw x.name = "Invariant Violation", x;
+              if (typeof e[l] != "function") {
+                var L = Error((t || "React class") + ": " + r + " type `" + l + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof e[l] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
+                throw L.name = "Invariant Violation", L;
               }
-              a = e[i](r, i, t, o, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
-            } catch (f) {
-              a = f;
+              s = e[l](o, l, t, r, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
+            } catch (x) {
+              s = x;
             }
-            a && !(a instanceof Error) && (G(u), p("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", t || "React class", o, i, typeof a), G(null)), a instanceof Error && !(a.message in we) && (we[a.message] = !0, G(u), p("Failed %s type: %s", o, a.message), G(null));
+            s && !(s instanceof Error) && (oe(u), h("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", t || "React class", r, l, typeof s), oe(null)), s instanceof Error && !(s.message in Le) && (Le[s.message] = !0, oe(u), h("Failed %s type: %s", r, s.message), oe(null));
           }
       }
     }
-    var Ke = Array.isArray;
-    function ce(e) {
-      return Ke(e);
+    var ro = Array.isArray;
+    function ge(e) {
+      return ro(e);
     }
-    function Xe(e) {
+    function no(e) {
       {
-        var r = typeof Symbol == "function" && Symbol.toStringTag, o = r && e[Symbol.toStringTag] || e.constructor.name || "Object";
-        return o;
+        var o = typeof Symbol == "function" && Symbol.toStringTag, r = o && e[Symbol.toStringTag] || e.constructor.name || "Object";
+        return r;
       }
     }
-    function Ze(e) {
+    function to(e) {
       try {
-        return _e(e), !1;
+        return Te(e), !1;
       } catch {
         return !0;
       }
     }
-    function _e(e) {
+    function Te(e) {
       return "" + e;
     }
     function je(e) {
-      if (Ze(e))
-        return p("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", Xe(e)), _e(e);
+      if (to(e))
+        return h("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", no(e)), Te(e);
     }
-    var M = k.ReactCurrentOwner, Qe = {
+    var H = D.ReactCurrentOwner, io = {
       key: !0,
       ref: !0,
       __self: !0,
       __source: !0
-    }, Le, Se, de;
-    de = {};
-    function er(e) {
-      if (I.call(e, "ref")) {
-        var r = Object.getOwnPropertyDescriptor(e, "ref").get;
-        if (r && r.isReactWarning)
+    }, Pe, Oe, ve;
+    ve = {};
+    function ao(e) {
+      if (B.call(e, "ref")) {
+        var o = Object.getOwnPropertyDescriptor(e, "ref").get;
+        if (o && o.isReactWarning)
           return !1;
       }
       return e.ref !== void 0;
     }
-    function rr(e) {
-      if (I.call(e, "key")) {
-        var r = Object.getOwnPropertyDescriptor(e, "key").get;
-        if (r && r.isReactWarning)
+    function so(e) {
+      if (B.call(e, "key")) {
+        var o = Object.getOwnPropertyDescriptor(e, "key").get;
+        if (o && o.isReactWarning)
           return !1;
       }
       return e.key !== void 0;
     }
-    function or(e, r) {
-      if (typeof e.ref == "string" && M.current && r && M.current.stateNode !== r) {
-        var o = w(M.current.type);
-        de[o] || (p('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', w(M.current.type), e.ref), de[o] = !0);
+    function lo(e, o) {
+      if (typeof e.ref == "string" && H.current && o && H.current.stateNode !== o) {
+        var r = j(H.current.type);
+        ve[r] || (h('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', j(H.current.type), e.ref), ve[r] = !0);
       }
     }
-    function nr(e, r) {
+    function uo(e, o) {
       {
-        var o = function() {
-          Le || (Le = !0, p("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", r));
+        var r = function() {
+          Pe || (Pe = !0, h("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", o));
         };
-        o.isReactWarning = !0, Object.defineProperty(e, "key", {
-          get: o,
+        r.isReactWarning = !0, Object.defineProperty(e, "key", {
+          get: r,
           configurable: !0
         });
       }
     }
-    function tr(e, r) {
+    function co(e, o) {
       {
-        var o = function() {
-          Se || (Se = !0, p("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", r));
+        var r = function() {
+          Oe || (Oe = !0, h("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", o));
         };
-        o.isReactWarning = !0, Object.defineProperty(e, "ref", {
-          get: o,
+        r.isReactWarning = !0, Object.defineProperty(e, "ref", {
+          get: r,
           configurable: !0
         });
       }
     }
-    var ar = function(e, r, o, t, u, c, i) {
-      var a = {
+    var fo = function(e, o, r, t, u, m, l) {
+      var s = {
         // This tag allows us to uniquely identify this as a React Element
-        $$typeof: j,
+        $$typeof: b,
         // Built-in properties that belong on the element
         type: e,
-        key: r,
-        ref: o,
-        props: i,
+        key: o,
+        ref: r,
+        props: l,
         // Record the component responsible for creating this element.
-        _owner: c
+        _owner: m
       };
-      return a._store = {}, Object.defineProperty(a._store, "validated", {
+      return s._store = {}, Object.defineProperty(s._store, "validated", {
         configurable: !1,
         enumerable: !1,
         writable: !0,
         value: !1
-      }), Object.defineProperty(a, "_self", {
+      }), Object.defineProperty(s, "_self", {
         configurable: !1,
         enumerable: !1,
         writable: !1,
         value: t
-      }), Object.defineProperty(a, "_source", {
+      }), Object.defineProperty(s, "_source", {
         configurable: !1,
         enumerable: !1,
         writable: !1,
         value: u
-      }), Object.freeze && (Object.freeze(a.props), Object.freeze(a)), a;
+      }), Object.freeze && (Object.freeze(s.props), Object.freeze(s)), s;
     };
-    function ir(e, r, o, t, u) {
+    function mo(e, o, r, t, u) {
       {
-        var c, i = {}, a = null, x = null;
-        o !== void 0 && (je(o), a = "" + o), rr(r) && (je(r.key), a = "" + r.key), er(r) && (x = r.ref, or(r, u));
-        for (c in r)
-          I.call(r, c) && !Qe.hasOwnProperty(c) && (i[c] = r[c]);
+        var m, l = {}, s = null, L = null;
+        r !== void 0 && (je(r), s = "" + r), so(o) && (je(o.key), s = "" + o.key), ao(o) && (L = o.ref, lo(o, u));
+        for (m in o)
+          B.call(o, m) && !io.hasOwnProperty(m) && (l[m] = o[m]);
         if (e && e.defaultProps) {
-          var f = e.defaultProps;
-          for (c in f)
-            i[c] === void 0 && (i[c] = f[c]);
+          var x = e.defaultProps;
+          for (m in x)
+            l[m] === void 0 && (l[m] = x[m]);
         }
-        if (a || x) {
-          var g = typeof e == "function" ? e.displayName || e.name || "Unknown" : e;
-          a && nr(i, g), x && tr(i, g);
+        if (s || L) {
+          var E = typeof e == "function" ? e.displayName || e.name || "Unknown" : e;
+          s && uo(l, E), L && co(l, E);
         }
-        return ar(e, a, x, u, t, M.current, i);
+        return fo(e, s, L, u, t, H.current, l);
       }
     }
-    var fe = k.ReactCurrentOwner, Pe = k.ReactDebugCurrentFrame;
-    function U(e) {
+    var pe = D.ReactCurrentOwner, Ve = D.ReactDebugCurrentFrame;
+    function M(e) {
       if (e) {
-        var r = e._owner, o = J(e.type, e._source, r ? r.type : null);
-        Pe.setExtraStackFrame(o);
+        var o = e._owner, r = ee(e.type, e._source, o ? o.type : null);
+        Ve.setExtraStackFrame(r);
       } else
-        Pe.setExtraStackFrame(null);
+        Ve.setExtraStackFrame(null);
     }
-    var me;
-    me = !1;
-    function ge(e) {
-      return typeof e == "object" && e !== null && e.$$typeof === j;
+    var be;
+    be = !1;
+    function he(e) {
+      return typeof e == "object" && e !== null && e.$$typeof === b;
     }
-    function Oe() {
+    function Ae() {
       {
-        if (fe.current) {
-          var e = w(fe.current.type);
+        if (pe.current) {
+          var e = j(pe.current.type);
           if (e)
             return `
 
@@ -486,254 +486,358 @@ Check the render method of \`` + e + "`.";
         return "";
       }
     }
-    function sr(e) {
+    function go(e) {
       {
         if (e !== void 0) {
-          var r = e.fileName.replace(/^.*[\\\/]/, ""), o = e.lineNumber;
+          var o = e.fileName.replace(/^.*[\\\/]/, ""), r = e.lineNumber;
           return `
 
-Check your code at ` + r + ":" + o + ".";
+Check your code at ` + o + ":" + r + ".";
         }
         return "";
       }
     }
-    var Ve = {};
-    function lr(e) {
+    var Ue = {};
+    function vo(e) {
       {
-        var r = Oe();
-        if (!r) {
-          var o = typeof e == "string" ? e : e.displayName || e.name;
-          o && (r = `
+        var o = Ae();
+        if (!o) {
+          var r = typeof e == "string" ? e : e.displayName || e.name;
+          r && (o = `
 
-Check the top-level render call using <` + o + ">.");
+Check the top-level render call using <` + r + ">.");
         }
-        return r;
+        return o;
       }
     }
-    function Ue(e, r) {
+    function Fe(e, o) {
       {
         if (!e._store || e._store.validated || e.key != null)
           return;
         e._store.validated = !0;
-        var o = lr(r);
-        if (Ve[o])
+        var r = vo(o);
+        if (Ue[r])
           return;
-        Ve[o] = !0;
+        Ue[r] = !0;
         var t = "";
-        e && e._owner && e._owner !== fe.current && (t = " It was passed a child from " + w(e._owner.type) + "."), U(e), p('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', o, t), U(null);
+        e && e._owner && e._owner !== pe.current && (t = " It was passed a child from " + j(e._owner.type) + "."), M(e), h('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', r, t), M(null);
       }
     }
-    function Fe(e, r) {
+    function We(e, o) {
       {
         if (typeof e != "object")
           return;
-        if (ce(e))
-          for (var o = 0; o < e.length; o++) {
-            var t = e[o];
-            ge(t) && Ue(t, r);
+        if (ge(e))
+          for (var r = 0; r < e.length; r++) {
+            var t = e[r];
+            he(t) && Fe(t, o);
           }
-        else if (ge(e))
+        else if (he(e))
           e._store && (e._store.validated = !0);
         else if (e) {
-          var u = ee(e);
+          var u = n(e);
           if (typeof u == "function" && u !== e.entries)
-            for (var c = u.call(e), i; !(i = c.next()).done; )
-              ge(i.value) && Ue(i.value, r);
+            for (var m = u.call(e), l; !(l = m.next()).done; )
+              he(l.value) && Fe(l.value, o);
         }
       }
     }
-    function ur(e) {
+    function po(e) {
       {
-        var r = e.type;
-        if (r == null || typeof r == "string")
+        var o = e.type;
+        if (o == null || typeof o == "string")
           return;
-        var o;
-        if (typeof r == "function")
-          o = r.propTypes;
-        else if (typeof r == "object" && (r.$$typeof === l || // Note: Memo only checks outer props here.
+        var r;
+        if (typeof o == "function")
+          r = o.propTypes;
+        else if (typeof o == "object" && (o.$$typeof === c || // Note: Memo only checks outer props here.
         // Inner props are checked in the reconciler.
-        r.$$typeof === b))
-          o = r.propTypes;
+        o.$$typeof === p))
+          r = o.propTypes;
         else
           return;
-        if (o) {
-          var t = w(r);
-          He(o, e.props, "prop", t, e);
-        } else if (r.PropTypes !== void 0 && !me) {
-          me = !0;
-          var u = w(r);
-          p("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", u || "Unknown");
+        if (r) {
+          var t = j(o);
+          oo(r, e.props, "prop", t, e);
+        } else if (o.PropTypes !== void 0 && !be) {
+          be = !0;
+          var u = j(o);
+          h("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", u || "Unknown");
         }
-        typeof r.getDefaultProps == "function" && !r.getDefaultProps.isReactClassApproved && p("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
+        typeof o.getDefaultProps == "function" && !o.getDefaultProps.isReactClassApproved && h("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
       }
     }
-    function cr(e) {
+    function bo(e) {
       {
-        for (var r = Object.keys(e.props), o = 0; o < r.length; o++) {
-          var t = r[o];
+        for (var o = Object.keys(e.props), r = 0; r < o.length; r++) {
+          var t = o[r];
           if (t !== "children" && t !== "key") {
-            U(e), p("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", t), U(null);
+            M(e), h("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", t), M(null);
             break;
           }
         }
-        e.ref !== null && (U(e), p("Invalid attribute `ref` supplied to `React.Fragment`."), U(null));
+        e.ref !== null && (M(e), h("Invalid attribute `ref` supplied to `React.Fragment`."), M(null));
       }
     }
-    var Ae = {};
-    function dr(e, r, o, t, u, c) {
+    var Ie = {};
+    function ho(e, o, r, t, u, m) {
       {
-        var i = v(e);
-        if (!i) {
-          var a = "";
-          (e === void 0 || typeof e == "object" && e !== null && Object.keys(e).length === 0) && (a += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.");
-          var x = sr(u);
-          x ? a += x : a += Oe();
-          var f;
-          e === null ? f = "null" : ce(e) ? f = "array" : e !== void 0 && e.$$typeof === j ? (f = "<" + (w(e.type) || "Unknown") + " />", a = " Did you accidentally export a JSX literal instead of a component?") : f = typeof e, p("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", f, a);
+        var l = ue(e);
+        if (!l) {
+          var s = "";
+          (e === void 0 || typeof e == "object" && e !== null && Object.keys(e).length === 0) && (s += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.");
+          var L = go(u);
+          L ? s += L : s += Ae();
+          var x;
+          e === null ? x = "null" : ge(e) ? x = "array" : e !== void 0 && e.$$typeof === b ? (x = "<" + (j(e.type) || "Unknown") + " />", s = " Did you accidentally export a JSX literal instead of a component?") : x = typeof e, h("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", x, s);
         }
-        var g = ir(e, r, o, u, c);
-        if (g == null)
-          return g;
-        if (i) {
-          var E = r.children;
-          if (E !== void 0)
+        var E = mo(e, o, r, u, m);
+        if (E == null)
+          return E;
+        if (l) {
+          var O = o.children;
+          if (O !== void 0)
             if (t)
-              if (ce(E)) {
-                for (var F = 0; F < E.length; F++)
-                  Fe(E[F], e);
-                Object.freeze && Object.freeze(E);
+              if (ge(O)) {
+                for (var Y = 0; Y < O.length; Y++)
+                  We(O[Y], e);
+                Object.freeze && Object.freeze(O);
               } else
-                p("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
+                h("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
             else
-              Fe(E, e);
+              We(O, e);
         }
-        if (I.call(r, "key")) {
-          var V = w(e), y = Object.keys(r).filter(function(gr) {
-            return gr !== "key";
-          }), pe = y.length > 0 ? "{key: someKey, " + y.join(": ..., ") + ": ...}" : "{key: someKey}";
-          if (!Ae[V + pe]) {
-            var mr = y.length > 0 ? "{" + y.join(": ..., ") + ": ...}" : "{}";
-            p(`A props object containing a "key" prop is being spread into JSX:
+        if (B.call(o, "key")) {
+          var $ = j(e), S = Object.keys(o).filter(function(Eo) {
+            return Eo !== "key";
+          }), xe = S.length > 0 ? "{key: someKey, " + S.join(": ..., ") + ": ...}" : "{key: someKey}";
+          if (!Ie[$ + xe]) {
+            var yo = S.length > 0 ? "{" + S.join(": ..., ") + ": ...}" : "{}";
+            h(`A props object containing a "key" prop is being spread into JSX:
   let props = %s;
   <%s {...props} />
 React keys must be passed directly to JSX without using spread:
   let props = %s;
-  <%s key={someKey} {...props} />`, pe, V, mr, V), Ae[V + pe] = !0;
+  <%s key={someKey} {...props} />`, xe, $, yo, $), Ie[$ + xe] = !0;
           }
         }
-        return e === C ? cr(g) : ur(g), g;
+        return e === N ? bo(E) : po(E), E;
       }
     }
-    var fr = dr;
-    Z.Fragment = C, Z.jsxDEV = fr;
-  })()), Z;
+    var xo = ho;
+    ie.Fragment = N, ie.jsxDEV = xo;
+  })()), ie;
 }
-var Ye;
-function Tr() {
-  return Ye || (Ye = 1, process.env.NODE_ENV === "production" ? K.exports = Rr() : K.exports = wr()), K.exports;
+var qe;
+function Ao() {
+  return qe || (qe = 1, process.env.NODE_ENV === "production" ? ne.exports = Oo() : ne.exports = Vo()), ne.exports;
 }
-var s = Tr();
-function _r(_, j, L) {
-  return L === void 0 && (L = {}), function(C, S, N) {
+var a = Ao();
+function Uo(g, b, C) {
+  return C === void 0 && (C = {}), function(N, k, v) {
     try {
-      return Promise.resolve((function(h, D) {
+      return Promise.resolve((function(y, w) {
         try {
-          var l = (j != null && j.context && process.env.NODE_ENV === "development" && console.warn("You should not used the yup options context. Please, use the 'useForm' context object instead"), Promise.resolve(_[L.mode === "sync" ? "validateSync" : "validate"](C, Object.assign({ abortEarly: !1 }, j, { context: S }))).then(function(d) {
-            return N.shouldUseNativeValidation && hr({}, N), { values: L.raw ? Object.assign({}, C) : d, errors: {} };
+          var c = (b != null && b.context && process.env.NODE_ENV === "development" && console.warn("You should not used the yup options context. Please, use the 'useForm' context object instead"), Promise.resolve(g[C.mode === "sync" ? "validateSync" : "validate"](N, Object.assign({ abortEarly: !1 }, b, { context: k }))).then(function(f) {
+            return v.shouldUseNativeValidation && Ro({}, v), { values: C.raw ? Object.assign({}, N) : f, errors: {} };
           }));
-        } catch (d) {
-          return D(d);
+        } catch (f) {
+          return w(f);
         }
-        return l && l.then ? l.then(void 0, D) : l;
-      })(0, function(h) {
-        if (!h.inner) throw h;
-        return { values: {}, errors: yr((D = h, l = !N.shouldUseNativeValidation && N.criteriaMode === "all", (D.inner || []).reduce(function(d, m) {
-          if (d[m.path] || (d[m.path] = { message: m.message, type: m.type }), l) {
-            var b = d[m.path].types, R = b && b[m.type];
-            d[m.path] = br(m.path, l, d, m.type, R ? [].concat(R, m.message) : m.message);
+        return c && c.then ? c.then(void 0, w) : c;
+      })(0, function(y) {
+        if (!y.inner) throw y;
+        return { values: {}, errors: _o((w = y, c = !v.shouldUseNativeValidation && v.criteriaMode === "all", (w.inner || []).reduce(function(f, i) {
+          if (f[i.path] || (f[i.path] = { message: i.message, type: i.type }), c) {
+            var p = f[i.path].types, R = p && p[i.type];
+            f[i.path] = wo(i.path, c, f, i.type, R ? [].concat(R, i.message) : i.message);
           }
-          return d;
-        }, {})), N) };
-        var D, l;
+          return f;
+        }, {})), v) };
+        var w, c;
       }));
-    } catch (h) {
-      return Promise.reject(h);
+    } catch (y) {
+      return Promise.reject(y);
     }
   };
 }
-const jr = be.object({
-  email: be.string().email("Please enter a valid email address").required("Email is required"),
-  password: be.string().min(6, "Password must be at least 6 characters").required("Password is required")
-}), Lr = () => ({
+function Fo(g = {}) {
+  const { nonce: b, onScriptLoadSuccess: C, onScriptLoadError: N } = g, [k, v] = ae(!1), y = z(C);
+  y.current = C;
+  const w = z(N);
+  return w.current = N, Ee(() => {
+    const c = document.createElement("script");
+    return c.src = "https://accounts.google.com/gsi/client", c.async = !0, c.defer = !0, c.nonce = b, c.onload = () => {
+      var f;
+      v(!0), (f = y.current) === null || f === void 0 || f.call(y);
+    }, c.onerror = () => {
+      var f;
+      v(!1), (f = w.current) === null || f === void 0 || f.call(w);
+    }, document.body.appendChild(c), () => {
+      document.body.removeChild(c);
+    };
+  }, [b]), k;
+}
+const Je = No(null);
+function Wo({ clientId: g, nonce: b, onScriptLoadSuccess: C, onScriptLoadError: N, children: k }) {
+  const v = Fo({
+    nonce: b,
+    onScriptLoadSuccess: C,
+    onScriptLoadError: N
+  }), y = Co(() => ({
+    clientId: g,
+    scriptLoadedSuccessfully: v
+  }), [g, v]);
+  return He.createElement(Je.Provider, { value: y }, k);
+}
+function Io() {
+  const g = ko(Je);
+  if (!g)
+    throw new Error("Google OAuth components must be used within GoogleOAuthProvider");
+  return g;
+}
+function $o({ flow: g = "implicit", scope: b = "", onSuccess: C, onError: N, onNonOAuthError: k, overrideScope: v, state: y, ...w }) {
+  const { clientId: c, scriptLoadedSuccessfully: f } = Io(), i = z(), p = z(C);
+  p.current = C;
+  const R = z(N);
+  R.current = N;
+  const _ = z(k);
+  _.current = k, Ee(() => {
+    var n, D;
+    if (!f)
+      return;
+    const h = g === "implicit" ? "initTokenClient" : "initCodeClient", q = (D = (n = window?.google) === null || n === void 0 ? void 0 : n.accounts) === null || D === void 0 ? void 0 : D.oauth2[h]({
+      client_id: c,
+      scope: v ? b : `openid profile email ${b}`,
+      callback: (T) => {
+        var V, I;
+        if (T.error)
+          return (V = R.current) === null || V === void 0 ? void 0 : V.call(R, T);
+        (I = p.current) === null || I === void 0 || I.call(p, T);
+      },
+      error_callback: (T) => {
+        var V;
+        (V = _.current) === null || V === void 0 || V.call(_, T);
+      },
+      state: y,
+      ...w
+    });
+    i.current = q;
+  }, [c, f, g, b, y]);
+  const W = $e((n) => {
+    var D;
+    return (D = i.current) === null || D === void 0 ? void 0 : D.requestAccessToken(n);
+  }, []), G = $e(() => {
+    var n;
+    return (n = i.current) === null || n === void 0 ? void 0 : n.requestCode();
+  }, []);
+  return g === "implicit" ? W : G;
+}
+const Mo = ye.object({
+  email: ye.string().email("Please enter a valid email address").required("Email is required"),
+  password: ye.string().min(6, "Password must be at least 6 characters").required("Password is required")
+}), Yo = () => ({
   primaryColor: "#1976d2",
   secondaryColor: "#42a5f5",
   backgroundColor: "#ffffff",
   textColor: "#333333",
   logoHeight: 48,
   logo: "https://via.placeholder.com/200x80/1976d2/ffffff?text=Lumora"
-}), Sr = (_) => ({
-  ...Lr(),
-  ..._
-}), Wr = ({
-  onLocalLogin: _,
-  onGoogleLogin: j,
-  onLoginSuccess: L,
-  onLoginError: C,
-  googleClientId: S,
-  enableGoogleSignIn: N = !0,
-  enableLocalSignIn: h = !0,
-  branding: D
+}), zo = (g) => ({
+  ...Yo(),
+  ...g
+}), Be = ({
+  onLocalLogin: g,
+  onGoogleLogin: b,
+  onLoginSuccess: C,
+  onLoginError: N,
+  enableRecaptcha: k = !1,
+  recaptchaSiteKey: v,
+  googleClientId: y,
+  enableGoogleSignIn: w = !0,
+  enableLocalSignIn: c = !0,
+  branding: f
 }) => {
-  const [l, d] = ve("idle"), [m, b] = ve(null), [R, Q] = ve(!1), n = Sr(D);
-  if (!h && !N)
+  const [i, p] = ae("idle"), [R, _] = ae(null), [W, G] = ae(!1), n = zo(f), D = $o({
+    onSuccess: (d) => {
+      p("google-loading"), _(null);
+      try {
+        const P = {
+          access_token: d.access_token,
+          expires_in: d.expires_in,
+          scope: d.scope,
+          token_type: d.token_type
+        };
+        b(P), setTimeout(() => {
+          p("otp-required");
+        }, 1e3);
+      } catch (P) {
+        const U = P;
+        _({ message: U.message, type: "google" }), p("error"), N(U);
+      }
+    },
+    onError: (d) => {
+      _({ message: d.error_description || "Google sign-in failed", type: "google" }), p("error"), N(new Error(d.error_description || "Google sign-in failed"));
+    }
+  });
+  if (!c && !w)
     throw new Error(
       "At least one sign-in method must be enabled (enableLocalSignIn or enableGoogleSignIn)"
     );
+  if (k && !v)
+    throw new Error(
+      "recaptchaSiteKey is required when enableRecaptcha is true"
+    );
   const {
-    register: z,
-    handleSubmit: ee,
-    formState: { errors: k },
-    reset: p
-  } = xr({
-    resolver: _r(jr)
-  }), re = async (v) => {
-    d("loading"), b(null);
+    register: h,
+    handleSubmit: q,
+    formState: { errors: T },
+    reset: V
+  } = Do({
+    resolver: Uo(Mo)
+  }), I = () => window.grecaptcha.execute(v, { action: "login" }).catch(() => {
+    throw new Error("reCAPTCHA verification failed");
+  }), se = async () => {
+    if (!k || !v)
+      return "";
+    if (typeof window > "u" || !window.grecaptcha)
+      throw new Error("reCAPTCHA is not loaded");
+    return new Promise((d, P) => {
+      const U = () => {
+        I().then(d).catch(P);
+      };
+      window.grecaptcha.ready(U);
+    });
+  }, le = async (d) => {
+    p("loading"), _(null);
     try {
-      await _(v.email, v.password), d("otp-required");
+      k && await se(), await g(d.email, d.password), p("otp-required");
     } catch (P) {
-      const W = P;
-      b({ message: W.message, type: "local" }), d("error"), C(W);
+      const U = P;
+      _({ message: U.message, type: "local" }), p("error"), N(U);
     }
-  }, oe = () => {
-    d("google-loading"), b(null);
-    try {
-      j(), setTimeout(() => {
-        d("otp-required");
-      }, 1e3);
-    } catch (v) {
-      const P = v;
-      b({ message: P.message, type: "google" }), d("error"), C(P);
-    }
-  }, ne = async (v) => {
-    if (await new Promise((P) => setTimeout(P, 1e3)), v === "123456")
+  }, X = () => {
+    D();
+  }, ue = async (d) => {
+    if (await new Promise((P) => setTimeout(P, 1e3)), d === "123456")
       return { success: !0, token: "verified-token" };
     throw new Error("Invalid OTP code");
-  }, te = (v) => {
-    d("success"), L(v);
-  }, ae = (v) => {
-    b({ message: v.message, type: "otp" }), d("otp-error");
-  }, ie = () => {
-    console.log("Resending OTP..."), m && m.type === "otp" && b(null);
+  }, ce = (d) => {
+    p("success"), C(d);
+  }, K = (d) => {
+    _({ message: d.message, type: "otp" }), p("otp-error");
+  }, j = () => {
+    console.log("Resending OTP..."), R && R.type === "otp" && _(null);
   }, A = () => {
-    b(null), d("idle"), p();
+    _(null), p("idle"), V();
   };
-  return vr(() => {
-    if (S && typeof window < "u") {
-      const v = document.createElement("script");
-      v.src = "https://accounts.google.com/gsi/client", v.async = !0, v.defer = !0, document.head.appendChild(v);
+  return Ee(() => {
+    if (k && v && typeof window < "u") {
+      const d = document.createElement("script");
+      d.src = `https://www.google.com/recaptcha/enterprise.js?render=${v}`, d.async = !0, d.defer = !0, document.head.appendChild(d);
     }
-  }, [S]), l === "otp-required" || l === "otp-error" ? /* @__PURE__ */ s.jsxDEV(
-    T,
+  }, [k, v]), i === "otp-required" || i === "otp-error" ? /* @__PURE__ */ a.jsxDEV(
+    F,
     {
       sx: {
         // Mobile: full screen with proper centering
@@ -757,8 +861,8 @@ const jr = be.object({
         overflowX: "hidden",
         boxSizing: "border-box"
       },
-      children: /* @__PURE__ */ s.jsxDEV(
-        T,
+      children: /* @__PURE__ */ a.jsxDEV(
+        F,
         {
           sx: {
             p: { xs: 3, sm: 4 },
@@ -771,8 +875,8 @@ const jr = be.object({
             boxSizing: "border-box"
           },
           children: [
-            /* @__PURE__ */ s.jsxDEV(T, { sx: { textAlign: "center", mb: 3 }, children: [
-              n.logo && /* @__PURE__ */ s.jsxDEV(T, { sx: { mb: 2 }, children: typeof n.logo == "string" ? /* @__PURE__ */ s.jsxDEV(
+            /* @__PURE__ */ a.jsxDEV(F, { sx: { textAlign: "center", mb: 3 }, children: [
+              n.logo && /* @__PURE__ */ a.jsxDEV(F, { sx: { mb: 2 }, children: typeof n.logo == "string" ? /* @__PURE__ */ a.jsxDEV(
                 "img",
                 {
                   src: n.logo,
@@ -787,17 +891,17 @@ const jr = be.object({
                 !1,
                 {
                   fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                  lineNumber: 232,
+                  lineNumber: 299,
                   columnNumber: 10
                 },
                 void 0
               ) : n.logo }, void 0, !1, {
                 fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                lineNumber: 230,
+                lineNumber: 297,
                 columnNumber: 8
               }, void 0),
-              /* @__PURE__ */ s.jsxDEV(
-                H,
+              /* @__PURE__ */ a.jsxDEV(
+                re,
                 {
                   variant: "h5",
                   component: "h1",
@@ -812,23 +916,23 @@ const jr = be.object({
                 !1,
                 {
                   fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                  lineNumber: 250,
+                  lineNumber: 317,
                   columnNumber: 7
                 },
                 void 0
               )
             ] }, void 0, !0, {
               fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-              lineNumber: 228,
+              lineNumber: 295,
               columnNumber: 6
             }, void 0),
-            /* @__PURE__ */ s.jsxDEV(
-              Dr,
+            /* @__PURE__ */ a.jsxDEV(
+              Po,
               {
-                onVerify: ne,
-                onVerifySuccess: te,
-                onVerifyError: ae,
-                onResend: ie,
+                onVerify: ue,
+                onVerifySuccess: ce,
+                onVerifyError: K,
+                onResend: j,
                 instructionText: "Please enter the 6-digit code sent to your email",
                 showResend: !0,
                 resendCooldown: 60,
@@ -839,13 +943,13 @@ const jr = be.object({
               !1,
               {
                 fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                lineNumber: 263,
+                lineNumber: 330,
                 columnNumber: 6
               },
               void 0
             ),
-            l === "otp-error" && /* @__PURE__ */ s.jsxDEV(T, { textAlign: "center", sx: { mt: 3 }, children: /* @__PURE__ */ s.jsxDEV(
-              Y,
+            i === "otp-error" && /* @__PURE__ */ a.jsxDEV(F, { textAlign: "center", sx: { mt: 3 }, children: /* @__PURE__ */ a.jsxDEV(
+              J,
               {
                 variant: "text",
                 onClick: A,
@@ -863,13 +967,13 @@ const jr = be.object({
               !1,
               {
                 fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                lineNumber: 277,
+                lineNumber: 344,
                 columnNumber: 8
               },
               void 0
             ) }, void 0, !1, {
               fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-              lineNumber: 276,
+              lineNumber: 343,
               columnNumber: 7
             }, void 0)
           ]
@@ -878,7 +982,7 @@ const jr = be.object({
         !0,
         {
           fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-          lineNumber: 215,
+          lineNumber: 282,
           columnNumber: 5
         },
         void 0
@@ -888,12 +992,12 @@ const jr = be.object({
     !1,
     {
       fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-      lineNumber: 191,
+      lineNumber: 258,
       columnNumber: 4
     },
     void 0
-  ) : /* @__PURE__ */ s.jsxDEV(
-    T,
+  ) : /* @__PURE__ */ a.jsxDEV(
+    F,
     {
       sx: {
         // Mobile: full screen with proper centering
@@ -904,7 +1008,10 @@ const jr = be.object({
         maxWidth: { xs: "100%", sm: "600px" },
         // Desktop: container with card styling
         mt: { xs: 0, sm: 4 },
-        boxShadow: { xs: "none", sm: "0 8px 32px rgba(0, 0, 0, 0.12)" },
+        boxShadow: {
+          xs: "none",
+          sm: "0 8px 32px rgba(0, 0, 0, 0.12)"
+        },
         borderRadius: { xs: 0, sm: 2 },
         border: { xs: "none", sm: "1px solid rgba(0, 0, 0, 0.08)" },
         background: n.backgroundColor,
@@ -914,8 +1021,8 @@ const jr = be.object({
         overflowX: "hidden",
         boxSizing: "border-box"
       },
-      children: /* @__PURE__ */ s.jsxDEV(
-        T,
+      children: /* @__PURE__ */ a.jsxDEV(
+        F,
         {
           sx: {
             p: { xs: 3, sm: 4 },
@@ -928,8 +1035,8 @@ const jr = be.object({
             boxSizing: "border-box"
           },
           children: [
-            /* @__PURE__ */ s.jsxDEV(T, { sx: { textAlign: "center", mb: 4 }, children: [
-              n.logo && /* @__PURE__ */ s.jsxDEV(T, { sx: { mb: 2 }, children: typeof n.logo == "string" ? /* @__PURE__ */ s.jsxDEV(
+            /* @__PURE__ */ a.jsxDEV(F, { sx: { textAlign: "center", mb: 4 }, children: [
+              n.logo && /* @__PURE__ */ a.jsxDEV(F, { sx: { mb: 2 }, children: typeof n.logo == "string" ? /* @__PURE__ */ a.jsxDEV(
                 "img",
                 {
                   src: n.logo,
@@ -944,17 +1051,17 @@ const jr = be.object({
                 !1,
                 {
                   fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                  lineNumber: 338,
+                  lineNumber: 408,
                   columnNumber: 9
                 },
                 void 0
               ) : n.logo }, void 0, !1, {
                 fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                lineNumber: 336,
+                lineNumber: 406,
                 columnNumber: 7
               }, void 0),
-              /* @__PURE__ */ s.jsxDEV(
-                H,
+              /* @__PURE__ */ a.jsxDEV(
+                re,
                 {
                   variant: "h4",
                   component: "h1",
@@ -970,13 +1077,13 @@ const jr = be.object({
                 !1,
                 {
                   fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                  lineNumber: 356,
+                  lineNumber: 426,
                   columnNumber: 6
                 },
                 void 0
               ),
-              n.tagline && /* @__PURE__ */ s.jsxDEV(
-                H,
+              n.tagline && /* @__PURE__ */ a.jsxDEV(
+                re,
                 {
                   variant: "body1",
                   sx: {
@@ -990,51 +1097,51 @@ const jr = be.object({
                 !1,
                 {
                   fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                  lineNumber: 372,
+                  lineNumber: 442,
                   columnNumber: 7
                 },
                 void 0
               )
             ] }, void 0, !0, {
               fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-              lineNumber: 334,
+              lineNumber: 404,
               columnNumber: 5
             }, void 0),
-            m && /* @__PURE__ */ s.jsxDEV(
-              Er,
+            R && /* @__PURE__ */ a.jsxDEV(
+              Lo,
               {
                 severity: "error",
                 sx: { mb: 3 },
-                onClose: () => b(null),
-                children: m.message
+                onClose: () => _(null),
+                children: R.message
               },
               void 0,
               !1,
               {
                 fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                lineNumber: 386,
+                lineNumber: 456,
                 columnNumber: 6
               },
               void 0
             ),
-            /* @__PURE__ */ s.jsxDEV(
-              T,
+            /* @__PURE__ */ a.jsxDEV(
+              F,
               {
                 component: "form",
-                onSubmit: h ? ee(re) : void 0,
-                children: /* @__PURE__ */ s.jsxDEV(Nr, { spacing: 3, children: [
-                  h && /* @__PURE__ */ s.jsxDEV(s.Fragment, { children: [
-                    /* @__PURE__ */ s.jsxDEV(
-                      We,
+                onSubmit: c ? q(le) : void 0,
+                children: /* @__PURE__ */ a.jsxDEV(So, { spacing: 3, children: [
+                  c && /* @__PURE__ */ a.jsxDEV(a.Fragment, { children: [
+                    /* @__PURE__ */ a.jsxDEV(
+                      Me,
                       {
-                        ...z("email"),
+                        ...h("email"),
                         fullWidth: !0,
                         label: "Email Address",
                         type: "email",
                         placeholder: "Enter your email",
-                        error: !!k.email,
-                        helperText: k.email?.message,
-                        disabled: l === "loading" || l === "google-loading",
+                        error: !!T.email,
+                        helperText: T.email?.message,
+                        disabled: i === "loading" || i === "google-loading",
                         sx: {
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1.4,
@@ -1054,22 +1161,22 @@ const jr = be.object({
                       !1,
                       {
                         fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                        lineNumber: 406,
+                        lineNumber: 476,
                         columnNumber: 9
                       },
                       void 0
                     ),
-                    /* @__PURE__ */ s.jsxDEV(
-                      We,
+                    /* @__PURE__ */ a.jsxDEV(
+                      Me,
                       {
-                        ...z("password"),
+                        ...h("password"),
                         fullWidth: !0,
                         label: "Password",
-                        type: R ? "text" : "password",
+                        type: W ? "text" : "password",
                         placeholder: "Enter your password",
-                        error: !!k.password,
-                        helperText: k.password?.message,
-                        disabled: l === "loading" || l === "google-loading",
+                        error: !!T.password,
+                        helperText: T.password?.message,
+                        disabled: i === "loading" || i === "google-loading",
                         sx: {
                           "& .MuiOutlinedInput-root": {
                             borderRadius: 1.4,
@@ -1086,14 +1193,14 @@ const jr = be.object({
                         },
                         slotProps: {
                           input: {
-                            endAdornment: /* @__PURE__ */ s.jsxDEV(
-                              Y,
+                            endAdornment: /* @__PURE__ */ a.jsxDEV(
+                              J,
                               {
                                 size: "small",
-                                onClick: () => Q(
-                                  !R
+                                onClick: () => G(
+                                  !W
                                 ),
-                                disabled: l === "loading" || l === "google-loading",
+                                disabled: i === "loading" || i === "google-loading",
                                 sx: {
                                   color: n.primaryColor,
                                   textTransform: "none",
@@ -1102,13 +1209,13 @@ const jr = be.object({
                                     backgroundColor: `${n.primaryColor}10`
                                   }
                                 },
-                                children: R ? "Hide" : "Show"
+                                children: W ? "Hide" : "Show"
                               },
                               void 0,
                               !1,
                               {
                                 fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                                lineNumber: 467,
+                                lineNumber: 537,
                                 columnNumber: 13
                               },
                               void 0
@@ -1120,19 +1227,19 @@ const jr = be.object({
                       !1,
                       {
                         fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                        lineNumber: 436,
+                        lineNumber: 506,
                         columnNumber: 9
                       },
                       void 0
                     ),
-                    /* @__PURE__ */ s.jsxDEV(
-                      Y,
+                    /* @__PURE__ */ a.jsxDEV(
+                      J,
                       {
                         type: "submit",
                         fullWidth: !0,
                         variant: "contained",
                         size: "large",
-                        disabled: l === "loading" || l === "google-loading",
+                        disabled: i === "loading" || i === "google-loading",
                         sx: {
                           py: 1.5,
                           backgroundColor: n.primaryColor,
@@ -1149,8 +1256,8 @@ const jr = be.object({
                             backgroundColor: `${n.primaryColor}60`
                           }
                         },
-                        children: l === "loading" ? /* @__PURE__ */ s.jsxDEV(
-                          $e,
+                        children: i === "loading" ? /* @__PURE__ */ a.jsxDEV(
+                          Ye,
                           {
                             size: 24,
                             color: "inherit"
@@ -1159,7 +1266,7 @@ const jr = be.object({
                           !1,
                           {
                             fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                            lineNumber: 527,
+                            lineNumber: 597,
                             columnNumber: 11
                           },
                           void 0
@@ -1169,19 +1276,19 @@ const jr = be.object({
                       !1,
                       {
                         fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                        lineNumber: 498,
+                        lineNumber: 568,
                         columnNumber: 9
                       },
                       void 0
                     )
                   ] }, void 0, !0, {
                     fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                    lineNumber: 405,
+                    lineNumber: 475,
                     columnNumber: 8
                   }, void 0),
-                  N && S && /* @__PURE__ */ s.jsxDEV(s.Fragment, { children: [
-                    h && /* @__PURE__ */ s.jsxDEV(kr, { sx: { my: 1 }, children: /* @__PURE__ */ s.jsxDEV(
-                      H,
+                  w && y && /* @__PURE__ */ a.jsxDEV(a.Fragment, { children: [
+                    c && /* @__PURE__ */ a.jsxDEV(To, { sx: { my: 1 }, children: /* @__PURE__ */ a.jsxDEV(
+                      re,
                       {
                         variant: "body2",
                         sx: {
@@ -1196,23 +1303,23 @@ const jr = be.object({
                       !1,
                       {
                         fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                        lineNumber: 542,
+                        lineNumber: 612,
                         columnNumber: 11
                       },
                       void 0
                     ) }, void 0, !1, {
                       fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                      lineNumber: 541,
+                      lineNumber: 611,
                       columnNumber: 10
                     }, void 0),
-                    /* @__PURE__ */ s.jsxDEV(
-                      Y,
+                    /* @__PURE__ */ a.jsxDEV(
+                      J,
                       {
                         fullWidth: !0,
                         variant: "outlined",
                         size: "large",
-                        startIcon: l === "google-loading" ? /* @__PURE__ */ s.jsxDEV(
-                          $e,
+                        startIcon: i === "google-loading" ? /* @__PURE__ */ a.jsxDEV(
+                          Ye,
                           {
                             size: 20,
                             color: "inherit"
@@ -1221,17 +1328,17 @@ const jr = be.object({
                           !1,
                           {
                             fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                            lineNumber: 562,
+                            lineNumber: 632,
                             columnNumber: 12
                           },
                           void 0
-                        ) : /* @__PURE__ */ s.jsxDEV(Cr, {}, void 0, !1, {
+                        ) : /* @__PURE__ */ a.jsxDEV(jo, {}, void 0, !1, {
                           fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                          lineNumber: 567,
+                          lineNumber: 637,
                           columnNumber: 12
                         }, void 0),
-                        onClick: oe,
-                        disabled: l === "loading" || l === "google-loading",
+                        onClick: X,
+                        disabled: i === "loading" || i === "google-loading",
                         sx: {
                           py: 1.5,
                           borderRadius: 1.4,
@@ -1267,24 +1374,24 @@ const jr = be.object({
                             color: n.textColor
                           }
                         },
-                        children: l === "google-loading" ? "Signing in..." : "Continue with Google"
+                        children: i === "google-loading" ? "Signing in..." : "Continue with Google"
                       },
                       void 0,
                       !1,
                       {
                         fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                        lineNumber: 556,
+                        lineNumber: 626,
                         columnNumber: 9
                       },
                       void 0
                     )
                   ] }, void 0, !0, {
                     fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                    lineNumber: 539,
+                    lineNumber: 609,
                     columnNumber: 8
                   }, void 0),
-                  l === "error" && /* @__PURE__ */ s.jsxDEV(
-                    Y,
+                  i === "error" && /* @__PURE__ */ a.jsxDEV(
+                    J,
                     {
                       fullWidth: !0,
                       variant: "text",
@@ -1304,14 +1411,14 @@ const jr = be.object({
                     !1,
                     {
                       fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                      lineNumber: 623,
+                      lineNumber: 693,
                       columnNumber: 8
                     },
                     void 0
                   )
                 ] }, void 0, !0, {
                   fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                  lineNumber: 403,
+                  lineNumber: 473,
                   columnNumber: 6
                 }, void 0)
               },
@@ -1319,7 +1426,7 @@ const jr = be.object({
               !1,
               {
                 fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-                lineNumber: 395,
+                lineNumber: 465,
                 columnNumber: 5
               },
               void 0
@@ -1330,7 +1437,7 @@ const jr = be.object({
         !0,
         {
           fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-          lineNumber: 321,
+          lineNumber: 391,
           columnNumber: 4
         },
         void 0
@@ -1340,12 +1447,27 @@ const jr = be.object({
     !1,
     {
       fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-      lineNumber: 300,
+      lineNumber: 367,
       columnNumber: 3
     },
     void 0
   );
+}, Ko = (g) => {
+  const { googleClientId: b, enableGoogleSignIn: C } = g;
+  return C && b ? /* @__PURE__ */ a.jsxDEV(Wo, { clientId: b, children: /* @__PURE__ */ a.jsxDEV(Be, { ...g }, void 0, !1, {
+    fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
+    lineNumber: 725,
+    columnNumber: 5
+  }, void 0) }, void 0, !1, {
+    fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
+    lineNumber: 724,
+    columnNumber: 4
+  }, void 0) : /* @__PURE__ */ a.jsxDEV(Be, { ...g }, void 0, !1, {
+    fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
+    lineNumber: 731,
+    columnNumber: 9
+  }, void 0);
 };
 export {
-  Wr as LumoraLogin
+  Ko as LumoraLogin
 };

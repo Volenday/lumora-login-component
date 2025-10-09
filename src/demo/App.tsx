@@ -14,7 +14,7 @@ import {
 	Alert,
 	Slider
 } from '@mui/material';
-import { LumoraLogin, BrandingConfig } from '../index';
+import { LumoraLogin, BrandingConfig, GoogleOAuthResponse } from '../index';
 
 // Create Material-UI theme for the demo
 const theme = createTheme({
@@ -29,7 +29,7 @@ const App: React.FC = () => {
 	const [enableLocalSignIn, setEnableLocalSignIn] = useState(true);
 	const [enableGoogleSignIn, setEnableGoogleSignIn] = useState(true);
 	const [googleClientId, setGoogleClientId] = useState(
-		'your-google-client-id'
+		'1077414399410-1k1hg3liscujlq0rlnkgjguh4iblt7f7.apps.googleusercontent.com'
 	);
 
 	// State for branding configuration
@@ -71,16 +71,24 @@ const App: React.FC = () => {
 	};
 
 	// Handle Google login simulation
-	const handleGoogleLogin = () => {
-		setLastAction('Google login initiated');
+	const handleGoogleLogin = (response: GoogleOAuthResponse) => {
+		setLastAction(
+			`Google login successful! Access token: ${response.access_token.substring(
+				0,
+				20
+			)}...`
+		);
 		setLoginAttempts(prev => prev + 1);
-		console.log('Google login initiated');
-		// In a real implementation, this would trigger the Google OAuth flow
+		console.log('Google login response:', response);
+		// In a real implementation, you would send the access token to your backend for verification
 	};
 
 	// Handle successful login
-	const handleLoginSuccess = (response: any) => {
-		setLastAction(`Login successful! Token: ${response.token}`);
+	const handleLoginSuccess = (response: unknown) => {
+		const responseData = response as { token?: string };
+		setLastAction(
+			`Login successful! Token: ${responseData.token || 'N/A'}`
+		);
 		console.log('Login successful:', response);
 	};
 
@@ -339,6 +347,8 @@ const App: React.FC = () => {
 							googleClientId={googleClientId || undefined}
 							enableLocalSignIn={enableLocalSignIn}
 							enableGoogleSignIn={enableGoogleSignIn}
+							enableRecaptcha={true}
+							recaptchaSiteKey="6Le2YeMrAAAAAGRMlDzqrI0aTtFeVMmNp7QpAREf"
 							branding={branding}
 						/>
 					</Box>
