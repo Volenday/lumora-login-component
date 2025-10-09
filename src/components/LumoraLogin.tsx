@@ -1,46 +1,25 @@
 import React, { useState, useEffect } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
-import {
-	Box,
-	TextField,
-	Button,
-	Typography,
-	Alert,
-	CircularProgress,
-	Divider,
-	Stack
-} from '@mui/material';
-import { Google as GoogleIcon } from '@mui/icons-material';
+import { SubmitHandler } from 'react-hook-form';
+import { Alert, Stack, Button } from '@mui/material';
 import { GoogleOAuthProvider, useGoogleLogin } from '@react-oauth/google';
-// Import the OTP component from the private package
-// Note: This requires proper GitHub Packages authentication
-// To set up authentication:
-// 1. Create a GitHub Personal Access Token with 'read:packages' permission
-// 2. Set the GITHUB_TOKEN environment variable: export GITHUB_TOKEN=your_token_here
-// 3. Run: npm install
-import { LumoraOTP } from '@volenday/lumora-otp-component';
 import {
 	LumoraLoginProps,
 	LoginFormData,
+	ForgetPasswordFormData,
 	LoginState,
 	ErrorState,
 	BrandingConfig,
 	GoogleOAuthResponse
 } from '../types';
 
-// Validation schema for login form
-const validationSchema = yup.object({
-	email: yup
-		.string()
-		.email('Please enter a valid email address')
-		.required('Email is required'),
-	password: yup
-		.string()
-		.min(6, 'Password must be at least 6 characters')
-		.required('Password is required')
-});
+// Import sub-components
+import BrandingHeader from './BrandingHeader';
+import LoginForm from './LoginForm';
+import GoogleSignInButton from './GoogleSignInButton';
+import ForgetPasswordForm from './ForgetPasswordForm';
+import OTPVerification from './OTPVerification';
+import ForgetPasswordSuccess from './ForgetPasswordSuccess';
+import LoginContainer from './LoginContainer';
 
 // Default branding configuration
 const getDefaultBranding = (): BrandingConfig => ({
@@ -60,28 +39,20 @@ const getBrandingConfig = (
 	...customBranding
 });
 
-// Internal component that uses the Google OAuth hook
-const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
-	onLocalLogin,
+// Component that handles Google OAuth functionality when enabled
+const GoogleOAuthHandler: React.FC<{
+	onGoogleLogin: (response: GoogleOAuthResponse) => void;
+	onLoginError: (error: Error) => void;
+	setLoginState: (state: LoginState) => void;
+	setError: (error: ErrorState | null) => void;
+	googleLoginRef: React.RefObject<(() => void) | null>;
+}> = ({
 	onGoogleLogin,
-	onLoginSuccess,
 	onLoginError,
-	enableRecaptcha = false,
-	recaptchaSiteKey,
-	googleClientId,
-	enableGoogleSignIn = true,
-	enableLocalSignIn = true,
-	branding
+	setLoginState,
+	setError,
+	googleLoginRef
 }) => {
-	// Component state management
-	const [loginState, setLoginState] = useState<LoginState>('idle');
-	const [error, setError] = useState<ErrorState | null>(null);
-	const [showPassword, setShowPassword] = useState(false);
-
-	// Get merged branding configuration
-	const brandConfig = getBrandingConfig(branding);
-
-	// Google OAuth login hook
 	const googleLogin = useGoogleLogin({
 		onSuccess: response => {
 			setLoginState('google-loading');
@@ -119,6 +90,39 @@ const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 		}
 	});
 
+	// Store the googleLogin function in the ref
+	React.useEffect(() => {
+		googleLoginRef.current = googleLogin;
+	}, [googleLogin, googleLoginRef]);
+
+	return null; // This component doesn't render anything, just provides the hook
+};
+
+// Internal component that uses the Google OAuth hook
+const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
+	onLocalLogin,
+	onGoogleLogin,
+	onLoginSuccess,
+	onLoginError,
+	onForgetPassword,
+	enableRecaptcha = false,
+	recaptchaSiteKey,
+	googleClientId,
+	enableGoogleSignIn = true,
+	enableLocalSignIn = true,
+	enableForgetPassword = true,
+	branding
+}) => {
+	// Component state management
+	const [loginState, setLoginState] = useState<LoginState>('idle');
+	const [error, setError] = useState<ErrorState | null>(null);
+
+	// Ref to store the Google login function
+	const googleLoginRef = React.useRef<(() => void) | null>(null);
+
+	// Get merged branding configuration
+	const brandConfig = getBrandingConfig(branding);
+
 	// Validate that at least one sign-in method is enabled
 	if (!enableLocalSignIn && !enableGoogleSignIn) {
 		throw new Error(
@@ -133,15 +137,14 @@ const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 		);
 	}
 
-	// Form setup with validation
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-		reset
-	} = useForm<LoginFormData>({
-		resolver: yupResolver(validationSchema)
-	});
+	// Form reset functions for sub-components
+	const reset = () => {
+		// Reset will be handled by sub-components
+	};
+
+	const resetForgetPassword = () => {
+		// Reset will be handled by sub-components
+	};
 
 	// Handle reCAPTCHA execution
 	const executeRecaptcha = (): Promise<string> => {
@@ -196,7 +199,9 @@ const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 
 	// Handle Google OAuth login
 	const handleGoogleLogin = () => {
-		googleLogin();
+		if (googleLoginRef.current) {
+			googleLoginRef.current();
+		}
 	};
 
 	// Handle OTP verification
@@ -241,6 +246,52 @@ const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 		reset();
 	};
 
+	// Handle forget password form submission
+	const handleForgetPassword: SubmitHandler<
+		ForgetPasswordFormData
+	> = async data => {
+		if (!onForgetPassword) {
+			setError({
+				message: 'Forget password functionality is not available',
+				type: 'forget-password'
+			});
+			return;
+		}
+
+		setLoginState('forget-password-loading');
+		setError(null);
+
+		try {
+			// Verify reCAPTCHA if enabled
+			if (enableRecaptcha) {
+				await verifyRecaptcha();
+			}
+
+			await onForgetPassword(data.email);
+			setLoginState('forget-password-success');
+		} catch (err) {
+			const error = err as Error;
+			setError({ message: error.message, type: 'forget-password' });
+			setLoginState('forget-password');
+			onLoginError(error);
+		}
+	};
+
+	// Handle navigate to forget password
+	const handleNavigateToForgetPassword = () => {
+		setError(null);
+		setLoginState('forget-password');
+		resetForgetPassword();
+	};
+
+	// Handle back to login from forget password
+	const handleBackToLogin = () => {
+		setError(null);
+		setLoginState('idle');
+		reset();
+		resetForgetPassword();
+	};
+
 	// Load reCAPTCHA script if enabled and site key is provided
 	useEffect(() => {
 		if (
@@ -259,462 +310,130 @@ const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 	// Render OTP verification screen
 	if (loginState === 'otp-required' || loginState === 'otp-error') {
 		return (
-			<Box
-				sx={{
-					// Mobile: full screen with proper centering
-					width: { xs: '100%', sm: 'auto' },
-					height: { xs: '100vh', sm: 'auto' },
-					minHeight: { xs: '100vh', sm: 'auto' },
-					margin: { xs: 0, sm: 'auto' },
-					maxWidth: { xs: '100%', sm: '600px' },
-					// Desktop: container with card styling
-					mt: { xs: 0, sm: 4 },
-					boxShadow: {
-						xs: 'none',
-						sm: '0 8px 32px rgba(0, 0, 0, 0.12)'
-					},
-					borderRadius: { xs: 0, sm: 2 },
-					border: { xs: 'none', sm: '1px solid rgba(0, 0, 0, 0.08)' },
-					background: brandConfig.backgroundColor,
-					display: 'flex',
-					flexDirection: 'column',
-					// Prevent horizontal overflow
-					overflowX: 'hidden',
-					boxSizing: 'border-box'
-				}}
-			>
-				<Box
-					sx={{
-						p: { xs: 3, sm: 4 },
-						flex: 1,
-						display: 'flex',
-						flexDirection: 'column',
-						// Ensure proper mobile centering and prevent overflow
-						width: '100%',
-						maxWidth: '100%',
-						boxSizing: 'border-box'
-					}}
-				>
-					{/* Logo and Branding Section for OTP */}
-					<Box sx={{ textAlign: 'center', mb: 3 }}>
-						{brandConfig.logo && (
-							<Box sx={{ mb: 2 }}>
-								{typeof brandConfig.logo === 'string' ? (
-									<img
-										src={brandConfig.logo}
-										alt={
-											brandConfig.companyName ||
-											'Company Logo'
-										}
-										style={{
-											height: brandConfig.logoHeight,
-											maxWidth: '100%',
-											objectFit: 'contain'
-										}}
-									/>
-								) : (
-									brandConfig.logo
-								)}
-							</Box>
-						)}
+			<LoginContainer brandConfig={brandConfig}>
+				<OTPVerification
+					brandConfig={brandConfig}
+					loginState={loginState}
+					onVerify={handleOTPVerify}
+					onVerifySuccess={handleOTPSuccess}
+					onVerifyError={handleOTPError}
+					onResend={handleOTPResend}
+					onBackToSignIn={handleBackToSignIn}
+				/>
+			</LoginContainer>
+		);
+	}
 
-						<Typography
-							variant="h5"
-							component="h1"
-							sx={{
-								color: brandConfig.textColor,
-								fontWeight: 600,
-								fontSize: { xs: '1.5rem', sm: '1.75rem' }
-							}}
-						>
-							Verify Your Identity
-						</Typography>
-					</Box>
+	// Render forget password success screen
+	if (loginState === 'forget-password-success') {
+		return (
+			<LoginContainer brandConfig={brandConfig}>
+				<ForgetPasswordSuccess
+					brandConfig={brandConfig}
+					onBackToLogin={handleBackToLogin}
+				/>
+			</LoginContainer>
+		);
+	}
 
-					<LumoraOTP
-						onVerify={handleOTPVerify}
-						onVerifySuccess={handleOTPSuccess}
-						onVerifyError={handleOTPError}
-						onResend={handleOTPResend}
-						instructionText="Please enter the 6-digit code sent to your email"
-						showResend={true}
-						resendCooldown={60}
-						expirationTime={300}
-						showExpirationTimer={true}
-					/>
-
-					{loginState === 'otp-error' && (
-						<Box textAlign="center" sx={{ mt: 3 }}>
-							<Button
-								variant="text"
-								onClick={handleBackToSignIn}
-								sx={{
-									textTransform: 'none',
-									color: brandConfig.primaryColor,
-									fontWeight: 500,
-									'&:hover': {
-										backgroundColor: `${brandConfig.primaryColor}08`
-									}
-								}}
-							>
-								Back to Sign In
-							</Button>
-						</Box>
-					)}
-				</Box>
-			</Box>
+	// Render forget password form
+	if (
+		loginState === 'forget-password' ||
+		loginState === 'forget-password-loading'
+	) {
+		return (
+			<LoginContainer brandConfig={brandConfig}>
+				<BrandingHeader brandConfig={brandConfig} />
+				<ForgetPasswordForm
+					brandConfig={brandConfig}
+					loginState={loginState}
+					error={error}
+					onSubmit={handleForgetPassword}
+					onBackToLogin={handleBackToLogin}
+					onCloseError={() => setError(null)}
+				/>
+			</LoginContainer>
 		);
 	}
 
 	// Render main login form
 	return (
-		<Box
-			sx={{
-				// Mobile: full screen with proper centering
-				width: { xs: '100%', sm: 'auto' },
-				height: { xs: '100vh', sm: 'auto' },
-				minHeight: { xs: '100vh', sm: 'auto' },
-				margin: { xs: 0, sm: 'auto' },
-				maxWidth: { xs: '100%', sm: '600px' },
-				// Desktop: container with card styling
-				mt: { xs: 0, sm: 4 },
-				boxShadow: {
-					xs: 'none',
-					sm: '0 8px 32px rgba(0, 0, 0, 0.12)'
-				},
-				borderRadius: { xs: 0, sm: 2 },
-				border: { xs: 'none', sm: '1px solid rgba(0, 0, 0, 0.08)' },
-				background: brandConfig.backgroundColor,
-				display: 'flex',
-				flexDirection: 'column',
-				// Prevent horizontal overflow
-				overflowX: 'hidden',
-				boxSizing: 'border-box'
-			}}
-		>
-			<Box
-				sx={{
-					p: { xs: 3, sm: 4 },
-					flex: 1,
-					display: 'flex',
-					flexDirection: 'column',
-					// Ensure proper mobile centering and prevent overflow
-					width: '100%',
-					maxWidth: '100%',
-					boxSizing: 'border-box'
-				}}
-			>
-				{/* Logo and Branding Section */}
-				<Box sx={{ textAlign: 'center', mb: 4 }}>
-					{brandConfig.logo && (
-						<Box sx={{ mb: 2 }}>
-							{typeof brandConfig.logo === 'string' ? (
-								<img
-									src={brandConfig.logo}
-									alt={
-										brandConfig.companyName ||
-										'Company Logo'
-									}
-									style={{
-										height: brandConfig.logoHeight,
-										maxWidth: '100%',
-										objectFit: 'contain'
-									}}
-								/>
-							) : (
-								brandConfig.logo
-							)}
-						</Box>
-					)}
+		<LoginContainer brandConfig={brandConfig}>
+			<BrandingHeader
+				brandConfig={brandConfig}
+				title={
+					brandConfig.companyName
+						? `Welcome to ${brandConfig.companyName}`
+						: 'Sign In'
+				}
+				subtitle={brandConfig.tagline}
+			/>
 
-					<Typography
-						variant="h4"
-						component="h1"
-						sx={{
-							mb: 1,
-							color: brandConfig.textColor,
-							fontWeight: 600,
-							fontSize: { xs: '1.75rem', sm: '2rem' }
-						}}
-					>
-						{brandConfig.companyName
-							? `Welcome to ${brandConfig.companyName}`
-							: 'Sign In'}
-					</Typography>
+			{error && (
+				<Alert
+					severity="error"
+					sx={{ mb: 3 }}
+					onClose={() => setError(null)}
+				>
+					{error.message}
+				</Alert>
+			)}
 
-					{brandConfig.tagline && (
-						<Typography
-							variant="body1"
-							sx={{
-								color: brandConfig.textColor,
-								opacity: 0.7,
-								fontSize: '0.95rem'
-							}}
-						>
-							{brandConfig.tagline}
-						</Typography>
-					)}
-				</Box>
-
-				{error && (
-					<Alert
-						severity="error"
-						sx={{ mb: 3 }}
-						onClose={() => setError(null)}
-					>
-						{error.message}
-					</Alert>
+			<Stack spacing={3}>
+				{enableLocalSignIn && (
+					<LoginForm
+						brandConfig={brandConfig}
+						loginState={loginState}
+						onSubmit={handleLocalLogin}
+						onForgetPassword={
+							onForgetPassword
+								? handleNavigateToForgetPassword
+								: undefined
+						}
+						enableForgetPassword={enableForgetPassword}
+					/>
 				)}
 
-				<Box
-					component="form"
-					onSubmit={
-						enableLocalSignIn
-							? handleSubmit(handleLocalLogin)
-							: undefined
-					}
-				>
-					<Stack spacing={3}>
-						{enableLocalSignIn && (
-							<>
-								<TextField
-									{...register('email')}
-									fullWidth
-									label="Email Address"
-									type="email"
-									placeholder="Enter your email"
-									error={!!errors.email}
-									helperText={errors.email?.message}
-									disabled={
-										loginState === 'loading' ||
-										loginState === 'google-loading'
-									}
-									sx={{
-										'& .MuiOutlinedInput-root': {
-											borderRadius: 1.4,
-											'&:hover fieldset': {
-												borderColor:
-													brandConfig.primaryColor
-											},
-											'&.Mui-focused fieldset': {
-												borderColor:
-													brandConfig.primaryColor
-											}
-										},
-										'& .MuiInputLabel-root.Mui-focused': {
-											color: brandConfig.primaryColor
-										}
-									}}
-								/>
+				{enableGoogleSignIn && googleClientId && (
+					<GoogleSignInButton
+						brandConfig={brandConfig}
+						loginState={loginState}
+						onClick={handleGoogleLogin}
+						showDivider={enableLocalSignIn}
+					/>
+				)}
 
-								<TextField
-									{...register('password')}
-									fullWidth
-									label="Password"
-									type={showPassword ? 'text' : 'password'}
-									placeholder="Enter your password"
-									error={!!errors.password}
-									helperText={errors.password?.message}
-									disabled={
-										loginState === 'loading' ||
-										loginState === 'google-loading'
-									}
-									sx={{
-										'& .MuiOutlinedInput-root': {
-											borderRadius: 1.4,
-											'&:hover fieldset': {
-												borderColor:
-													brandConfig.primaryColor
-											},
-											'&.Mui-focused fieldset': {
-												borderColor:
-													brandConfig.primaryColor
-											}
-										},
-										'& .MuiInputLabel-root.Mui-focused': {
-											color: brandConfig.primaryColor
-										}
-									}}
-									slotProps={{
-										input: {
-											endAdornment: (
-												<Button
-													size="small"
-													onClick={() =>
-														setShowPassword(
-															!showPassword
-														)
-													}
-													disabled={
-														loginState ===
-															'loading' ||
-														loginState ===
-															'google-loading'
-													}
-													sx={{
-														color: brandConfig.primaryColor,
-														textTransform: 'none',
-														fontWeight: 500,
-														'&:hover': {
-															backgroundColor: `${brandConfig.primaryColor}10`
-														}
-													}}
-												>
-													{showPassword
-														? 'Hide'
-														: 'Show'}
-												</Button>
-											)
-										}
-									}}
-								/>
+				{loginState === 'error' && (
+					<Button
+						fullWidth
+						variant="text"
+						onClick={handleBackToSignIn}
+						sx={{
+							mt: 1,
+							color: brandConfig.primaryColor,
+							textTransform: 'none',
+							fontWeight: 500,
+							'&:hover': {
+								backgroundColor: `${brandConfig.primaryColor}08`
+							}
+						}}
+					>
+						Try Again
+					</Button>
+				)}
+			</Stack>
 
-								<Button
-									type="submit"
-									fullWidth
-									variant="contained"
-									size="large"
-									disabled={
-										loginState === 'loading' ||
-										loginState === 'google-loading'
-									}
-									sx={{
-										py: 1.5,
-										backgroundColor:
-											brandConfig.primaryColor,
-										borderRadius: 1.4,
-										textTransform: 'none',
-										fontWeight: 600,
-										fontSize: '1rem',
-										boxShadow: `0 4px 12px ${brandConfig.primaryColor}30`,
-										'&:hover': {
-											backgroundColor:
-												brandConfig.secondaryColor,
-											boxShadow: `0 6px 16px ${brandConfig.primaryColor}40`
-										},
-										'&:disabled': {
-											backgroundColor: `${brandConfig.primaryColor}60`
-										}
-									}}
-								>
-									{loginState === 'loading' ? (
-										<CircularProgress
-											size={24}
-											color="inherit"
-										/>
-									) : (
-										'Sign In'
-									)}
-								</Button>
-							</>
-						)}
-
-						{enableGoogleSignIn && googleClientId && (
-							<>
-								{enableLocalSignIn && (
-									<Divider sx={{ my: 1 }}>
-										<Typography
-											variant="body2"
-											sx={{
-												color: brandConfig.textColor,
-												opacity: 0.6,
-												px: 2,
-												fontWeight: 500
-											}}
-										>
-											OR
-										</Typography>
-									</Divider>
-								)}
-
-								<Button
-									fullWidth
-									variant="outlined"
-									size="large"
-									startIcon={
-										loginState === 'google-loading' ? (
-											<CircularProgress
-												size={20}
-												color="inherit"
-											/>
-										) : (
-											<GoogleIcon />
-										)
-									}
-									onClick={handleGoogleLogin}
-									disabled={
-										loginState === 'loading' ||
-										loginState === 'google-loading'
-									}
-									sx={{
-										py: 1.5,
-										borderRadius: 1.4,
-										textTransform: 'none',
-										fontWeight: 500,
-										fontSize: '1rem',
-										borderColor:
-											brandConfig.textColor + '30',
-										color: brandConfig.textColor,
-										'&:hover': {
-											borderColor:
-												brandConfig.primaryColor,
-											backgroundColor: `${brandConfig.primaryColor}08`,
-											color: brandConfig.textColor // Ensure text color stays consistent
-										},
-										'&:active': {
-											borderColor:
-												brandConfig.primaryColor,
-											backgroundColor: `${brandConfig.primaryColor}12`,
-											color: brandConfig.textColor // Ensure text color stays consistent on click
-										},
-										'&:disabled': {
-											borderColor:
-												brandConfig.textColor + '20',
-											color: brandConfig.textColor + '60'
-										},
-										// Prevent color changes on focus
-										'&:focus': {
-											borderColor:
-												brandConfig.textColor + '30',
-											color: brandConfig.textColor
-										},
-										// Ensure consistent styling across all states
-										'&.MuiButton-root': {
-											borderColor:
-												brandConfig.textColor + '30',
-											color: brandConfig.textColor
-										}
-									}}
-								>
-									{loginState === 'google-loading'
-										? 'Signing in...'
-										: 'Continue with Google'}
-								</Button>
-							</>
-						)}
-
-						{loginState === 'error' && (
-							<Button
-								fullWidth
-								variant="text"
-								onClick={handleBackToSignIn}
-								sx={{
-									mt: 1,
-									color: brandConfig.primaryColor,
-									textTransform: 'none',
-									fontWeight: 500,
-									'&:hover': {
-										backgroundColor: `${brandConfig.primaryColor}08`
-									}
-								}}
-							>
-								Try Again
-							</Button>
-						)}
-					</Stack>
-				</Box>
-			</Box>
-		</Box>
+			{/* Google OAuth Handler - only render when Google sign-in is enabled */}
+			{enableGoogleSignIn && googleClientId && (
+				<GoogleOAuthHandler
+					onGoogleLogin={onGoogleLogin}
+					onLoginError={onLoginError}
+					setLoginState={setLoginState}
+					setError={setError}
+					googleLoginRef={googleLoginRef}
+				/>
+			)}
+		</LoginContainer>
 	);
 };
 

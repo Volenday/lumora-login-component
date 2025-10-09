@@ -7,6 +7,10 @@ export interface BrandingConfig {
 	textColor?: string;
 	companyName?: string;
 	tagline?: string;
+	forgetPasswordTitle?: string;
+	forgetPasswordDescription?: string;
+	forgetPasswordSuccessTitle?: string;
+	forgetPasswordSuccessDescription?: string;
 }
 
 export interface GoogleOAuthResponse {
@@ -21,17 +25,23 @@ export interface LumoraLoginProps {
 	onGoogleLogin: (response: GoogleOAuthResponse) => void;
 	onLoginSuccess: (response: unknown) => void;
 	onLoginError: (error: Error) => void;
+	onForgetPassword?: (email: string) => Promise<unknown>;
 	enableRecaptcha?: boolean;
 	recaptchaSiteKey?: string;
 	googleClientId?: string;
 	enableGoogleSignIn?: boolean;
 	enableLocalSignIn?: boolean;
+	enableForgetPassword?: boolean;
 	branding?: BrandingConfig;
 }
 
 export interface LoginFormData {
 	email: string;
 	password: string;
+}
+
+export interface ForgetPasswordFormData {
+	email: string;
 }
 
 export type LoginState =
@@ -41,11 +51,20 @@ export type LoginState =
 	| 'success'
 	| 'error'
 	| 'otp-required'
-	| 'otp-error';
+	| 'otp-error'
+	| 'forget-password'
+	| 'forget-password-loading'
+	| 'forget-password-success';
 
 export interface ErrorState {
 	message: string;
-	type: 'local' | 'google' | 'otp' | 'network' | 'recaptcha';
+	type:
+		| 'local'
+		| 'google'
+		| 'otp'
+		| 'network'
+		| 'recaptcha'
+		| 'forget-password';
 }
 
 // Global reCAPTCHA types

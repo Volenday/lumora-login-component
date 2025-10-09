@@ -42,9 +42,11 @@ const createMockProps = (
 	onGoogleLogin: jest.fn(),
 	onLoginSuccess: jest.fn(),
 	onLoginError: jest.fn(),
+	onForgetPassword: jest.fn().mockResolvedValue({ success: true }),
 	googleClientId: 'test-google-client-id',
 	enableGoogleSignIn: true,
 	enableLocalSignIn: true,
+	enableForgetPassword: true,
 	...overrides
 });
 
@@ -689,6 +691,351 @@ describe('LumoraLogin Component', () => {
 			expect(emailInput).toBeDisabled();
 			expect(passwordInput).toBeDisabled();
 			expect(submitButton).toBeDisabled();
+		});
+	});
+
+	describe('Forget Password Flow', () => {
+		it('should show forget password link when enabled', () => {
+			const props = createMockProps({
+				enableForgetPassword: true,
+				onForgetPassword: jest.fn()
+			});
+			renderWithTheme(props);
+
+			expect(
+				screen.getByRole('button', { name: 'Forgot Password?' })
+			).toBeInTheDocument();
+		});
+
+		it('should not show forget password link when disabled', () => {
+			const props = createMockProps({
+				enableForgetPassword: false
+			});
+			renderWithTheme(props);
+
+			expect(
+				screen.queryByRole('button', { name: 'Forgot Password?' })
+			).not.toBeInTheDocument();
+		});
+
+		it('should not show forget password link when onForgetPassword is not provided', () => {
+			const props = createMockProps({
+				enableForgetPassword: true,
+				onForgetPassword: undefined
+			});
+			renderWithTheme(props);
+
+			expect(
+				screen.queryByRole('button', { name: 'Forgot Password?' })
+			).not.toBeInTheDocument();
+		});
+
+		it('should navigate to forget password form when link is clicked', async () => {
+			const user = userEvent.setup();
+			const props = createMockProps({
+				enableForgetPassword: true,
+				onForgetPassword: jest.fn()
+			});
+			renderWithTheme(props);
+
+			const forgetPasswordLink = screen.getByRole('button', {
+				name: 'Forgot Password?'
+			});
+			await user.click(forgetPasswordLink);
+
+			expect(
+				screen.getByRole('heading', { name: 'Reset Password' })
+			).toBeInTheDocument();
+			expect(
+				screen.getByText(
+					'Enter your email address and we will send you a link to reset your password.'
+				)
+			).toBeInTheDocument();
+		});
+
+		it('should show forget password form with email input', async () => {
+			const user = userEvent.setup();
+			const props = createMockProps({
+				enableForgetPassword: true,
+				onForgetPassword: jest.fn()
+			});
+			renderWithTheme(props);
+
+			const forgetPasswordLink = screen.getByRole('button', {
+				name: 'Forgot Password?'
+			});
+			await user.click(forgetPasswordLink);
+
+			expect(screen.getByLabelText('Email Address')).toBeInTheDocument();
+			expect(
+				screen.getByRole('button', { name: 'Send Reset Link' })
+			).toBeInTheDocument();
+			expect(
+				screen.getByRole('button', { name: 'Back to Sign In' })
+			).toBeInTheDocument();
+		});
+
+		it('should validate forget password form submission', async () => {
+			const user = userEvent.setup();
+			const props = createMockProps({
+				enableForgetPassword: true,
+				onForgetPassword: jest.fn()
+			});
+			renderWithTheme(props);
+
+			// Navigate to forget password form
+			const forgetPasswordLink = screen.getByRole('button', {
+				name: 'Forgot Password?'
+			});
+			await user.click(forgetPasswordLink);
+
+			// Submit empty form
+			const submitButton = screen.getByRole('button', {
+				name: 'Send Reset Link'
+			});
+			await user.click(submitButton);
+
+			await waitFor(() => {
+				expect(
+					screen.getByText('Email is required')
+				).toBeInTheDocument();
+			});
+		});
+
+		it('should call onForgetPassword with correct email', async () => {
+			const user = userEvent.setup();
+			const mockOnForgetPassword = jest
+				.fn()
+				.mockResolvedValue({ success: true });
+			const props = createMockProps({
+				enableForgetPassword: true,
+				onForgetPassword: mockOnForgetPassword
+			});
+			renderWithTheme(props);
+
+			// Navigate to forget password form
+			const forgetPasswordLink = screen.getByRole('button', {
+				name: 'Forgot Password?'
+			});
+			await user.click(forgetPasswordLink);
+
+			// Fill and submit form
+			const emailInput = screen.getByLabelText('Email Address');
+			const submitButton = screen.getByRole('button', {
+				name: 'Send Reset Link'
+			});
+
+			await user.type(emailInput, 'test@example.com');
+			await user.click(submitButton);
+
+			await waitFor(() => {
+				expect(mockOnForgetPassword).toHaveBeenCalledWith(
+					'test@example.com'
+				);
+			});
+		});
+
+		it('should show loading state during forget password submission', async () => {
+			const user = userEvent.setup();
+			const mockOnForgetPassword = jest
+				.fn()
+				.mockImplementation(() => createDelayedPromise(100));
+			const props = createMockProps({
+				enableForgetPassword: true,
+				onForgetPassword: mockOnForgetPassword
+			});
+			renderWithTheme(props);
+
+			// Navigate to forget password form
+			const forgetPasswordLink = screen.getByRole('button', {
+				name: 'Forgot Password?'
+			});
+			await user.click(forgetPasswordLink);
+
+			// Fill and submit form
+			const emailInput = screen.getByLabelText('Email Address');
+			const submitButton = screen.getByRole('button', {
+				name: 'Send Reset Link'
+			});
+
+			await user.type(emailInput, 'test@example.com');
+			await user.click(submitButton);
+
+			// Check for loading state
+			expect(screen.getByRole('progressbar')).toBeInTheDocument();
+			expect(submitButton).toBeDisabled();
+		});
+
+		it('should show success message after successful forget password submission', async () => {
+			const user = userEvent.setup();
+			const mockOnForgetPassword = jest
+				.fn()
+				.mockResolvedValue({ success: true });
+			const props = createMockProps({
+				enableForgetPassword: true,
+				onForgetPassword: mockOnForgetPassword
+			});
+			renderWithTheme(props);
+
+			// Navigate to forget password form
+			const forgetPasswordLink = screen.getByRole('button', {
+				name: 'Forgot Password?'
+			});
+			await user.click(forgetPasswordLink);
+
+			// Fill and submit form
+			const emailInput = screen.getByLabelText('Email Address');
+			const submitButton = screen.getByRole('button', {
+				name: 'Send Reset Link'
+			});
+
+			await user.type(emailInput, 'test@example.com');
+			await user.click(submitButton);
+
+			await waitFor(() => {
+				expect(
+					screen.getByRole('heading', { name: 'Check Your Email' })
+				).toBeInTheDocument();
+				expect(
+					screen.getByText(
+						'We have sent you a password reset link. Please check your email and follow the instructions to reset your password.'
+					)
+				).toBeInTheDocument();
+			});
+		});
+
+		it('should handle forget password error and show error message', async () => {
+			const user = userEvent.setup();
+			const mockOnForgetPassword = jest
+				.fn()
+				.mockRejectedValue(new Error('Email not found'));
+			const mockOnLoginError = jest.fn();
+			const props = createMockProps({
+				enableForgetPassword: true,
+				onForgetPassword: mockOnForgetPassword,
+				onLoginError: mockOnLoginError
+			});
+			renderWithTheme(props);
+
+			// Navigate to forget password form
+			const forgetPasswordLink = screen.getByRole('button', {
+				name: 'Forgot Password?'
+			});
+			await user.click(forgetPasswordLink);
+
+			// Fill and submit form
+			const emailInput = screen.getByLabelText('Email Address');
+			const submitButton = screen.getByRole('button', {
+				name: 'Send Reset Link'
+			});
+
+			await user.type(emailInput, 'test@example.com');
+			await user.click(submitButton);
+
+			await waitFor(() => {
+				expect(screen.getByText('Email not found')).toBeInTheDocument();
+				expect(mockOnLoginError).toHaveBeenCalledWith(
+					expect.any(Error)
+				);
+			});
+		});
+
+		it('should navigate back to login from forget password form', async () => {
+			const user = userEvent.setup();
+			const props = createMockProps({
+				enableForgetPassword: true,
+				onForgetPassword: jest.fn()
+			});
+			renderWithTheme(props);
+
+			// Navigate to forget password form
+			const forgetPasswordLink = screen.getByRole('button', {
+				name: 'Forgot Password?'
+			});
+			await user.click(forgetPasswordLink);
+
+			// Click back to login
+			const backButton = screen.getByRole('button', {
+				name: 'Back to Sign In'
+			});
+			await user.click(backButton);
+
+			expect(
+				screen.getByRole('heading', { name: 'Sign In' })
+			).toBeInTheDocument();
+		});
+
+		it('should navigate back to login from forget password success screen', async () => {
+			const user = userEvent.setup();
+			const mockOnForgetPassword = jest
+				.fn()
+				.mockResolvedValue({ success: true });
+			const props = createMockProps({
+				enableForgetPassword: true,
+				onForgetPassword: mockOnForgetPassword
+			});
+			renderWithTheme(props);
+
+			// Navigate to forget password form and submit
+			const forgetPasswordLink = screen.getByRole('button', {
+				name: 'Forgot Password?'
+			});
+			await user.click(forgetPasswordLink);
+
+			const emailInput = screen.getByLabelText('Email Address');
+			const submitButton = screen.getByRole('button', {
+				name: 'Send Reset Link'
+			});
+
+			await user.type(emailInput, 'test@example.com');
+			await user.click(submitButton);
+
+			// Wait for success screen
+			await waitFor(() => {
+				expect(
+					screen.getByRole('heading', { name: 'Check Your Email' })
+				).toBeInTheDocument();
+			});
+
+			// Click back to login
+			const backButton = screen.getByRole('button', {
+				name: 'Back to Sign In'
+			});
+			await user.click(backButton);
+
+			expect(
+				screen.getByRole('heading', { name: 'Sign In' })
+			).toBeInTheDocument();
+		});
+
+		it('should disable forget password link during loading states', async () => {
+			const user = userEvent.setup();
+			const mockOnLocalLogin = jest
+				.fn()
+				.mockImplementation(() => createDelayedPromise(100));
+			const props = createMockProps({
+				enableForgetPassword: true,
+				onForgetPassword: jest.fn(),
+				onLocalLogin: mockOnLocalLogin
+			});
+			renderWithTheme(props);
+
+			// Start login process
+			const emailInput = screen.getByLabelText('Email Address');
+			const passwordInput = screen.getByLabelText('Password');
+			const submitButton = screen.getByRole('button', {
+				name: 'Sign In'
+			});
+
+			await user.type(emailInput, 'test@example.com');
+			await user.type(passwordInput, 'password123');
+			await user.click(submitButton);
+
+			// Check that forget password link is disabled during loading
+			const forgetPasswordLink = screen.getByRole('button', {
+				name: 'Forgot Password?'
+			});
+			expect(forgetPasswordLink).toBeDisabled();
 		});
 	});
 });

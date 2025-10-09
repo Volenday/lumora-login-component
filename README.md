@@ -1,11 +1,12 @@
-# LumoraLogin Component v1.0.2
+# LumoraLogin Component v1.0.3
 
-A reusable React TypeScript login component with local and Google OAuth authentication, 2FA support, and responsive design.
+A reusable React TypeScript login component with local and Google OAuth authentication, 2FA support, forget password functionality, and responsive design.
 
 ## Features
 
 -   **Local Login**: Email/password authentication with validation
 -   **Google OAuth**: Integration with Google Sign-In
+-   **Forget Password**: Built-in password reset functionality with email verification
 -   **Two-Factor Authentication**: Built-in 2FA support using @volenday/lumora-otp-component
 -   **Responsive Design**: Mobile-first design using MUI breakpoints
 -   **Form Validation**: Powered by react-hook-form and Yup
@@ -128,6 +129,21 @@ const App = () => {
 		console.error('Login failed:', error);
 	};
 
+	const handleForgetPassword = async (email: string) => {
+		// Your forget password logic here
+		const response = await fetch('/api/forget-password', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ email })
+		});
+
+		if (!response.ok) {
+			throw new Error('Failed to send reset email');
+		}
+
+		return response.json();
+	};
+
 	return (
 		<ThemeProvider theme={theme}>
 			<LumoraLogin
@@ -135,9 +151,11 @@ const App = () => {
 				onGoogleLogin={handleGoogleLogin}
 				onLoginSuccess={handleLoginSuccess}
 				onLoginError={handleLoginError}
+				onForgetPassword={handleForgetPassword}
 				googleClientId="your-google-client-id"
 				enableLocalSignIn={true}
 				enableGoogleSignIn={true}
+				enableForgetPassword={true}
 			/>
 		</ThemeProvider>
 	);
@@ -183,6 +201,68 @@ The component supports flexible configuration of sign-in methods through the `en
 
 **Note**: At least one sign-in method must be enabled. The component will throw an error if both are disabled.
 
+## Forget Password Functionality
+
+The component includes built-in forget password functionality that allows users to request a password reset via email.
+
+### Basic Forget Password Setup
+
+```tsx
+<LumoraLogin
+	onForgetPassword={handleForgetPassword}
+	enableForgetPassword={true}
+	// ... other props
+/>
+```
+
+### Forget Password Configuration
+
+-   **`onForgetPassword`**: Callback function that handles the password reset request
+-   **`enableForgetPassword`**: Enable/disable the forget password functionality (default: `true`)
+-   The forget password link only appears when both `enableForgetPassword` is `true` and `onForgetPassword` is provided
+-   Users can navigate between login and forget password screens seamlessly
+
+### Forget Password Flow
+
+1. **User clicks "Forgot Password?" link** on the login form
+2. **Forget password form appears** with email input field
+3. **User enters email and submits** the form
+4. **Loading state shows** while processing the request
+5. **Success screen displays** confirmation that reset email was sent
+6. **User can return to login** using the "Back to Sign In" button
+
+### Example Implementation
+
+```tsx
+const handleForgetPassword = async (email: string) => {
+	try {
+		const response = await fetch('/api/forget-password', {
+			method: 'POST',
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ email })
+		});
+
+		if (!response.ok) {
+			const error = await response.json();
+			throw new Error(error.message || 'Failed to send reset email');
+		}
+
+		return await response.json();
+	} catch (error) {
+		throw new Error('Network error. Please try again.');
+	}
+};
+```
+
+### Disabling Forget Password
+
+```tsx
+<LumoraLogin
+	enableForgetPassword={false}
+	// ... other props
+/>
+```
+
 ## reCAPTCHA Integration
 
 The component supports Google reCAPTCHA v3 integration for enhanced security:
@@ -219,18 +299,20 @@ The component supports Google reCAPTCHA v3 integration for enhanced security:
 
 ## Props
 
-| Prop                 | Type                                                | Required | Default | Description                                                  |
-| -------------------- | --------------------------------------------------- | -------- | ------- | ------------------------------------------------------------ |
-| `onLocalLogin`       | `(email: string, password: string) => Promise<any>` | ✅       | -       | Callback for local email/password login                      |
-| `onGoogleLogin`      | `(response: GoogleOAuthResponse) => void`           | ✅       | -       | Callback for Google OAuth login with response object         |
-| `onLoginSuccess`     | `(response: any) => void`                           | ✅       | -       | Callback for successful login                                |
-| `onLoginError`       | `(error: Error) => void`                            | ✅       | -       | Callback for login errors                                    |
-| `enableRecaptcha`    | `boolean`                                           | ❌       | `false` | Enable/disable reCAPTCHA verification                        |
-| `recaptchaSiteKey`   | `string`                                            | ❌       | -       | reCAPTCHA site key (required when enableRecaptcha is true)   |
-| `googleClientId`     | `string`                                            | ❌       | -       | Google OAuth client ID (hides Google button if not provided) |
-| `enableLocalSignIn`  | `boolean`                                           | ❌       | `true`  | Enable/disable local email/password sign-in                  |
-| `enableGoogleSignIn` | `boolean`                                           | ❌       | `true`  | Enable/disable Google OAuth sign-in                          |
-| `branding`           | `BrandingConfig`                                    | ❌       | -       | Custom branding configuration for the component              |
+| Prop                   | Type                                                | Required | Default | Description                                                  |
+| ---------------------- | --------------------------------------------------- | -------- | ------- | ------------------------------------------------------------ |
+| `onLocalLogin`         | `(email: string, password: string) => Promise<any>` | ✅       | -       | Callback for local email/password login                      |
+| `onGoogleLogin`        | `(response: GoogleOAuthResponse) => void`           | ✅       | -       | Callback for Google OAuth login with response object         |
+| `onLoginSuccess`       | `(response: any) => void`                           | ✅       | -       | Callback for successful login                                |
+| `onLoginError`         | `(error: Error) => void`                            | ✅       | -       | Callback for login errors                                    |
+| `onForgetPassword`     | `(email: string) => Promise<any>`                   | ❌       | -       | Callback for forget password functionality                   |
+| `enableRecaptcha`      | `boolean`                                           | ❌       | `false` | Enable/disable reCAPTCHA verification                        |
+| `recaptchaSiteKey`     | `string`                                            | ❌       | -       | reCAPTCHA site key (required when enableRecaptcha is true)   |
+| `googleClientId`       | `string`                                            | ❌       | -       | Google OAuth client ID (hides Google button if not provided) |
+| `enableLocalSignIn`    | `boolean`                                           | ❌       | `true`  | Enable/disable local email/password sign-in                  |
+| `enableGoogleSignIn`   | `boolean`                                           | ❌       | `true`  | Enable/disable Google OAuth sign-in                          |
+| `enableForgetPassword` | `boolean`                                           | ❌       | `true`  | Enable/disable forget password functionality                 |
+| `branding`             | `BrandingConfig`                                    | ❌       | -       | Custom branding configuration for the component              |
 
 ## TypeScript Interfaces
 
@@ -254,7 +336,13 @@ Error states are categorized by type for better error handling:
 ```typescript
 interface ErrorState {
 	message: string;
-	type: 'local' | 'google' | 'otp' | 'network' | 'recaptcha';
+	type:
+		| 'local'
+		| 'google'
+		| 'otp'
+		| 'network'
+		| 'recaptcha'
+		| 'forget-password';
 }
 ```
 
@@ -265,6 +353,7 @@ interface ErrorState {
 -   **`otp`**: Errors related to 2FA/OTP verification
 -   **`network`**: Network connectivity or server errors
 -   **`recaptcha`**: reCAPTCHA verification errors
+-   **`forget-password`**: Errors related to password reset functionality
 
 ### LoginState
 
@@ -278,7 +367,10 @@ type LoginState =
 	| 'success' // Authentication successful
 	| 'error' // Authentication failed
 	| 'otp-required' // 2FA verification needed
-	| 'otp-error'; // 2FA verification failed
+	| 'otp-error' // 2FA verification failed
+	| 'forget-password' // Forget password form displayed
+	| 'forget-password-loading' // Forget password request in progress
+	| 'forget-password-success'; // Forget password email sent successfully
 ```
 
 ## Branding Configuration
@@ -686,6 +778,18 @@ If you encounter issues not covered here:
     - Steps to reproduce
 
 ## Changelog
+
+### v1.0.3
+
+-   **NEW**: Added forget password functionality with email verification
+-   **NEW**: Added forget password form with validation and success screens
+-   **NEW**: Added `onForgetPassword` callback prop for handling password reset requests
+-   **NEW**: Added `enableForgetPassword` prop to control forget password feature
+-   **NEW**: Added comprehensive forget password tests
+-   **NEW**: Updated demo app to showcase forget password functionality
+-   **IMPROVED**: Enhanced error handling with forget password error types
+-   **IMPROVED**: Updated TypeScript interfaces to include forget password types
+-   **IMPROVED**: Enhanced documentation with forget password usage examples
 
 ### v1.0.2
 

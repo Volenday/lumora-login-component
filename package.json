@@ -1,6 +1,6 @@
 {
 	"name": "@volenday/lumora-login-component",
-	"version": "1.0.3",
+	"version": "1.0.4",
 	"description": "A reusable React TypeScript login component with local and Google OAuth authentication, 2FA support, and responsive design",
 	"main": "dist/lumora-login.umd.js",
 	"module": "dist/lumora-login.mjs",

@@ -28,6 +28,7 @@ const App: React.FC = () => {
 	// State for all LumoraLogin props
 	const [enableLocalSignIn, setEnableLocalSignIn] = useState(true);
 	const [enableGoogleSignIn, setEnableGoogleSignIn] = useState(true);
+	const [enableForgetPassword, setEnableForgetPassword] = useState(true);
 	const [googleClientId, setGoogleClientId] = useState(
 		'1077414399410-1k1hg3liscujlq0rlnkgjguh4iblt7f7.apps.googleusercontent.com'
 	);
@@ -41,7 +42,13 @@ const App: React.FC = () => {
 		backgroundColor: '#ffffff',
 		textColor: '#333333',
 		logoHeight: 48,
-		logo: 'https://lumora.capital/_next/image?url=%2Fimages%2Flumora-logo.png&w=256&q=75'
+		logo: 'https://lumora.capital/_next/image?url=%2Fimages%2Flumora-logo.png&w=256&q=75',
+		forgetPasswordTitle: 'Reset Your Password',
+		forgetPasswordDescription:
+			'Enter your email address and we will send you a secure link to reset your password.',
+		forgetPasswordSuccessTitle: 'Check Your Inbox',
+		forgetPasswordSuccessDescription:
+			'We have sent you a password reset link. Please check your email and follow the instructions to reset your password.'
 	});
 
 	// State for demo feedback
@@ -98,6 +105,24 @@ const App: React.FC = () => {
 		console.error('Login error:', error);
 	};
 
+	// Handle forget password simulation
+	const handleForgetPassword = async (email: string) => {
+		setLastAction(`Forget password request for email: ${email}`);
+		setLoginAttempts(prev => prev + 1);
+
+		// Simulate API call
+		console.log('Forget password request:', { email });
+
+		// Simulate network delay
+		await new Promise(resolve => setTimeout(resolve, 1000));
+
+		// Simulate successful password reset email sent
+		return {
+			success: true,
+			message: 'Password reset email sent successfully'
+		};
+	};
+
 	// Reset demo state
 	const resetDemo = () => {
 		setLastAction('');
@@ -152,6 +177,18 @@ const App: React.FC = () => {
 							/>
 						}
 						label="Enable Google Sign-in"
+					/>
+					<br />
+					<FormControlLabel
+						control={
+							<Switch
+								checked={enableForgetPassword}
+								onChange={e =>
+									setEnableForgetPassword(e.target.checked)
+								}
+							/>
+						}
+						label="Enable Forget Password"
 					/>
 				</Box>
 
@@ -213,6 +250,58 @@ const App: React.FC = () => {
 						onChange={e => updateBranding({ logo: e.target.value })}
 						size="small"
 						helperText="URL to your company logo image"
+					/>
+					<TextField
+						fullWidth
+						label="Forget Password Title"
+						value={branding.forgetPasswordTitle || ''}
+						onChange={e =>
+							updateBranding({
+								forgetPasswordTitle: e.target.value
+							})
+						}
+						size="small"
+						sx={{ mt: 2 }}
+						helperText="Title shown on forget password form"
+					/>
+					<TextField
+						fullWidth
+						label="Forget Password Description"
+						value={branding.forgetPasswordDescription || ''}
+						onChange={e =>
+							updateBranding({
+								forgetPasswordDescription: e.target.value
+							})
+						}
+						size="small"
+						sx={{ mt: 2 }}
+						helperText="Description shown on forget password form"
+					/>
+					<TextField
+						fullWidth
+						label="Forget Password Success Title"
+						value={branding.forgetPasswordSuccessTitle || ''}
+						onChange={e =>
+							updateBranding({
+								forgetPasswordSuccessTitle: e.target.value
+							})
+						}
+						size="small"
+						sx={{ mt: 2 }}
+						helperText="Title shown on forget password success screen"
+					/>
+					<TextField
+						fullWidth
+						label="Forget Password Success Description"
+						value={branding.forgetPasswordSuccessDescription || ''}
+						onChange={e =>
+							updateBranding({
+								forgetPasswordSuccessDescription: e.target.value
+							})
+						}
+						size="small"
+						sx={{ mt: 2 }}
+						helperText="Description shown on forget password success screen"
 					/>
 				</Box>
 
@@ -344,9 +433,11 @@ const App: React.FC = () => {
 							onGoogleLogin={handleGoogleLogin}
 							onLoginSuccess={handleLoginSuccess}
 							onLoginError={handleLoginError}
+							onForgetPassword={handleForgetPassword}
 							googleClientId={googleClientId || undefined}
 							enableLocalSignIn={enableLocalSignIn}
 							enableGoogleSignIn={enableGoogleSignIn}
+							enableForgetPassword={enableForgetPassword}
 							enableRecaptcha={true}
 							recaptchaSiteKey="6Le2YeMrAAAAAGRMlDzqrI0aTtFeVMmNp7QpAREf"
 							branding={branding}
