@@ -16,41 +16,82 @@ A reusable React TypeScript login component with local and Google OAuth authenti
 
 ## Installation
 
+### Prerequisites
+
+This package requires the following peer dependencies to be installed in your project:
+
 ```bash
-npm install @volenday/lumora-login-component
+npm install @mui/material @emotion/react @emotion/styled react react-dom react-hook-form @hookform/resolvers yup @mui/icons-material @react-oauth/google
 ```
 
-### Private Package Authentication
+### Install from GitHub
 
-This component depends on `@volenday/lumora-otp-component`, which is a private package hosted on GitHub Packages. To install it, you need to authenticate with GitHub:
+This is a private repository. You can install the package directly from GitHub using npm or yarn.
 
-1. **Create a GitHub Personal Access Token:**
+#### Install from Main Branch
 
-    - Go to GitHub Settings → Developer settings → Personal access tokens
-    - Generate a new token with `read:packages` permission
-    - Copy the token
+```bash
+npm install git+https://github.com/Volenday/lumora-login-component.git
+```
 
-2. **Configure npm authentication:**
+or with yarn:
 
-    ```bash
-    # Set the GitHub token as an environment variable
-    export GITHUB_TOKEN=your_token_here
+```bash
+yarn add git+https://github.com/Volenday/lumora-login-component.git
+```
 
-    # Or add it to your .npmrc file
-    echo "@volenday:registry=https://npm.pkg.github.com" >> .npmrc
-    echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" >> .npmrc
-    ```
+#### Install from Specific Branch
 
-3. **Install dependencies:**
-    ```bash
-    npm install
-    ```
+```bash
+npm install git+https://github.com/Volenday/lumora-login-component.git#branch-name
+```
+
+#### Install from Specific Commit
+
+```bash
+npm install git+https://github.com/Volenday/lumora-login-component.git#commit-hash
+```
+
+### GitHub Authentication
+
+Since this is a private repository, you'll need to authenticate with GitHub:
+
+#### Option 1: Personal Access Token (Recommended)
+
+1. Create a Personal Access Token at [GitHub Settings > Developer settings > Personal access tokens](https://github.com/settings/tokens)
+2. Select the `repo` scope for full repository access
+3. Use the token in your installation command:
+
+```bash
+npm install git+https://YOUR_TOKEN@github.com/Volenday/lumora-login-component.git
+```
+
+#### Option 2: SSH Key Authentication
+
+If you have SSH keys set up with GitHub:
+
+```bash
+npm install git+ssh://git@github.com/Volenday/lumora-login-component.git
+```
+
+#### Option 3: Configure Git Credentials
+
+You can also configure Git to use your credentials:
+
+```bash
+git config --global credential.helper store
+```
+
+Then when prompted during installation, enter your GitHub username and Personal Access Token.
+
+> **Note**: For private repositories, you must have access to the repository. Contact the repository administrators if you need access.
+
+> **Note for Developers**: Make sure to run `npm run build` before pushing changes to ensure the latest compiled code is available for installation.
 
 ### Package Information
 
 -   **Package Name**: `@volenday/lumora-login-component`
--   **Version**: 1.0.2
--   **Registry**: GitHub Packages (`https://npm.pkg.github.com`)
+-   **Version**: 1.0.4
 -   **License**: MIT
 -   **Repository**: [GitHub Repository](https://github.com/Volenday/lumora-login-component)
 
