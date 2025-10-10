@@ -1,65 +1,44 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { resolve } from 'path';
-import { fileURLToPath, URL } from 'node:url';
+import tsconfigPaths from 'vite-tsconfig-paths';
+import dts from 'vite-plugin-dts';
 
-export default defineConfig(({ command }) => {
-	const isDev = command === 'serve';
-
+export default defineConfig(() => {
 	return {
-		plugins: [react()],
-		resolve: {
-			dedupe: ['react', 'react-dom'],
-			alias: {
-				react: resolve(
-					fileURLToPath(
-						new URL('./node_modules/react', import.meta.url)
-					)
-				),
-				'react-dom': resolve(
-					fileURLToPath(
-						new URL('./node_modules/react-dom', import.meta.url)
-					)
-				)
-			}
-		},
+		plugins: [
+			react(),
+			tsconfigPaths(),
+			dts({
+				insertTypesEntry: true,
+				include: ['src/**/*'],
+				exclude: ['src/**/*.test.*', 'src/**/*.spec.*']
+			})
+		],
 		build: {
 			lib: {
-				entry: resolve(
-					fileURLToPath(new URL('./src/index.ts', import.meta.url))
-				),
+				entry: 'src/index.ts',
 				name: 'LumoraLogin',
-				fileName: 'lumora-login',
-				formats: ['es', 'umd']
+				formats: ['es', 'cjs'],
+				fileName: format => `index.${format}.js`
 			},
 			rollupOptions: {
 				external: [
 					'react',
 					'react-dom',
-					'@mui/material',
-					'@mui/icons-material',
 					'@emotion/react',
 					'@emotion/styled',
+					'@mui/material',
+					'@mui/icons-material',
 					'react-hook-form',
 					'@hookform/resolvers',
 					'yup',
-					// Only externalize LumoraOTP in production builds
-					...(isDev ? [] : ['@volenday/lumora-otp-component'])
+					'@react-oauth/google',
+					'@volenday/lumora-otp-component'
 				],
 				output: {
 					globals: {
 						react: 'React',
-						'react-dom': 'ReactDOM',
-						'@mui/material': 'MaterialUI',
-						'@mui/icons-material': 'MaterialUIIcons',
-						'@emotion/react': 'EmotionReact',
-						'@emotion/styled': 'EmotionStyled',
-						'react-hook-form': 'ReactHookForm',
-						'@hookform/resolvers': 'HookformResolvers',
-						yup: 'Yup',
-						...(isDev
-							? {}
-							: { '@volenday/lumora-otp-component': 'LumoraOTP' })
+						'react-dom': 'ReactDOM'
 					}
 				}
 			}

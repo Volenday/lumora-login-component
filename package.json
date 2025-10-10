@@ -1,22 +1,30 @@
 {
 	"name": "@volenday/lumora-login-component",
 	"version": "1.0.4",
+	"type": "module",
 	"description": "A reusable React TypeScript login component with local and Google OAuth authentication, 2FA support, and responsive design",
-	"main": "dist/lumora-login.umd.js",
-	"module": "dist/lumora-login.mjs",
+	"main": "dist/index.cjs.js",
+	"module": "dist/index.es.js",
 	"types": "dist/index.d.ts",
+	"exports": {
+		".": {
+			"import": "./dist/index.es.js",
+			"require": "./dist/index.cjs.js"
+		}
+	},
 	"files": [
 		"dist"
 	],
 	"scripts": {
 		"dev": "vite",
-		"build": "tsc --emitDeclarationOnly && vite build",
+		"build": "vite build",
 		"build:types": "tsc --emitDeclarationOnly",
 		"preview": "vite preview",
 		"type-check": "tsc --noEmit",
 		"test": "jest",
 		"test:watch": "jest --watch",
-		"test:coverage": "jest --coverage"
+		"test:coverage": "jest --coverage",
+		"prepublishOnly": "npm run build"
 	},
 	"keywords": [
 		"react",
@@ -40,13 +48,24 @@
 	"peerDependencies": {
 		"@emotion/react": ">=11.0.0",
 		"@emotion/styled": ">=11.0.0",
+		"@hookform/resolvers": ">=5.0.0",
+		"@mui/icons-material": ">=7.0.0",
 		"@mui/material": ">=7.0.0",
+		"@react-oauth/google": ">=0.12.0",
+		"@volenday/lumora-otp-component": "github:Volenday/lumora-otp-component",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
-		"react-hook-form": ">=7.0.0"
+		"react-hook-form": ">=7.0.0",
+		"yup": ">=1.0.0"
 	},
 	"devDependencies": {
+		"@emotion/react": ">=11.0.0",
+		"@emotion/styled": ">=11.0.0",
 		"@eslint/js": "^9.37.0",
+		"@hookform/resolvers": "^5.2.2",
+		"@mui/icons-material": "^7.3.4",
+		"@mui/material": ">=7.3.4",
+		"@react-oauth/google": "^0.12.2",
 		"@testing-library/jest-dom": "^6.9.1",
 		"@testing-library/react": "^16.3.0",
 		"@testing-library/user-event": "^14.6.1",
@@ -56,26 +75,20 @@
 		"@typescript-eslint/eslint-plugin": "^8.46.0",
 		"@typescript-eslint/parser": "^8.46.0",
 		"@vitejs/plugin-react": "^5.0.4",
+		"@volenday/lumora-otp-component": "github:Volenday/lumora-otp-component",
 		"eslint-plugin-react-hooks": "^6.1.1",
 		"eslint-plugin-react-refresh": "^0.4.23",
 		"identity-obj-proxy": "^3.0.0",
 		"jest": "^30.2.0",
 		"jest-environment-jsdom": "^30.2.0",
-		"ts-jest": "^29.4.4",
-		"typescript": "^5.9.3",
-		"vite": "^7.1.9"
-	},
-	"dependencies": {
-		"@emotion/react": ">=11.0.0",
-		"@emotion/styled": ">=11.0.0",
-		"@hookform/resolvers": "^5.2.2",
-		"@mui/icons-material": "^7.3.4",
-		"@mui/material": ">=7.3.4",
-		"@react-oauth/google": "^0.12.2",
-		"@volenday/lumora-otp-component": "github:Volenday/lumora-otp-component",
 		"react": "^18.2.0",
 		"react-dom": "^18.2.0",
 		"react-hook-form": ">=7.0.0",
+		"ts-jest": "^29.4.4",
+		"typescript": "^5.9.3",
+		"vite": "^7.1.9",
+		"vite-plugin-dts": "^4.5.4",
+		"vite-tsconfig-paths": "^5.1.4",
 		"yup": "^1.7.1"
 	}
 }

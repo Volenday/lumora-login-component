@@ -1,0 +1,112 @@
+---
+alwaysApply: true
+---
+
+# Cursor Rule: Setup for a React Component Library using Vite
+
+# Goal: Prepare a reusable, installable component library that supports both
+
+# npm (via GitHub Packages) and direct GitHub installs.
+
+rules:
+
+-   name: Vite React Component Library Setup
+    description: |
+    Configure Vite to build a React component library that can be installed using:
+    • npm install @<your-org>/<repo-name>
+    • npm install git+https://github.com/<your-org>/<repo-name>.git
+    The output must be optimized for consumption by other React projects.
+
+    instructions: |
+
+    1. **Project Setup**
+
+        - Use TypeScript + React.
+        - Add Vite as the bundler (`vite`, `@vitejs/plugin-react`, `vite-tsconfig-paths`).
+        - Use ESM build output (`"type": "module"` in package.json).
+
+    2. **Build Configuration**
+
+        - In `vite.config.ts`, configure `build.lib`:
+            ```ts
+            build: {
+              lib: {
+                entry: 'src/index.ts',
+                name: 'YourComponentLibrary',
+                formats: ['es', 'cjs'],
+                fileName: (format) => `index.${format}.js`,
+              },
+              rollupOptions: {
+                external: ['react', 'react-dom'],
+                output: {
+                  globals: {
+                    react: 'React',
+                    'react-dom': 'ReactDOM',
+                  },
+                },
+              },
+            }
+            ```
+        - Ensure the library builds cleanly with `vite build`.
+
+    3. **Package Configuration**
+
+        - In `package.json`, include:
+            ```json
+            {
+            	"main": "dist/index.cjs.js",
+            	"module": "dist/index.es.js",
+            	"types": "dist/index.d.ts",
+            	"exports": {
+            		".": {
+            			"import": "./dist/index.es.js",
+            			"require": "./dist/index.cjs.js"
+            		}
+            	},
+            	"files": ["dist"],
+            	"scripts": {
+            		"build": "vite build",
+            		"prepublishOnly": "npm run build"
+            	},
+            	"peerDependencies": {
+            		"react": "^18.0.0",
+            		"react-dom": "^18.0.0"
+            	}
+            }
+            ```
+
+    4. **Index Entry**
+
+        - Add an `src/index.ts` that exports all components:
+            ```ts
+            export { default as MyComponent } from './components/MyComponent';
+            ```
+
+    5. **GitHub Package Setup**
+
+        - For private npm installs:
+            - In `.npmrc`:
+                ```
+                @<your-org>:registry=https://npm.pkg.github.com/
+                ```
+            - In `package.json`:
+                ```json
+                "publishConfig": {
+                  "registry": "https://npm.pkg.github.com/"
+                }
+                ```
+        - Ensure repo visibility matches your publishing target (private/public).
+
+    6. **Install Validation**
+
+        - Test install locally:
+            - Via npm: `npm install @<your-org>/<repo-name>`
+            - Via GitHub: `npm install git+https://github.com/<your-org>/<repo-name>.git`
+        - Confirm components can be imported without “Failed to resolve entry” errors.
+
+    7. **Optional Enhancements**
+        - Add a `README.md` with install and usage instructions.
+        - Add a GitHub Action to auto-build on push to `main`.
+
+    outcome: |
+    A Vite-based React component library that can be successfully installed and used via both npm and GitHub URLs.

@@ -1,11 +1,12 @@
-import ue, { createContext as So, useMemo as Po, useState as le, useRef as q, useEffect as Ee, useCallback as ze, useContext as To } from "react";
-import { Box as C, Typography as $, Stack as De, TextField as ke, Button as I, CircularProgress as we, Divider as Co, Alert as Ze } from "@mui/material";
-import { appendErrors as _o, useForm as Qe } from "react-hook-form";
-import { validateFieldsNatively as Vo, toNestErrors as Fo } from "@hookform/resolvers";
-import * as X from "yup";
-import { Google as Lo } from "@mui/icons-material";
-import { LumoraOTP as Oo } from "@volenday/lumora-otp-component";
-var te = { exports: {} }, ie = {};
+import ye, { useState as Ne, useEffect as Do } from "react";
+import { Box as S, Typography as A, Stack as ke, TextField as be, Button as U, CircularProgress as Ee, Divider as wo, Alert as Je } from "@mui/material";
+import { GoogleOAuthProvider as jo, useGoogleLogin as Ro } from "@react-oauth/google";
+import { appendErrors as Po, useForm as Xe } from "react-hook-form";
+import { validateFieldsNatively as To, toNestErrors as So } from "@hookform/resolvers";
+import * as z from "yup";
+import { Google as Co } from "@mui/icons-material";
+import { LumoraOTP as Vo } from "@volenday/lumora-otp-component";
+var ee = { exports: {} }, oe = {};
 /**
  * @license React
  * react-jsx-dev-runtime.production.min.js
@@ -15,14 +16,14 @@ var te = { exports: {} }, ie = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var qe;
-function Uo() {
-  if (qe) return ie;
-  qe = 1;
+var Ye;
+function _o() {
+  if (Ye) return oe;
+  Ye = 1;
   var o = Symbol.for("react.fragment");
-  return ie.Fragment = o, ie.jsxDEV = void 0, ie;
+  return oe.Fragment = o, oe.jsxDEV = void 0, oe;
 }
-var se = {};
+var re = {};
 /**
  * @license React
  * react-jsx-dev-runtime.development.js
@@ -32,54 +33,54 @@ var se = {};
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-var He;
-function Ao() {
-  return He || (He = 1, process.env.NODE_ENV !== "production" && (function() {
-    var o = ue, s = Symbol.for("react.element"), d = Symbol.for("react.portal"), p = Symbol.for("react.fragment"), N = Symbol.for("react.strict_mode"), m = Symbol.for("react.profiler"), a = Symbol.for("react.provider"), b = Symbol.for("react.context"), u = Symbol.for("react.forward_ref"), l = Symbol.for("react.suspense"), x = Symbol.for("react.suspense_list"), _ = Symbol.for("react.memo"), k = Symbol.for("react.lazy"), R = Symbol.for("react.offscreen"), U = Symbol.iterator, j = "@@iterator";
-    function S(e) {
+var ze;
+function Fo() {
+  return ze || (ze = 1, process.env.NODE_ENV !== "production" && (function() {
+    var o = ye, a = Symbol.for("react.element"), d = Symbol.for("react.portal"), x = Symbol.for("react.fragment"), E = Symbol.for("react.strict_mode"), g = Symbol.for("react.profiler"), c = Symbol.for("react.provider"), y = Symbol.for("react.context"), p = Symbol.for("react.forward_ref"), m = Symbol.for("react.suspense"), h = Symbol.for("react.suspense_list"), O = Symbol.for("react.memo"), w = Symbol.for("react.lazy"), P = Symbol.for("react.offscreen"), L = Symbol.iterator, j = "@@iterator";
+    function B(e) {
       if (e === null || typeof e != "object")
         return null;
-      var r = U && e[U] || e[j];
+      var r = L && e[L] || e[j];
       return typeof r == "function" ? r : null;
     }
-    var g = o.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
+    var N = o.__SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED;
     function D(e) {
       {
-        for (var r = arguments.length, t = new Array(r > 1 ? r - 1 : 0), i = 1; i < r; i++)
-          t[i - 1] = arguments[i];
+        for (var r = arguments.length, t = new Array(r > 1 ? r - 1 : 0), s = 1; s < r; s++)
+          t[s - 1] = arguments[s];
         G("error", e, t);
       }
     }
     function G(e, r, t) {
       {
-        var i = g.ReactDebugCurrentFrame, v = i.getStackAddendum();
-        v !== "" && (r += "%s", t = t.concat([v]));
-        var h = t.map(function(f) {
-          return String(f);
+        var s = N.ReactDebugCurrentFrame, u = s.getStackAddendum();
+        u !== "" && (r += "%s", t = t.concat([u]));
+        var f = t.map(function(l) {
+          return String(l);
         });
-        h.unshift("Warning: " + r), Function.prototype.apply.call(console[e], console, h);
+        f.unshift("Warning: " + r), Function.prototype.apply.call(console[e], console, f);
       }
     }
-    var W = !1, O = !1, B = !1, ce = !1, de = !1, K;
-    K = Symbol.for("react.module.reference");
-    function Z(e) {
-      return !!(typeof e == "string" || typeof e == "function" || e === p || e === m || de || e === N || e === l || e === x || ce || e === R || W || O || B || typeof e == "object" && e !== null && (e.$$typeof === k || e.$$typeof === _ || e.$$typeof === a || e.$$typeof === b || e.$$typeof === u || // This needs to include all possible module reference object
+    var te = !1, se = !1, ie = !1, ae = !1, le = !1, H;
+    H = Symbol.for("react.module.reference");
+    function q(e) {
+      return !!(typeof e == "string" || typeof e == "function" || e === x || e === g || le || e === E || e === m || e === h || ae || e === P || te || se || ie || typeof e == "object" && e !== null && (e.$$typeof === w || e.$$typeof === O || e.$$typeof === c || e.$$typeof === y || e.$$typeof === p || // This needs to include all possible module reference object
       // types supported by any Flight configuration anywhere since
       // we don't know which Flight build this will end up being used
       // with.
-      e.$$typeof === K || e.getModuleId !== void 0));
+      e.$$typeof === H || e.getModuleId !== void 0));
     }
-    function me(e, r, t) {
-      var i = e.displayName;
-      if (i)
-        return i;
-      var v = r.displayName || r.name || "";
-      return v !== "" ? t + "(" + v + ")" : t;
+    function ue(e, r, t) {
+      var s = e.displayName;
+      if (s)
+        return s;
+      var u = r.displayName || r.name || "";
+      return u !== "" ? t + "(" + u + ")" : t;
     }
-    function Q(e) {
+    function J(e) {
       return e.displayName || "Context";
     }
-    function V(e) {
+    function C(e) {
       if (e == null)
         return null;
       if (typeof e.tag == "number" && D("Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."), typeof e == "function")
@@ -87,36 +88,36 @@ function Ao() {
       if (typeof e == "string")
         return e;
       switch (e) {
-        case p:
+        case x:
           return "Fragment";
         case d:
           return "Portal";
-        case m:
+        case g:
           return "Profiler";
-        case N:
+        case E:
           return "StrictMode";
-        case l:
+        case m:
           return "Suspense";
-        case x:
+        case h:
           return "SuspenseList";
       }
       if (typeof e == "object")
         switch (e.$$typeof) {
-          case b:
+          case y:
             var r = e;
-            return Q(r) + ".Consumer";
-          case a:
+            return J(r) + ".Consumer";
+          case c:
             var t = e;
-            return Q(t._context) + ".Provider";
-          case u:
-            return me(e, e.render, "ForwardRef");
-          case _:
-            var i = e.displayName || null;
-            return i !== null ? i : V(e.type) || "Memo";
-          case k: {
-            var v = e, h = v._payload, f = v._init;
+            return J(t._context) + ".Provider";
+          case p:
+            return ue(e, e.render, "ForwardRef");
+          case O:
+            var s = e.displayName || null;
+            return s !== null ? s : C(e.type) || "Memo";
+          case w: {
+            var u = e, f = u._payload, l = u._init;
             try {
-              return V(f(h));
+              return C(l(f));
             } catch {
               return null;
             }
@@ -124,18 +125,18 @@ function Ao() {
         }
       return null;
     }
-    var y = Object.assign, F = 0, A, Re, je, Se, Pe, Te, Ce;
-    function _e() {
+    var v = Object.assign, V = 0, F, De, we, je, Re, Pe, Te;
+    function Se() {
     }
-    _e.__reactDisabledLog = !0;
-    function ro() {
+    Se.__reactDisabledLog = !0;
+    function Ze() {
       {
-        if (F === 0) {
-          A = console.log, Re = console.info, je = console.warn, Se = console.error, Pe = console.group, Te = console.groupCollapsed, Ce = console.groupEnd;
+        if (V === 0) {
+          F = console.log, De = console.info, we = console.warn, je = console.error, Re = console.group, Pe = console.groupCollapsed, Te = console.groupEnd;
           var e = {
             configurable: !0,
             enumerable: !0,
-            value: _e,
+            value: Se,
             writable: !0
           };
           Object.defineProperties(console, {
@@ -148,254 +149,254 @@ function Ao() {
             groupEnd: e
           });
         }
-        F++;
+        V++;
       }
     }
-    function no() {
+    function Qe() {
       {
-        if (F--, F === 0) {
+        if (V--, V === 0) {
           var e = {
             configurable: !0,
             enumerable: !0,
             writable: !0
           };
           Object.defineProperties(console, {
-            log: y({}, e, {
-              value: A
+            log: v({}, e, {
+              value: F
             }),
-            info: y({}, e, {
-              value: Re
+            info: v({}, e, {
+              value: De
             }),
-            warn: y({}, e, {
+            warn: v({}, e, {
+              value: we
+            }),
+            error: v({}, e, {
               value: je
             }),
-            error: y({}, e, {
-              value: Se
+            group: v({}, e, {
+              value: Re
             }),
-            group: y({}, e, {
+            groupCollapsed: v({}, e, {
               value: Pe
             }),
-            groupCollapsed: y({}, e, {
+            groupEnd: v({}, e, {
               value: Te
-            }),
-            groupEnd: y({}, e, {
-              value: Ce
             })
           });
         }
-        F < 0 && D("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
+        V < 0 && D("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
       }
     }
-    var fe = g.ReactCurrentDispatcher, pe;
-    function ee(e, r, t) {
+    var ce = N.ReactCurrentDispatcher, me;
+    function X(e, r, t) {
       {
-        if (pe === void 0)
+        if (me === void 0)
           try {
             throw Error();
-          } catch (v) {
-            var i = v.stack.trim().match(/\n( *(at )?)/);
-            pe = i && i[1] || "";
+          } catch (u) {
+            var s = u.stack.trim().match(/\n( *(at )?)/);
+            me = s && s[1] || "";
           }
         return `
-` + pe + e;
+` + me + e;
       }
     }
-    var ge = !1, oe;
+    var de = !1, K;
     {
-      var to = typeof WeakMap == "function" ? WeakMap : Map;
-      oe = new to();
+      var eo = typeof WeakMap == "function" ? WeakMap : Map;
+      K = new eo();
     }
-    function Ve(e, r) {
-      if (!e || ge)
+    function Ce(e, r) {
+      if (!e || de)
         return "";
       {
-        var t = oe.get(e);
+        var t = K.get(e);
         if (t !== void 0)
           return t;
       }
-      var i;
-      ge = !0;
-      var v = Error.prepareStackTrace;
+      var s;
+      de = !0;
+      var u = Error.prepareStackTrace;
       Error.prepareStackTrace = void 0;
-      var h;
-      h = fe.current, fe.current = null, ro();
+      var f;
+      f = ce.current, ce.current = null, Ze();
       try {
         if (r) {
-          var f = function() {
+          var l = function() {
             throw Error();
           };
-          if (Object.defineProperty(f.prototype, "props", {
+          if (Object.defineProperty(l.prototype, "props", {
             set: function() {
               throw Error();
             }
           }), typeof Reflect == "object" && Reflect.construct) {
             try {
-              Reflect.construct(f, []);
+              Reflect.construct(l, []);
             } catch (T) {
-              i = T;
+              s = T;
             }
-            Reflect.construct(e, [], f);
+            Reflect.construct(e, [], l);
           } else {
             try {
-              f.call();
+              l.call();
             } catch (T) {
-              i = T;
+              s = T;
             }
-            e.call(f.prototype);
+            e.call(l.prototype);
           }
         } else {
           try {
             throw Error();
           } catch (T) {
-            i = T;
+            s = T;
           }
           e();
         }
       } catch (T) {
-        if (T && i && typeof T.stack == "string") {
-          for (var c = T.stack.split(`
-`), P = i.stack.split(`
-`), E = c.length - 1, w = P.length - 1; E >= 1 && w >= 0 && c[E] !== P[w]; )
-            w--;
-          for (; E >= 1 && w >= 0; E--, w--)
-            if (c[E] !== P[w]) {
-              if (E !== 1 || w !== 1)
+        if (T && s && typeof T.stack == "string") {
+          for (var i = T.stack.split(`
+`), R = s.stack.split(`
+`), b = i.length - 1, k = R.length - 1; b >= 1 && k >= 0 && i[b] !== R[k]; )
+            k--;
+          for (; b >= 1 && k >= 0; b--, k--)
+            if (i[b] !== R[k]) {
+              if (b !== 1 || k !== 1)
                 do
-                  if (E--, w--, w < 0 || c[E] !== P[w]) {
-                    var L = `
-` + c[E].replace(" at new ", " at ");
-                    return e.displayName && L.includes("<anonymous>") && (L = L.replace("<anonymous>", e.displayName)), typeof e == "function" && oe.set(e, L), L;
+                  if (b--, k--, k < 0 || i[b] !== R[k]) {
+                    var _ = `
+` + i[b].replace(" at new ", " at ");
+                    return e.displayName && _.includes("<anonymous>") && (_ = _.replace("<anonymous>", e.displayName)), typeof e == "function" && K.set(e, _), _;
                   }
-                while (E >= 1 && w >= 0);
+                while (b >= 1 && k >= 0);
               break;
             }
         }
       } finally {
-        ge = !1, fe.current = h, no(), Error.prepareStackTrace = v;
+        de = !1, ce.current = f, Qe(), Error.prepareStackTrace = u;
       }
-      var z = e ? e.displayName || e.name : "", M = z ? ee(z) : "";
-      return typeof e == "function" && oe.set(e, M), M;
+      var $ = e ? e.displayName || e.name : "", W = $ ? X($) : "";
+      return typeof e == "function" && K.set(e, W), W;
     }
-    function io(e, r, t) {
-      return Ve(e, !1);
+    function oo(e, r, t) {
+      return Ce(e, !1);
     }
-    function so(e) {
+    function ro(e) {
       var r = e.prototype;
       return !!(r && r.isReactComponent);
     }
-    function re(e, r, t) {
+    function Z(e, r, t) {
       if (e == null)
         return "";
       if (typeof e == "function")
-        return Ve(e, so(e));
+        return Ce(e, ro(e));
       if (typeof e == "string")
-        return ee(e);
+        return X(e);
       switch (e) {
-        case l:
-          return ee("Suspense");
-        case x:
-          return ee("SuspenseList");
+        case m:
+          return X("Suspense");
+        case h:
+          return X("SuspenseList");
       }
       if (typeof e == "object")
         switch (e.$$typeof) {
-          case u:
-            return io(e.render);
-          case _:
-            return re(e.type, r, t);
-          case k: {
-            var i = e, v = i._payload, h = i._init;
+          case p:
+            return oo(e.render);
+          case O:
+            return Z(e.type, r, t);
+          case w: {
+            var s = e, u = s._payload, f = s._init;
             try {
-              return re(h(v), r, t);
+              return Z(f(u), r, t);
             } catch {
             }
           }
         }
       return "";
     }
-    var H = Object.prototype.hasOwnProperty, Fe = {}, Le = g.ReactDebugCurrentFrame;
-    function ne(e) {
+    var M = Object.prototype.hasOwnProperty, Ve = {}, _e = N.ReactDebugCurrentFrame;
+    function Q(e) {
       if (e) {
-        var r = e._owner, t = re(e.type, e._source, r ? r.type : null);
-        Le.setExtraStackFrame(t);
+        var r = e._owner, t = Z(e.type, e._source, r ? r.type : null);
+        _e.setExtraStackFrame(t);
       } else
-        Le.setExtraStackFrame(null);
+        _e.setExtraStackFrame(null);
     }
-    function ao(e, r, t, i, v) {
+    function no(e, r, t, s, u) {
       {
-        var h = Function.call.bind(H);
-        for (var f in e)
-          if (h(e, f)) {
-            var c = void 0;
+        var f = Function.call.bind(M);
+        for (var l in e)
+          if (f(e, l)) {
+            var i = void 0;
             try {
-              if (typeof e[f] != "function") {
-                var P = Error((i || "React class") + ": " + t + " type `" + f + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof e[f] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
-                throw P.name = "Invariant Violation", P;
+              if (typeof e[l] != "function") {
+                var R = Error((s || "React class") + ": " + t + " type `" + l + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof e[l] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
+                throw R.name = "Invariant Violation", R;
               }
-              c = e[f](r, f, i, t, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
-            } catch (E) {
-              c = E;
+              i = e[l](r, l, s, t, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
+            } catch (b) {
+              i = b;
             }
-            c && !(c instanceof Error) && (ne(v), D("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", i || "React class", t, f, typeof c), ne(null)), c instanceof Error && !(c.message in Fe) && (Fe[c.message] = !0, ne(v), D("Failed %s type: %s", t, c.message), ne(null));
+            i && !(i instanceof Error) && (Q(u), D("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", s || "React class", t, l, typeof i), Q(null)), i instanceof Error && !(i.message in Ve) && (Ve[i.message] = !0, Q(u), D("Failed %s type: %s", t, i.message), Q(null));
           }
       }
     }
-    var lo = Array.isArray;
-    function ve(e) {
-      return lo(e);
+    var to = Array.isArray;
+    function fe(e) {
+      return to(e);
     }
-    function uo(e) {
+    function so(e) {
       {
         var r = typeof Symbol == "function" && Symbol.toStringTag, t = r && e[Symbol.toStringTag] || e.constructor.name || "Object";
         return t;
       }
     }
-    function co(e) {
+    function io(e) {
       try {
-        return Oe(e), !1;
+        return Fe(e), !1;
       } catch {
         return !0;
       }
     }
-    function Oe(e) {
+    function Fe(e) {
       return "" + e;
     }
-    function Ue(e) {
-      if (co(e))
-        return D("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", uo(e)), Oe(e);
+    function Oe(e) {
+      if (io(e))
+        return D("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", so(e)), Fe(e);
     }
-    var J = g.ReactCurrentOwner, mo = {
+    var Y = N.ReactCurrentOwner, ao = {
       key: !0,
       ref: !0,
       __self: !0,
       __source: !0
-    }, Ae, We, xe;
-    xe = {};
-    function fo(e) {
-      if (H.call(e, "ref")) {
+    }, Ue, Le, ge;
+    ge = {};
+    function lo(e) {
+      if (M.call(e, "ref")) {
         var r = Object.getOwnPropertyDescriptor(e, "ref").get;
         if (r && r.isReactWarning)
           return !1;
       }
       return e.ref !== void 0;
     }
-    function po(e) {
-      if (H.call(e, "key")) {
+    function uo(e) {
+      if (M.call(e, "key")) {
         var r = Object.getOwnPropertyDescriptor(e, "key").get;
         if (r && r.isReactWarning)
           return !1;
       }
       return e.key !== void 0;
     }
-    function go(e, r) {
-      if (typeof e.ref == "string" && J.current && r && J.current.stateNode !== r) {
-        var t = V(J.current.type);
-        xe[t] || (D('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', V(J.current.type), e.ref), xe[t] = !0);
+    function co(e, r) {
+      if (typeof e.ref == "string" && Y.current && r && Y.current.stateNode !== r) {
+        var t = C(Y.current.type);
+        ge[t] || (D('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', C(Y.current.type), e.ref), ge[t] = !0);
       }
     }
-    function vo(e, r) {
+    function mo(e, r) {
       {
         var t = function() {
-          Ae || (Ae = !0, D("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", r));
+          Ue || (Ue = !0, D("%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", r));
         };
         t.isReactWarning = !0, Object.defineProperty(e, "key", {
           get: t,
@@ -403,10 +404,10 @@ function Ao() {
         });
       }
     }
-    function xo(e, r) {
+    function fo(e, r) {
       {
         var t = function() {
-          We || (We = !0, D("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", r));
+          Le || (Le = !0, D("%s: `ref` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://reactjs.org/link/special-props)", r));
         };
         t.isReactWarning = !0, Object.defineProperty(e, "ref", {
           get: t,
@@ -414,70 +415,70 @@ function Ao() {
         });
       }
     }
-    var ho = function(e, r, t, i, v, h, f) {
-      var c = {
+    var go = function(e, r, t, s, u, f, l) {
+      var i = {
         // This tag allows us to uniquely identify this as a React Element
-        $$typeof: s,
+        $$typeof: a,
         // Built-in properties that belong on the element
         type: e,
         key: r,
         ref: t,
-        props: f,
+        props: l,
         // Record the component responsible for creating this element.
-        _owner: h
+        _owner: f
       };
-      return c._store = {}, Object.defineProperty(c._store, "validated", {
+      return i._store = {}, Object.defineProperty(i._store, "validated", {
         configurable: !1,
         enumerable: !1,
         writable: !0,
         value: !1
-      }), Object.defineProperty(c, "_self", {
+      }), Object.defineProperty(i, "_self", {
         configurable: !1,
         enumerable: !1,
         writable: !1,
-        value: i
-      }), Object.defineProperty(c, "_source", {
+        value: s
+      }), Object.defineProperty(i, "_source", {
         configurable: !1,
         enumerable: !1,
         writable: !1,
-        value: v
-      }), Object.freeze && (Object.freeze(c.props), Object.freeze(c)), c;
+        value: u
+      }), Object.freeze && (Object.freeze(i.props), Object.freeze(i)), i;
     };
-    function No(e, r, t, i, v) {
+    function po(e, r, t, s, u) {
       {
-        var h, f = {}, c = null, P = null;
-        t !== void 0 && (Ue(t), c = "" + t), po(r) && (Ue(r.key), c = "" + r.key), fo(r) && (P = r.ref, go(r, v));
-        for (h in r)
-          H.call(r, h) && !mo.hasOwnProperty(h) && (f[h] = r[h]);
+        var f, l = {}, i = null, R = null;
+        t !== void 0 && (Oe(t), i = "" + t), uo(r) && (Oe(r.key), i = "" + r.key), lo(r) && (R = r.ref, co(r, u));
+        for (f in r)
+          M.call(r, f) && !ao.hasOwnProperty(f) && (l[f] = r[f]);
         if (e && e.defaultProps) {
-          var E = e.defaultProps;
-          for (h in E)
-            f[h] === void 0 && (f[h] = E[h]);
+          var b = e.defaultProps;
+          for (f in b)
+            l[f] === void 0 && (l[f] = b[f]);
         }
-        if (c || P) {
-          var w = typeof e == "function" ? e.displayName || e.name || "Unknown" : e;
-          c && vo(f, w), P && xo(f, w);
+        if (i || R) {
+          var k = typeof e == "function" ? e.displayName || e.name || "Unknown" : e;
+          i && mo(l, k), R && fo(l, k);
         }
-        return ho(e, c, P, v, i, J.current, f);
+        return go(e, i, R, u, s, Y.current, l);
       }
     }
-    var he = g.ReactCurrentOwner, Ie = g.ReactDebugCurrentFrame;
-    function Y(e) {
+    var pe = N.ReactCurrentOwner, Ae = N.ReactDebugCurrentFrame;
+    function I(e) {
       if (e) {
-        var r = e._owner, t = re(e.type, e._source, r ? r.type : null);
-        Ie.setExtraStackFrame(t);
+        var r = e._owner, t = Z(e.type, e._source, r ? r.type : null);
+        Ae.setExtraStackFrame(t);
       } else
-        Ie.setExtraStackFrame(null);
+        Ae.setExtraStackFrame(null);
     }
-    var Ne;
-    Ne = !1;
-    function be(e) {
-      return typeof e == "object" && e !== null && e.$$typeof === s;
+    var ve;
+    ve = !1;
+    function xe(e) {
+      return typeof e == "object" && e !== null && e.$$typeof === a;
     }
-    function $e() {
+    function We() {
       {
-        if (he.current) {
-          var e = V(he.current.type);
+        if (pe.current) {
+          var e = C(pe.current.type);
           if (e)
             return `
 
@@ -486,7 +487,7 @@ Check the render method of \`` + e + "`.";
         return "";
       }
     }
-    function bo(e) {
+    function vo(e) {
       {
         if (e !== void 0) {
           var r = e.fileName.replace(/^.*[\\\/]/, ""), t = e.lineNumber;
@@ -497,10 +498,10 @@ Check your code at ` + r + ":" + t + ".";
         return "";
       }
     }
-    var Be = {};
-    function yo(e) {
+    var Ie = {};
+    function xo(e) {
       {
-        var r = $e();
+        var r = We();
         if (!r) {
           var t = typeof e == "string" ? e : e.displayName || e.name;
           t && (r = `
@@ -510,39 +511,39 @@ Check the top-level render call using <` + t + ">.");
         return r;
       }
     }
-    function Me(e, r) {
+    function $e(e, r) {
       {
         if (!e._store || e._store.validated || e.key != null)
           return;
         e._store.validated = !0;
-        var t = yo(r);
-        if (Be[t])
+        var t = xo(r);
+        if (Ie[t])
           return;
-        Be[t] = !0;
-        var i = "";
-        e && e._owner && e._owner !== he.current && (i = " It was passed a child from " + V(e._owner.type) + "."), Y(e), D('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', t, i), Y(null);
+        Ie[t] = !0;
+        var s = "";
+        e && e._owner && e._owner !== pe.current && (s = " It was passed a child from " + C(e._owner.type) + "."), I(e), D('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', t, s), I(null);
       }
     }
-    function Ge(e, r) {
+    function Be(e, r) {
       {
         if (typeof e != "object")
           return;
-        if (ve(e))
+        if (fe(e))
           for (var t = 0; t < e.length; t++) {
-            var i = e[t];
-            be(i) && Me(i, r);
+            var s = e[t];
+            xe(s) && $e(s, r);
           }
-        else if (be(e))
+        else if (xe(e))
           e._store && (e._store.validated = !0);
         else if (e) {
-          var v = S(e);
-          if (typeof v == "function" && v !== e.entries)
-            for (var h = v.call(e), f; !(f = h.next()).done; )
-              be(f.value) && Me(f.value, r);
+          var u = B(e);
+          if (typeof u == "function" && u !== e.entries)
+            for (var f = u.call(e), l; !(l = f.next()).done; )
+              xe(l.value) && $e(l.value, r);
         }
       }
     }
-    function ko(e) {
+    function ho(e) {
       {
         var r = e.type;
         if (r == null || typeof r == "string")
@@ -550,167 +551,95 @@ Check the top-level render call using <` + t + ">.");
         var t;
         if (typeof r == "function")
           t = r.propTypes;
-        else if (typeof r == "object" && (r.$$typeof === u || // Note: Memo only checks outer props here.
+        else if (typeof r == "object" && (r.$$typeof === p || // Note: Memo only checks outer props here.
         // Inner props are checked in the reconciler.
-        r.$$typeof === _))
+        r.$$typeof === O))
           t = r.propTypes;
         else
           return;
         if (t) {
-          var i = V(r);
-          ao(t, e.props, "prop", i, e);
-        } else if (r.PropTypes !== void 0 && !Ne) {
-          Ne = !0;
-          var v = V(r);
-          D("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", v || "Unknown");
+          var s = C(r);
+          no(t, e.props, "prop", s, e);
+        } else if (r.PropTypes !== void 0 && !ve) {
+          ve = !0;
+          var u = C(r);
+          D("Component %s declared `PropTypes` instead of `propTypes`. Did you misspell the property assignment?", u || "Unknown");
         }
         typeof r.getDefaultProps == "function" && !r.getDefaultProps.isReactClassApproved && D("getDefaultProps is only used on classic React.createClass definitions. Use a static property named `defaultProps` instead.");
       }
     }
-    function Eo(e) {
+    function No(e) {
       {
         for (var r = Object.keys(e.props), t = 0; t < r.length; t++) {
-          var i = r[t];
-          if (i !== "children" && i !== "key") {
-            Y(e), D("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", i), Y(null);
+          var s = r[t];
+          if (s !== "children" && s !== "key") {
+            I(e), D("Invalid prop `%s` supplied to `React.Fragment`. React.Fragment can only have `key` and `children` props.", s), I(null);
             break;
           }
         }
-        e.ref !== null && (Y(e), D("Invalid attribute `ref` supplied to `React.Fragment`."), Y(null));
+        e.ref !== null && (I(e), D("Invalid attribute `ref` supplied to `React.Fragment`."), I(null));
       }
     }
-    var Ye = {};
-    function Do(e, r, t, i, v, h) {
+    var Me = {};
+    function bo(e, r, t, s, u, f) {
       {
-        var f = Z(e);
-        if (!f) {
-          var c = "";
-          (e === void 0 || typeof e == "object" && e !== null && Object.keys(e).length === 0) && (c += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.");
-          var P = bo(v);
-          P ? c += P : c += $e();
-          var E;
-          e === null ? E = "null" : ve(e) ? E = "array" : e !== void 0 && e.$$typeof === s ? (E = "<" + (V(e.type) || "Unknown") + " />", c = " Did you accidentally export a JSX literal instead of a component?") : E = typeof e, D("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", E, c);
+        var l = q(e);
+        if (!l) {
+          var i = "";
+          (e === void 0 || typeof e == "object" && e !== null && Object.keys(e).length === 0) && (i += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.");
+          var R = vo(u);
+          R ? i += R : i += We();
+          var b;
+          e === null ? b = "null" : fe(e) ? b = "array" : e !== void 0 && e.$$typeof === a ? (b = "<" + (C(e.type) || "Unknown") + " />", i = " Did you accidentally export a JSX literal instead of a component?") : b = typeof e, D("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", b, i);
         }
-        var w = No(e, r, t, v, h);
-        if (w == null)
-          return w;
-        if (f) {
-          var L = r.children;
-          if (L !== void 0)
-            if (i)
-              if (ve(L)) {
-                for (var z = 0; z < L.length; z++)
-                  Ge(L[z], e);
-                Object.freeze && Object.freeze(L);
+        var k = po(e, r, t, u, f);
+        if (k == null)
+          return k;
+        if (l) {
+          var _ = r.children;
+          if (_ !== void 0)
+            if (s)
+              if (fe(_)) {
+                for (var $ = 0; $ < _.length; $++)
+                  Be(_[$], e);
+                Object.freeze && Object.freeze(_);
               } else
                 D("React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead.");
             else
-              Ge(L, e);
+              Be(_, e);
         }
-        if (H.call(r, "key")) {
-          var M = V(e), T = Object.keys(r).filter(function(jo) {
-            return jo !== "key";
-          }), ye = T.length > 0 ? "{key: someKey, " + T.join(": ..., ") + ": ...}" : "{key: someKey}";
-          if (!Ye[M + ye]) {
-            var Ro = T.length > 0 ? "{" + T.join(": ..., ") + ": ...}" : "{}";
+        if (M.call(r, "key")) {
+          var W = C(e), T = Object.keys(r).filter(function(Eo) {
+            return Eo !== "key";
+          }), he = T.length > 0 ? "{key: someKey, " + T.join(": ..., ") + ": ...}" : "{key: someKey}";
+          if (!Me[W + he]) {
+            var ko = T.length > 0 ? "{" + T.join(": ..., ") + ": ...}" : "{}";
             D(`A props object containing a "key" prop is being spread into JSX:
   let props = %s;
   <%s {...props} />
 React keys must be passed directly to JSX without using spread:
   let props = %s;
-  <%s key={someKey} {...props} />`, ye, M, Ro, M), Ye[M + ye] = !0;
+  <%s key={someKey} {...props} />`, he, W, ko, W), Me[W + he] = !0;
           }
         }
-        return e === p ? Eo(w) : ko(w), w;
+        return e === x ? No(k) : ho(k), k;
       }
     }
-    var wo = Do;
-    se.Fragment = p, se.jsxDEV = wo;
-  })()), se;
+    var yo = bo;
+    re.Fragment = x, re.jsxDEV = yo;
+  })()), re;
 }
-var Je;
-function Wo() {
-  return Je || (Je = 1, process.env.NODE_ENV === "production" ? te.exports = Uo() : te.exports = Ao()), te.exports;
+var Ge;
+function Oo() {
+  return Ge || (Ge = 1, process.env.NODE_ENV === "production" ? ee.exports = _o() : ee.exports = Fo()), ee.exports;
 }
-var n = Wo();
-function Io(o = {}) {
-  const { nonce: s, onScriptLoadSuccess: d, onScriptLoadError: p } = o, [N, m] = le(!1), a = q(d);
-  a.current = d;
-  const b = q(p);
-  return b.current = p, Ee(() => {
-    const u = document.createElement("script");
-    return u.src = "https://accounts.google.com/gsi/client", u.async = !0, u.defer = !0, u.nonce = s, u.onload = () => {
-      var l;
-      m(!0), (l = a.current) === null || l === void 0 || l.call(a);
-    }, u.onerror = () => {
-      var l;
-      m(!1), (l = b.current) === null || l === void 0 || l.call(b);
-    }, document.body.appendChild(u), () => {
-      document.body.removeChild(u);
-    };
-  }, [s]), N;
-}
-const eo = So(null);
-function $o({ clientId: o, nonce: s, onScriptLoadSuccess: d, onScriptLoadError: p, children: N }) {
-  const m = Io({
-    nonce: s,
-    onScriptLoadSuccess: d,
-    onScriptLoadError: p
-  }), a = Po(() => ({
-    clientId: o,
-    scriptLoadedSuccessfully: m
-  }), [o, m]);
-  return ue.createElement(eo.Provider, { value: a }, N);
-}
-function Bo() {
-  const o = To(eo);
-  if (!o)
-    throw new Error("Google OAuth components must be used within GoogleOAuthProvider");
-  return o;
-}
-function Mo({ flow: o = "implicit", scope: s = "", onSuccess: d, onError: p, onNonOAuthError: N, overrideScope: m, state: a, ...b }) {
-  const { clientId: u, scriptLoadedSuccessfully: l } = Bo(), x = q(), _ = q(d);
-  _.current = d;
-  const k = q(p);
-  k.current = p;
-  const R = q(N);
-  R.current = N, Ee(() => {
-    var S, g;
-    if (!l)
-      return;
-    const D = o === "implicit" ? "initTokenClient" : "initCodeClient", G = (g = (S = window?.google) === null || S === void 0 ? void 0 : S.accounts) === null || g === void 0 ? void 0 : g.oauth2[D]({
-      client_id: u,
-      scope: m ? s : `openid profile email ${s}`,
-      callback: (W) => {
-        var O, B;
-        if (W.error)
-          return (O = k.current) === null || O === void 0 ? void 0 : O.call(k, W);
-        (B = _.current) === null || B === void 0 || B.call(_, W);
-      },
-      error_callback: (W) => {
-        var O;
-        (O = R.current) === null || O === void 0 || O.call(R, W);
-      },
-      state: a,
-      ...b
-    });
-    x.current = G;
-  }, [u, l, o, s, a]);
-  const U = ze((S) => {
-    var g;
-    return (g = x.current) === null || g === void 0 ? void 0 : g.requestAccessToken(S);
-  }, []), j = ze(() => {
-    var S;
-    return (S = x.current) === null || S === void 0 ? void 0 : S.requestCode();
-  }, []);
-  return o === "implicit" ? U : j;
-}
-const Xe = ({
+var n = Oo();
+const He = ({
   brandConfig: o,
-  title: s,
+  title: a,
   subtitle: d
-}) => /* @__PURE__ */ n.jsxDEV(C, { sx: { textAlign: "center", mb: 4 }, children: [
-  o.logo && /* @__PURE__ */ n.jsxDEV(C, { sx: { mb: 2 }, children: typeof o.logo == "string" ? /* @__PURE__ */ n.jsxDEV(
+}) => /* @__PURE__ */ n.jsxDEV(S, { sx: { textAlign: "center", mb: 4 }, children: [
+  o.logo && /* @__PURE__ */ n.jsxDEV(S, { sx: { mb: 2 }, children: typeof o.logo == "string" ? /* @__PURE__ */ n.jsxDEV(
     "img",
     {
       src: o.logo,
@@ -734,8 +663,8 @@ const Xe = ({
     lineNumber: 19,
     columnNumber: 5
   }, void 0),
-  s && /* @__PURE__ */ n.jsxDEV(
-    $,
+  a && /* @__PURE__ */ n.jsxDEV(
+    A,
     {
       variant: "h4",
       component: "h1",
@@ -745,7 +674,7 @@ const Xe = ({
         fontWeight: 600,
         fontSize: { xs: "1.75rem", sm: "2rem" }
       },
-      children: s
+      children: a
     },
     void 0,
     !1,
@@ -757,7 +686,7 @@ const Xe = ({
     void 0
   ),
   d && /* @__PURE__ */ n.jsxDEV(
-    $,
+    A,
     {
       variant: "body1",
       sx: {
@@ -781,63 +710,63 @@ const Xe = ({
   lineNumber: 17,
   columnNumber: 3
 }, void 0);
-function oo(o, s, d) {
-  return d === void 0 && (d = {}), function(p, N, m) {
+function Ke(o, a, d) {
+  return d === void 0 && (d = {}), function(x, E, g) {
     try {
-      return Promise.resolve((function(a, b) {
+      return Promise.resolve((function(c, y) {
         try {
-          var u = (s != null && s.context && process.env.NODE_ENV === "development" && console.warn("You should not used the yup options context. Please, use the 'useForm' context object instead"), Promise.resolve(o[d.mode === "sync" ? "validateSync" : "validate"](p, Object.assign({ abortEarly: !1 }, s, { context: N }))).then(function(l) {
-            return m.shouldUseNativeValidation && Vo({}, m), { values: d.raw ? Object.assign({}, p) : l, errors: {} };
+          var p = (a != null && a.context && process.env.NODE_ENV === "development" && console.warn("You should not used the yup options context. Please, use the 'useForm' context object instead"), Promise.resolve(o[d.mode === "sync" ? "validateSync" : "validate"](x, Object.assign({ abortEarly: !1 }, a, { context: E }))).then(function(m) {
+            return g.shouldUseNativeValidation && To({}, g), { values: d.raw ? Object.assign({}, x) : m, errors: {} };
           }));
-        } catch (l) {
-          return b(l);
+        } catch (m) {
+          return y(m);
         }
-        return u && u.then ? u.then(void 0, b) : u;
-      })(0, function(a) {
-        if (!a.inner) throw a;
-        return { values: {}, errors: Fo((b = a, u = !m.shouldUseNativeValidation && m.criteriaMode === "all", (b.inner || []).reduce(function(l, x) {
-          if (l[x.path] || (l[x.path] = { message: x.message, type: x.type }), u) {
-            var _ = l[x.path].types, k = _ && _[x.type];
-            l[x.path] = _o(x.path, u, l, x.type, k ? [].concat(k, x.message) : x.message);
+        return p && p.then ? p.then(void 0, y) : p;
+      })(0, function(c) {
+        if (!c.inner) throw c;
+        return { values: {}, errors: So((y = c, p = !g.shouldUseNativeValidation && g.criteriaMode === "all", (y.inner || []).reduce(function(m, h) {
+          if (m[h.path] || (m[h.path] = { message: h.message, type: h.type }), p) {
+            var O = m[h.path].types, w = O && O[h.type];
+            m[h.path] = Po(h.path, p, m, h.type, w ? [].concat(w, h.message) : h.message);
           }
-          return l;
-        }, {})), m) };
-        var b, u;
+          return m;
+        }, {})), g) };
+        var y, p;
       }));
-    } catch (a) {
-      return Promise.reject(a);
+    } catch (c) {
+      return Promise.reject(c);
     }
   };
 }
-const Go = X.object({
-  email: X.string().email("Please enter a valid email address").required("Email is required"),
-  password: X.string().min(6, "Password must be at least 6 characters").required("Password is required")
-}), Yo = ({
+const Uo = z.object({
+  email: z.string().email("Please enter a valid email address").required("Email is required"),
+  password: z.string().min(6, "Password must be at least 6 characters").required("Password is required")
+}), Lo = ({
   brandConfig: o,
-  loginState: s,
+  loginState: a,
   onSubmit: d,
-  onForgetPassword: p,
-  enableForgetPassword: N = !0
+  onForgetPassword: x,
+  enableForgetPassword: E = !0
 }) => {
-  const [m, a] = le(!1), {
-    register: b,
-    handleSubmit: u,
-    formState: { errors: l }
-  } = Qe({
-    resolver: oo(Go)
-  }), x = s === "loading" || s === "google-loading";
-  return /* @__PURE__ */ n.jsxDEV(C, { component: "form", onSubmit: u(d), children: /* @__PURE__ */ n.jsxDEV(De, { spacing: 3, children: [
+  const [g, c] = Ne(!1), {
+    register: y,
+    handleSubmit: p,
+    formState: { errors: m }
+  } = Xe({
+    resolver: Ke(Uo)
+  }), h = a === "loading" || a === "google-loading";
+  return /* @__PURE__ */ n.jsxDEV(S, { component: "form", onSubmit: p(d), children: /* @__PURE__ */ n.jsxDEV(ke, { spacing: 3, children: [
     /* @__PURE__ */ n.jsxDEV(
-      ke,
+      be,
       {
-        ...b("email"),
+        ...y("email"),
         fullWidth: !0,
         label: "Email Address",
         type: "email",
         placeholder: "Enter your email",
-        error: !!l.email,
-        helperText: l.email?.message,
-        disabled: x,
+        error: !!m.email,
+        helperText: m.email?.message,
+        disabled: h,
         sx: {
           "& .MuiOutlinedInput-root": {
             borderRadius: 1.4,
@@ -863,16 +792,16 @@ const Go = X.object({
       void 0
     ),
     /* @__PURE__ */ n.jsxDEV(
-      ke,
+      be,
       {
-        ...b("password"),
+        ...y("password"),
         fullWidth: !0,
         label: "Password",
-        type: m ? "text" : "password",
+        type: g ? "text" : "password",
         placeholder: "Enter your password",
-        error: !!l.password,
-        helperText: l.password?.message,
-        disabled: x,
+        error: !!m.password,
+        helperText: m.password?.message,
+        disabled: h,
         sx: {
           "& .MuiOutlinedInput-root": {
             borderRadius: 1.4,
@@ -890,11 +819,11 @@ const Go = X.object({
         slotProps: {
           input: {
             endAdornment: /* @__PURE__ */ n.jsxDEV(
-              I,
+              U,
               {
                 size: "small",
-                onClick: () => a(!m),
-                disabled: x,
+                onClick: () => c(!g),
+                disabled: h,
                 sx: {
                   color: o.primaryColor,
                   textTransform: "none",
@@ -903,7 +832,7 @@ const Go = X.object({
                     backgroundColor: `${o.primaryColor}10`
                   }
                 },
-                children: m ? "Hide" : "Show"
+                children: g ? "Hide" : "Show"
               },
               void 0,
               !1,
@@ -927,13 +856,13 @@ const Go = X.object({
       void 0
     ),
     /* @__PURE__ */ n.jsxDEV(
-      I,
+      U,
       {
         type: "submit",
         fullWidth: !0,
         variant: "contained",
         size: "large",
-        disabled: x,
+        disabled: h,
         sx: {
           py: 1.5,
           backgroundColor: o.primaryColor,
@@ -950,7 +879,7 @@ const Go = X.object({
             backgroundColor: `${o.primaryColor}60`
           }
         },
-        children: s === "loading" ? /* @__PURE__ */ n.jsxDEV(we, { size: 24, color: "inherit" }, void 0, !1, {
+        children: a === "loading" ? /* @__PURE__ */ n.jsxDEV(Ee, { size: 24, color: "inherit" }, void 0, !1, {
           fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LoginForm.tsx",
           lineNumber: 147,
           columnNumber: 7
@@ -965,12 +894,12 @@ const Go = X.object({
       },
       void 0
     ),
-    N && p && /* @__PURE__ */ n.jsxDEV(C, { textAlign: "right", sx: { mt: 1 }, children: /* @__PURE__ */ n.jsxDEV(
-      I,
+    E && x && /* @__PURE__ */ n.jsxDEV(S, { textAlign: "right", sx: { mt: 1 }, children: /* @__PURE__ */ n.jsxDEV(
+      U,
       {
         variant: "text",
-        onClick: p,
-        disabled: x,
+        onClick: x,
+        disabled: h,
         sx: {
           textTransform: "none",
           color: o.primaryColor,
@@ -1004,16 +933,16 @@ const Go = X.object({
     lineNumber: 48,
     columnNumber: 3
   }, void 0);
-}, zo = ({
+}, Ao = ({
   brandConfig: o,
-  loginState: s,
+  loginState: a,
   onClick: d,
-  showDivider: p = !1
+  showDivider: x = !1
 }) => {
-  const N = s === "loading" || s === "google-loading";
+  const E = a === "loading" || a === "google-loading";
   return /* @__PURE__ */ n.jsxDEV(n.Fragment, { children: [
-    p && /* @__PURE__ */ n.jsxDEV(Co, { sx: { my: 1 }, children: /* @__PURE__ */ n.jsxDEV(
-      $,
+    x && /* @__PURE__ */ n.jsxDEV(wo, { sx: { my: 1 }, children: /* @__PURE__ */ n.jsxDEV(
+      A,
       {
         variant: "body2",
         sx: {
@@ -1038,22 +967,22 @@ const Go = X.object({
       columnNumber: 5
     }, void 0),
     /* @__PURE__ */ n.jsxDEV(
-      I,
+      U,
       {
         fullWidth: !0,
         variant: "outlined",
         size: "large",
-        startIcon: s === "google-loading" ? /* @__PURE__ */ n.jsxDEV(we, { size: 20, color: "inherit" }, void 0, !1, {
+        startIcon: a === "google-loading" ? /* @__PURE__ */ n.jsxDEV(Ee, { size: 20, color: "inherit" }, void 0, !1, {
           fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/GoogleSignInButton.tsx",
           lineNumber: 46,
           columnNumber: 7
-        }, void 0) : /* @__PURE__ */ n.jsxDEV(Lo, {}, void 0, !1, {
+        }, void 0) : /* @__PURE__ */ n.jsxDEV(Co, {}, void 0, !1, {
           fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/GoogleSignInButton.tsx",
           lineNumber: 48,
           columnNumber: 7
         }, void 0),
         onClick: d,
-        disabled: N,
+        disabled: E,
         sx: {
           py: 1.5,
           borderRadius: 1.4,
@@ -1085,7 +1014,7 @@ const Go = X.object({
             color: o.textColor
           }
         },
-        children: s === "google-loading" ? "Signing in..." : "Continue with Google"
+        children: a === "google-loading" ? "Signing in..." : "Continue with Google"
       },
       void 0,
       !1,
@@ -1101,32 +1030,32 @@ const Go = X.object({
     lineNumber: 23,
     columnNumber: 3
   }, void 0);
-}, qo = X.object({
-  email: X.string().email("Please enter a valid email address").required("Email is required")
-}), Ho = ({
+}, Wo = z.object({
+  email: z.string().email("Please enter a valid email address").required("Email is required")
+}), Io = ({
   brandConfig: o,
-  loginState: s,
+  loginState: a,
   error: d,
-  onSubmit: p,
-  onBackToLogin: N,
-  onCloseError: m
+  onSubmit: x,
+  onBackToLogin: E,
+  onCloseError: g
 }) => {
   const {
-    register: a,
-    handleSubmit: b,
-    formState: { errors: u }
-  } = Qe({
-    resolver: oo(qo)
-  }), l = s === "forget-password-loading";
+    register: c,
+    handleSubmit: y,
+    formState: { errors: p }
+  } = Xe({
+    resolver: Ke(Wo)
+  }), m = a === "forget-password-loading";
   return /* @__PURE__ */ n.jsxDEV(n.Fragment, { children: [
-    d && /* @__PURE__ */ n.jsxDEV(Ze, { severity: "error", sx: { mb: 3 }, onClose: m, children: d.message }, void 0, !1, {
+    d && /* @__PURE__ */ n.jsxDEV(Je, { severity: "error", sx: { mb: 3 }, onClose: g, children: d.message }, void 0, !1, {
       fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/ForgetPasswordForm.tsx",
       lineNumber: 58,
       columnNumber: 5
     }, void 0),
-    /* @__PURE__ */ n.jsxDEV(C, { sx: { textAlign: "center", mb: 3 }, children: [
+    /* @__PURE__ */ n.jsxDEV(S, { sx: { textAlign: "center", mb: 3 }, children: [
       /* @__PURE__ */ n.jsxDEV(
-        $,
+        A,
         {
           variant: "h5",
           component: "h1",
@@ -1148,7 +1077,7 @@ const Go = X.object({
         void 0
       ),
       /* @__PURE__ */ n.jsxDEV(
-        $,
+        A,
         {
           variant: "body1",
           sx: {
@@ -1173,18 +1102,18 @@ const Go = X.object({
       lineNumber: 64,
       columnNumber: 4
     }, void 0),
-    /* @__PURE__ */ n.jsxDEV(C, { component: "form", onSubmit: b(p), children: /* @__PURE__ */ n.jsxDEV(De, { spacing: 3, children: [
+    /* @__PURE__ */ n.jsxDEV(S, { component: "form", onSubmit: y(x), children: /* @__PURE__ */ n.jsxDEV(ke, { spacing: 3, children: [
       /* @__PURE__ */ n.jsxDEV(
-        ke,
+        be,
         {
-          ...a("email"),
+          ...c("email"),
           fullWidth: !0,
           label: "Email Address",
           type: "email",
           placeholder: "Enter your email",
-          error: !!u.email,
-          helperText: u.email?.message,
-          disabled: l,
+          error: !!p.email,
+          helperText: p.email?.message,
+          disabled: m,
           sx: {
             "& .MuiOutlinedInput-root": {
               borderRadius: 1.4,
@@ -1210,13 +1139,13 @@ const Go = X.object({
         void 0
       ),
       /* @__PURE__ */ n.jsxDEV(
-        I,
+        U,
         {
           type: "submit",
           fullWidth: !0,
           variant: "contained",
           size: "large",
-          disabled: l,
+          disabled: m,
           sx: {
             py: 1.5,
             backgroundColor: o.primaryColor,
@@ -1233,7 +1162,7 @@ const Go = X.object({
               backgroundColor: `${o.primaryColor}60`
             }
           },
-          children: l ? /* @__PURE__ */ n.jsxDEV(we, { size: 24, color: "inherit" }, void 0, !1, {
+          children: m ? /* @__PURE__ */ n.jsxDEV(Ee, { size: 24, color: "inherit" }, void 0, !1, {
             fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/ForgetPasswordForm.tsx",
             lineNumber: 143,
             columnNumber: 8
@@ -1249,12 +1178,12 @@ const Go = X.object({
         void 0
       ),
       /* @__PURE__ */ n.jsxDEV(
-        I,
+        U,
         {
           fullWidth: !0,
           variant: "text",
-          onClick: N,
-          disabled: l,
+          onClick: E,
+          disabled: m,
           sx: {
             textTransform: "none",
             color: o.primaryColor,
@@ -1288,17 +1217,17 @@ const Go = X.object({
     lineNumber: 56,
     columnNumber: 3
   }, void 0);
-}, Jo = ({
+}, $o = ({
   brandConfig: o,
-  loginState: s,
+  loginState: a,
   onVerify: d,
-  onVerifySuccess: p,
-  onVerifyError: N,
-  onResend: m,
-  onBackToSignIn: a
+  onVerifySuccess: x,
+  onVerifyError: E,
+  onResend: g,
+  onBackToSignIn: c
 }) => /* @__PURE__ */ n.jsxDEV(n.Fragment, { children: [
-  /* @__PURE__ */ n.jsxDEV(C, { sx: { textAlign: "center", mb: 3 }, children: [
-    o.logo && /* @__PURE__ */ n.jsxDEV(C, { sx: { mb: 2 }, children: typeof o.logo == "string" ? /* @__PURE__ */ n.jsxDEV(
+  /* @__PURE__ */ n.jsxDEV(S, { sx: { textAlign: "center", mb: 3 }, children: [
+    o.logo && /* @__PURE__ */ n.jsxDEV(S, { sx: { mb: 2 }, children: typeof o.logo == "string" ? /* @__PURE__ */ n.jsxDEV(
       "img",
       {
         src: o.logo,
@@ -1323,7 +1252,7 @@ const Go = X.object({
       columnNumber: 6
     }, void 0),
     /* @__PURE__ */ n.jsxDEV(
-      $,
+      A,
       {
         variant: "h5",
         component: "h1",
@@ -1349,12 +1278,12 @@ const Go = X.object({
     columnNumber: 4
   }, void 0),
   /* @__PURE__ */ n.jsxDEV(
-    Oo,
+    Vo,
     {
       onVerify: d,
-      onVerifySuccess: p,
-      onVerifyError: N,
-      onResend: m,
+      onVerifySuccess: x,
+      onVerifyError: E,
+      onResend: g,
       instructionText: "Please enter the 6-digit code sent to your email",
       showResend: !0,
       resendCooldown: 60,
@@ -1370,11 +1299,11 @@ const Go = X.object({
     },
     void 0
   ),
-  s === "otp-error" && /* @__PURE__ */ n.jsxDEV(C, { textAlign: "center", sx: { mt: 3 }, children: /* @__PURE__ */ n.jsxDEV(
-    I,
+  a === "otp-error" && /* @__PURE__ */ n.jsxDEV(S, { textAlign: "center", sx: { mt: 3 }, children: /* @__PURE__ */ n.jsxDEV(
+    U,
     {
       variant: "text",
-      onClick: a,
+      onClick: c,
       sx: {
         textTransform: "none",
         color: o.primaryColor,
@@ -1402,12 +1331,12 @@ const Go = X.object({
   fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/OTPVerification.tsx",
   lineNumber: 26,
   columnNumber: 3
-}, void 0), Xo = ({
+}, void 0), Bo = ({
   brandConfig: o,
-  onBackToLogin: s
+  onBackToLogin: a
 }) => /* @__PURE__ */ n.jsxDEV(n.Fragment, { children: [
-  /* @__PURE__ */ n.jsxDEV(C, { sx: { textAlign: "center", mb: 3 }, children: [
-    o.logo && /* @__PURE__ */ n.jsxDEV(C, { sx: { mb: 2 }, children: typeof o.logo == "string" ? /* @__PURE__ */ n.jsxDEV(
+  /* @__PURE__ */ n.jsxDEV(S, { sx: { textAlign: "center", mb: 3 }, children: [
+    o.logo && /* @__PURE__ */ n.jsxDEV(S, { sx: { mb: 2 }, children: typeof o.logo == "string" ? /* @__PURE__ */ n.jsxDEV(
       "img",
       {
         src: o.logo,
@@ -1432,7 +1361,7 @@ const Go = X.object({
       columnNumber: 6
     }, void 0),
     /* @__PURE__ */ n.jsxDEV(
-      $,
+      A,
       {
         variant: "h5",
         component: "h1",
@@ -1454,7 +1383,7 @@ const Go = X.object({
       void 0
     ),
     /* @__PURE__ */ n.jsxDEV(
-      $,
+      A,
       {
         variant: "body1",
         sx: {
@@ -1479,11 +1408,11 @@ const Go = X.object({
     lineNumber: 17,
     columnNumber: 4
   }, void 0),
-  /* @__PURE__ */ n.jsxDEV(C, { textAlign: "center", sx: { mt: 3 }, children: /* @__PURE__ */ n.jsxDEV(
-    I,
+  /* @__PURE__ */ n.jsxDEV(S, { textAlign: "center", sx: { mt: 3 }, children: /* @__PURE__ */ n.jsxDEV(
+    U,
     {
       variant: "contained",
-      onClick: s,
+      onClick: a,
       sx: {
         py: 1.5,
         px: 4,
@@ -1517,11 +1446,11 @@ const Go = X.object({
   fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/ForgetPasswordSuccess.tsx",
   lineNumber: 15,
   columnNumber: 3
-}, void 0), ae = ({
+}, void 0), ne = ({
   children: o,
-  brandConfig: s
+  brandConfig: a
 }) => /* @__PURE__ */ n.jsxDEV(
-  C,
+  S,
   {
     sx: {
       // Mobile: full screen with proper centering
@@ -1538,7 +1467,7 @@ const Go = X.object({
       },
       borderRadius: { xs: 0, sm: 2 },
       border: { xs: "none", sm: "1px solid rgba(0, 0, 0, 0.08)" },
-      background: s.backgroundColor,
+      background: a.backgroundColor,
       display: "flex",
       flexDirection: "column",
       // Prevent horizontal overflow
@@ -1546,7 +1475,7 @@ const Go = X.object({
       boxSizing: "border-box"
     },
     children: /* @__PURE__ */ n.jsxDEV(
-      C,
+      S,
       {
         sx: {
           p: { xs: 3, sm: 4 },
@@ -1578,146 +1507,146 @@ const Go = X.object({
     columnNumber: 3
   },
   void 0
-), Ko = () => ({
+), Mo = () => ({
   primaryColor: "#1976d2",
   secondaryColor: "#42a5f5",
   backgroundColor: "#ffffff",
   textColor: "#333333",
   logoHeight: 48,
   logo: "https://via.placeholder.com/200x80/1976d2/ffffff?text=Lumora"
-}), Zo = (o) => ({
-  ...Ko(),
+}), Yo = (o) => ({
+  ...Mo(),
   ...o
-}), Qo = ({
+}), zo = ({
   onGoogleLogin: o,
-  onLoginError: s,
+  onLoginError: a,
   setLoginState: d,
-  setError: p,
-  googleLoginRef: N
+  setError: x,
+  googleLoginRef: E
 }) => {
-  const m = Mo({
-    onSuccess: (a) => {
-      d("google-loading"), p(null);
+  const g = Ro({
+    onSuccess: (c) => {
+      d("google-loading"), x(null);
       try {
-        const b = {
-          access_token: a.access_token,
-          expires_in: a.expires_in,
-          scope: a.scope,
-          token_type: a.token_type
+        const y = {
+          access_token: c.access_token,
+          expires_in: c.expires_in,
+          scope: c.scope,
+          token_type: c.token_type
         };
-        o(b), setTimeout(() => {
+        o(y), setTimeout(() => {
           d("otp-required");
         }, 1e3);
-      } catch (b) {
-        const u = b;
-        p({ message: u.message, type: "google" }), d("error"), s(u);
+      } catch (y) {
+        const p = y;
+        x({ message: p.message, type: "google" }), d("error"), a(p);
       }
     },
-    onError: (a) => {
-      p({
-        message: a.error_description || "Google sign-in failed",
+    onError: (c) => {
+      x({
+        message: c.error_description || "Google sign-in failed",
         type: "google"
-      }), d("error"), s(
-        new Error(a.error_description || "Google sign-in failed")
+      }), d("error"), a(
+        new Error(c.error_description || "Google sign-in failed")
       );
     }
   });
-  return ue.useEffect(() => {
-    N.current = m;
-  }, [m, N]), null;
-}, Ke = ({
+  return ye.useEffect(() => {
+    E.current = g;
+  }, [g, E]), null;
+}, qe = ({
   onLocalLogin: o,
-  onGoogleLogin: s,
+  onGoogleLogin: a,
   onLoginSuccess: d,
-  onLoginError: p,
-  onForgetPassword: N,
-  enableRecaptcha: m = !1,
-  recaptchaSiteKey: a,
-  googleClientId: b,
-  enableGoogleSignIn: u = !0,
-  enableLocalSignIn: l = !0,
-  enableForgetPassword: x = !0,
-  branding: _
+  onLoginError: x,
+  onForgetPassword: E,
+  enableRecaptcha: g = !1,
+  recaptchaSiteKey: c,
+  googleClientId: y,
+  enableGoogleSignIn: p = !0,
+  enableLocalSignIn: m = !0,
+  enableForgetPassword: h = !0,
+  branding: O
 }) => {
-  const [k, R] = le("idle"), [U, j] = le(null), S = ue.useRef(null), g = Zo(_);
-  if (!l && !u)
+  const [w, P] = Ne("idle"), [L, j] = Ne(null), B = ye.useRef(null), N = Yo(O);
+  if (!m && !p)
     throw new Error(
       "At least one sign-in method must be enabled (enableLocalSignIn or enableGoogleSignIn)"
     );
-  if (m && !a)
+  if (g && !c)
     throw new Error(
       "recaptchaSiteKey is required when enableRecaptcha is true"
     );
-  const D = () => window.grecaptcha.execute(a, { action: "login" }).catch(() => {
+  const D = () => window.grecaptcha.execute(c, { action: "login" }).catch(() => {
     throw new Error("reCAPTCHA verification failed");
   }), G = async () => {
-    if (!m || !a)
+    if (!g || !c)
       return "";
     if (typeof window > "u" || !window.grecaptcha)
       throw new Error("reCAPTCHA is not loaded");
-    return new Promise((y, F) => {
-      const A = () => {
-        D().then(y).catch(F);
+    return new Promise((v, V) => {
+      const F = () => {
+        D().then(v).catch(V);
       };
-      window.grecaptcha.ready(A);
+      window.grecaptcha.ready(F);
     });
-  }, W = async (y) => {
-    R("loading"), j(null);
+  }, te = async (v) => {
+    P("loading"), j(null);
     try {
-      m && await G(), await o(y.email, y.password), R("otp-required");
-    } catch (F) {
-      const A = F;
-      j({ message: A.message, type: "local" }), R("error"), p(A);
+      g && await G(), await o(v.email, v.password), P("otp-required");
+    } catch (V) {
+      const F = V;
+      j({ message: F.message, type: "local" }), P("error"), x(F);
     }
-  }, O = () => {
-    S.current && S.current();
-  }, B = async (y) => {
-    if (await new Promise((F) => setTimeout(F, 1e3)), y === "123456")
+  }, se = () => {
+    B.current && B.current();
+  }, ie = async (v) => {
+    if (await new Promise((V) => setTimeout(V, 1e3)), v === "123456")
       return { success: !0, token: "verified-token" };
     throw new Error("Invalid OTP code");
-  }, ce = (y) => {
-    R("success"), d(y);
-  }, de = (y) => {
-    j({ message: y.message, type: "otp" }), R("otp-error");
-  }, K = () => {
-    console.log("Resending OTP..."), U && U.type === "otp" && j(null);
-  }, Z = () => {
-    j(null), R("idle");
-  }, me = async (y) => {
-    if (!N) {
+  }, ae = (v) => {
+    P("success"), d(v);
+  }, le = (v) => {
+    j({ message: v.message, type: "otp" }), P("otp-error");
+  }, H = () => {
+    console.log("Resending OTP..."), L && L.type === "otp" && j(null);
+  }, q = () => {
+    j(null), P("idle");
+  }, ue = async (v) => {
+    if (!E) {
       j({
         message: "Forget password functionality is not available",
         type: "forget-password"
       });
       return;
     }
-    R("forget-password-loading"), j(null);
+    P("forget-password-loading"), j(null);
     try {
-      m && await G(), await N(y.email), R("forget-password-success");
-    } catch (F) {
-      const A = F;
-      j({ message: A.message, type: "forget-password" }), R("forget-password"), p(A);
+      g && await G(), await E(v.email), P("forget-password-success");
+    } catch (V) {
+      const F = V;
+      j({ message: F.message, type: "forget-password" }), P("forget-password"), x(F);
     }
-  }, Q = () => {
-    j(null), R("forget-password");
-  }, V = () => {
-    j(null), R("idle");
+  }, J = () => {
+    j(null), P("forget-password");
+  }, C = () => {
+    j(null), P("idle");
   };
-  return Ee(() => {
-    if (m && a && typeof window < "u") {
-      const y = document.createElement("script");
-      y.src = `https://www.google.com/recaptcha/enterprise.js?render=${a}`, y.async = !0, y.defer = !0, document.head.appendChild(y);
+  return Do(() => {
+    if (g && c && typeof window < "u") {
+      const v = document.createElement("script");
+      v.src = `https://www.google.com/recaptcha/enterprise.js?render=${c}`, v.async = !0, v.defer = !0, document.head.appendChild(v);
     }
-  }, [m, a]), k === "otp-required" || k === "otp-error" ? /* @__PURE__ */ n.jsxDEV(ae, { brandConfig: g, children: /* @__PURE__ */ n.jsxDEV(
-    Jo,
+  }, [g, c]), w === "otp-required" || w === "otp-error" ? /* @__PURE__ */ n.jsxDEV(ne, { brandConfig: N, children: /* @__PURE__ */ n.jsxDEV(
+    $o,
     {
-      brandConfig: g,
-      loginState: k,
-      onVerify: B,
-      onVerifySuccess: ce,
-      onVerifyError: de,
-      onResend: K,
-      onBackToSignIn: Z
+      brandConfig: N,
+      loginState: w,
+      onVerify: ie,
+      onVerifySuccess: ae,
+      onVerifyError: le,
+      onResend: H,
+      onBackToSignIn: q
     },
     void 0,
     !1,
@@ -1731,11 +1660,11 @@ const Go = X.object({
     fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
     lineNumber: 313,
     columnNumber: 4
-  }, void 0) : k === "forget-password-success" ? /* @__PURE__ */ n.jsxDEV(ae, { brandConfig: g, children: /* @__PURE__ */ n.jsxDEV(
-    Xo,
+  }, void 0) : w === "forget-password-success" ? /* @__PURE__ */ n.jsxDEV(ne, { brandConfig: N, children: /* @__PURE__ */ n.jsxDEV(
+    Bo,
     {
-      brandConfig: g,
-      onBackToLogin: V
+      brandConfig: N,
+      onBackToLogin: C
     },
     void 0,
     !1,
@@ -1749,20 +1678,20 @@ const Go = X.object({
     fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
     lineNumber: 330,
     columnNumber: 4
-  }, void 0) : k === "forget-password" || k === "forget-password-loading" ? /* @__PURE__ */ n.jsxDEV(ae, { brandConfig: g, children: [
-    /* @__PURE__ */ n.jsxDEV(Xe, { brandConfig: g }, void 0, !1, {
+  }, void 0) : w === "forget-password" || w === "forget-password-loading" ? /* @__PURE__ */ n.jsxDEV(ne, { brandConfig: N, children: [
+    /* @__PURE__ */ n.jsxDEV(He, { brandConfig: N }, void 0, !1, {
       fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
       lineNumber: 346,
       columnNumber: 5
     }, void 0),
     /* @__PURE__ */ n.jsxDEV(
-      Ho,
+      Io,
       {
-        brandConfig: g,
-        loginState: k,
-        error: U,
-        onSubmit: me,
-        onBackToLogin: V,
+        brandConfig: N,
+        loginState: w,
+        error: L,
+        onSubmit: ue,
+        onBackToLogin: C,
         onCloseError: () => j(null)
       },
       void 0,
@@ -1778,13 +1707,13 @@ const Go = X.object({
     fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
     lineNumber: 345,
     columnNumber: 4
-  }, void 0) : /* @__PURE__ */ n.jsxDEV(ae, { brandConfig: g, children: [
+  }, void 0) : /* @__PURE__ */ n.jsxDEV(ne, { brandConfig: N, children: [
     /* @__PURE__ */ n.jsxDEV(
-      Xe,
+      He,
       {
-        brandConfig: g,
-        title: g.companyName ? `Welcome to ${g.companyName}` : "Sign In",
-        subtitle: g.tagline
+        brandConfig: N,
+        title: N.companyName ? `Welcome to ${N.companyName}` : "Sign In",
+        subtitle: N.tagline
       },
       void 0,
       !1,
@@ -1795,13 +1724,13 @@ const Go = X.object({
       },
       void 0
     ),
-    U && /* @__PURE__ */ n.jsxDEV(
-      Ze,
+    L && /* @__PURE__ */ n.jsxDEV(
+      Je,
       {
         severity: "error",
         sx: { mb: 3 },
         onClose: () => j(null),
-        children: U.message
+        children: L.message
       },
       void 0,
       !1,
@@ -1812,15 +1741,15 @@ const Go = X.object({
       },
       void 0
     ),
-    /* @__PURE__ */ n.jsxDEV(De, { spacing: 3, children: [
-      l && /* @__PURE__ */ n.jsxDEV(
-        Yo,
+    /* @__PURE__ */ n.jsxDEV(ke, { spacing: 3, children: [
+      m && /* @__PURE__ */ n.jsxDEV(
+        Lo,
         {
-          brandConfig: g,
-          loginState: k,
-          onSubmit: W,
-          onForgetPassword: N ? Q : void 0,
-          enableForgetPassword: x
+          brandConfig: N,
+          loginState: w,
+          onSubmit: te,
+          onForgetPassword: E ? J : void 0,
+          enableForgetPassword: h
         },
         void 0,
         !1,
@@ -1831,13 +1760,13 @@ const Go = X.object({
         },
         void 0
       ),
-      u && b && /* @__PURE__ */ n.jsxDEV(
-        zo,
+      p && y && /* @__PURE__ */ n.jsxDEV(
+        Ao,
         {
-          brandConfig: g,
-          loginState: k,
-          onClick: O,
-          showDivider: l
+          brandConfig: N,
+          loginState: w,
+          onClick: se,
+          showDivider: m
         },
         void 0,
         !1,
@@ -1848,19 +1777,19 @@ const Go = X.object({
         },
         void 0
       ),
-      k === "error" && /* @__PURE__ */ n.jsxDEV(
-        I,
+      w === "error" && /* @__PURE__ */ n.jsxDEV(
+        U,
         {
           fullWidth: !0,
           variant: "text",
-          onClick: Z,
+          onClick: q,
           sx: {
             mt: 1,
-            color: g.primaryColor,
+            color: N.primaryColor,
             textTransform: "none",
             fontWeight: 500,
             "&:hover": {
-              backgroundColor: `${g.primaryColor}08`
+              backgroundColor: `${N.primaryColor}08`
             }
           },
           children: "Try Again"
@@ -1879,14 +1808,14 @@ const Go = X.object({
       lineNumber: 382,
       columnNumber: 4
     }, void 0),
-    u && b && /* @__PURE__ */ n.jsxDEV(
-      Qo,
+    p && y && /* @__PURE__ */ n.jsxDEV(
+      zo,
       {
-        onGoogleLogin: s,
-        onLoginError: p,
-        setLoginState: R,
+        onGoogleLogin: a,
+        onLoginError: x,
+        setLoginState: P,
         setError: j,
-        googleLoginRef: S
+        googleLoginRef: B
       },
       void 0,
       !1,
@@ -1902,9 +1831,9 @@ const Go = X.object({
     lineNumber: 361,
     columnNumber: 3
   }, void 0);
-}, sr = (o) => {
-  const { googleClientId: s, enableGoogleSignIn: d } = o;
-  return d && s ? /* @__PURE__ */ n.jsxDEV($o, { clientId: s, children: /* @__PURE__ */ n.jsxDEV(Ke, { ...o }, void 0, !1, {
+}, Qo = (o) => {
+  const { googleClientId: a, enableGoogleSignIn: d } = o;
+  return d && a ? /* @__PURE__ */ n.jsxDEV(jo, { clientId: a, children: /* @__PURE__ */ n.jsxDEV(qe, { ...o }, void 0, !1, {
     fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
     lineNumber: 448,
     columnNumber: 5
@@ -1912,12 +1841,12 @@ const Go = X.object({
     fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
     lineNumber: 447,
     columnNumber: 4
-  }, void 0) : /* @__PURE__ */ n.jsxDEV(Ke, { ...o }, void 0, !1, {
+  }, void 0) : /* @__PURE__ */ n.jsxDEV(qe, { ...o }, void 0, !1, {
     fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
     lineNumber: 454,
     columnNumber: 9
   }, void 0);
 };
 export {
-  sr as LumoraLogin
+  Qo as LumoraLogin
 };
