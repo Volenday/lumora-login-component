@@ -1,7 +1,7 @@
 import ye, { useState as Ne, useEffect as Do } from "react";
 import { Box as S, Typography as A, Stack as ke, TextField as be, Button as U, CircularProgress as Ee, Divider as wo, Alert as Je } from "@mui/material";
-import { GoogleOAuthProvider as jo, useGoogleLogin as Ro } from "@react-oauth/google";
-import { appendErrors as Po, useForm as Xe } from "react-hook-form";
+import { GoogleOAuthProvider as jo, useGoogleLogin as Po } from "@react-oauth/google";
+import { appendErrors as Ro, useForm as Xe } from "react-hook-form";
 import { validateFieldsNatively as To, toNestErrors as So } from "@hookform/resolvers";
 import * as z from "yup";
 import { Google as Co } from "@mui/icons-material";
@@ -36,7 +36,7 @@ var re = {};
 var ze;
 function Fo() {
   return ze || (ze = 1, process.env.NODE_ENV !== "production" && (function() {
-    var o = ye, a = Symbol.for("react.element"), d = Symbol.for("react.portal"), x = Symbol.for("react.fragment"), E = Symbol.for("react.strict_mode"), g = Symbol.for("react.profiler"), c = Symbol.for("react.provider"), y = Symbol.for("react.context"), p = Symbol.for("react.forward_ref"), m = Symbol.for("react.suspense"), h = Symbol.for("react.suspense_list"), O = Symbol.for("react.memo"), w = Symbol.for("react.lazy"), P = Symbol.for("react.offscreen"), L = Symbol.iterator, j = "@@iterator";
+    var o = ye, i = Symbol.for("react.element"), m = Symbol.for("react.portal"), x = Symbol.for("react.fragment"), E = Symbol.for("react.strict_mode"), p = Symbol.for("react.profiler"), c = Symbol.for("react.provider"), y = Symbol.for("react.context"), g = Symbol.for("react.forward_ref"), d = Symbol.for("react.suspense"), h = Symbol.for("react.suspense_list"), O = Symbol.for("react.memo"), w = Symbol.for("react.lazy"), R = Symbol.for("react.offscreen"), L = Symbol.iterator, j = "@@iterator";
     function B(e) {
       if (e === null || typeof e != "object")
         return null;
@@ -61,10 +61,10 @@ function Fo() {
         f.unshift("Warning: " + r), Function.prototype.apply.call(console[e], console, f);
       }
     }
-    var te = !1, se = !1, ie = !1, ae = !1, le = !1, H;
+    var te = !1, se = !1, ae = !1, ie = !1, le = !1, H;
     H = Symbol.for("react.module.reference");
     function q(e) {
-      return !!(typeof e == "string" || typeof e == "function" || e === x || e === g || le || e === E || e === m || e === h || ae || e === P || te || se || ie || typeof e == "object" && e !== null && (e.$$typeof === w || e.$$typeof === O || e.$$typeof === c || e.$$typeof === y || e.$$typeof === p || // This needs to include all possible module reference object
+      return !!(typeof e == "string" || typeof e == "function" || e === x || e === p || le || e === E || e === d || e === h || ie || e === R || te || se || ae || typeof e == "object" && e !== null && (e.$$typeof === w || e.$$typeof === O || e.$$typeof === c || e.$$typeof === y || e.$$typeof === g || // This needs to include all possible module reference object
       // types supported by any Flight configuration anywhere since
       // we don't know which Flight build this will end up being used
       // with.
@@ -90,13 +90,13 @@ function Fo() {
       switch (e) {
         case x:
           return "Fragment";
-        case d:
+        case m:
           return "Portal";
-        case g:
+        case p:
           return "Profiler";
         case E:
           return "StrictMode";
-        case m:
+        case d:
           return "Suspense";
         case h:
           return "SuspenseList";
@@ -109,7 +109,7 @@ function Fo() {
           case c:
             var t = e;
             return J(t._context) + ".Provider";
-          case p:
+          case g:
             return ue(e, e.render, "ForwardRef");
           case O:
             var s = e.displayName || null;
@@ -125,14 +125,14 @@ function Fo() {
         }
       return null;
     }
-    var v = Object.assign, V = 0, F, De, we, je, Re, Pe, Te;
+    var v = Object.assign, V = 0, F, De, we, je, Pe, Re, Te;
     function Se() {
     }
     Se.__reactDisabledLog = !0;
     function Ze() {
       {
         if (V === 0) {
-          F = console.log, De = console.info, we = console.warn, je = console.error, Re = console.group, Pe = console.groupCollapsed, Te = console.groupEnd;
+          F = console.log, De = console.info, we = console.warn, je = console.error, Pe = console.group, Re = console.groupCollapsed, Te = console.groupEnd;
           var e = {
             configurable: !0,
             enumerable: !0,
@@ -174,10 +174,10 @@ function Fo() {
               value: je
             }),
             group: v({}, e, {
-              value: Re
+              value: Pe
             }),
             groupCollapsed: v({}, e, {
-              value: Pe
+              value: Re
             }),
             groupEnd: v({}, e, {
               value: Te
@@ -187,27 +187,27 @@ function Fo() {
         V < 0 && D("disabledDepth fell below zero. This is a bug in React. Please file an issue.");
       }
     }
-    var ce = N.ReactCurrentDispatcher, me;
+    var ce = N.ReactCurrentDispatcher, de;
     function X(e, r, t) {
       {
-        if (me === void 0)
+        if (de === void 0)
           try {
             throw Error();
           } catch (u) {
             var s = u.stack.trim().match(/\n( *(at )?)/);
-            me = s && s[1] || "";
+            de = s && s[1] || "";
           }
         return `
-` + me + e;
+` + de + e;
       }
     }
-    var de = !1, K;
+    var me = !1, K;
     {
       var eo = typeof WeakMap == "function" ? WeakMap : Map;
       K = new eo();
     }
     function Ce(e, r) {
-      if (!e || de)
+      if (!e || me)
         return "";
       {
         var t = K.get(e);
@@ -215,7 +215,7 @@ function Fo() {
           return t;
       }
       var s;
-      de = !0;
+      me = !0;
       var u = Error.prepareStackTrace;
       Error.prepareStackTrace = void 0;
       var f;
@@ -254,17 +254,17 @@ function Fo() {
         }
       } catch (T) {
         if (T && s && typeof T.stack == "string") {
-          for (var i = T.stack.split(`
-`), R = s.stack.split(`
-`), b = i.length - 1, k = R.length - 1; b >= 1 && k >= 0 && i[b] !== R[k]; )
+          for (var a = T.stack.split(`
+`), P = s.stack.split(`
+`), b = a.length - 1, k = P.length - 1; b >= 1 && k >= 0 && a[b] !== P[k]; )
             k--;
           for (; b >= 1 && k >= 0; b--, k--)
-            if (i[b] !== R[k]) {
+            if (a[b] !== P[k]) {
               if (b !== 1 || k !== 1)
                 do
-                  if (b--, k--, k < 0 || i[b] !== R[k]) {
+                  if (b--, k--, k < 0 || a[b] !== P[k]) {
                     var _ = `
-` + i[b].replace(" at new ", " at ");
+` + a[b].replace(" at new ", " at ");
                     return e.displayName && _.includes("<anonymous>") && (_ = _.replace("<anonymous>", e.displayName)), typeof e == "function" && K.set(e, _), _;
                   }
                 while (b >= 1 && k >= 0);
@@ -272,7 +272,7 @@ function Fo() {
             }
         }
       } finally {
-        de = !1, ce.current = f, Qe(), Error.prepareStackTrace = u;
+        me = !1, ce.current = f, Qe(), Error.prepareStackTrace = u;
       }
       var $ = e ? e.displayName || e.name : "", W = $ ? X($) : "";
       return typeof e == "function" && K.set(e, W), W;
@@ -292,14 +292,14 @@ function Fo() {
       if (typeof e == "string")
         return X(e);
       switch (e) {
-        case m:
+        case d:
           return X("Suspense");
         case h:
           return X("SuspenseList");
       }
       if (typeof e == "object")
         switch (e.$$typeof) {
-          case p:
+          case g:
             return oo(e.render);
           case O:
             return Z(e.type, r, t);
@@ -326,17 +326,17 @@ function Fo() {
         var f = Function.call.bind(M);
         for (var l in e)
           if (f(e, l)) {
-            var i = void 0;
+            var a = void 0;
             try {
               if (typeof e[l] != "function") {
-                var R = Error((s || "React class") + ": " + t + " type `" + l + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof e[l] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
-                throw R.name = "Invariant Violation", R;
+                var P = Error((s || "React class") + ": " + t + " type `" + l + "` is invalid; it must be a function, usually from the `prop-types` package, but received `" + typeof e[l] + "`.This often happens because of typos such as `PropTypes.function` instead of `PropTypes.func`.");
+                throw P.name = "Invariant Violation", P;
               }
-              i = e[l](r, l, s, t, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
+              a = e[l](r, l, s, t, null, "SECRET_DO_NOT_PASS_THIS_OR_YOU_WILL_BE_FIRED");
             } catch (b) {
-              i = b;
+              a = b;
             }
-            i && !(i instanceof Error) && (Q(u), D("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", s || "React class", t, l, typeof i), Q(null)), i instanceof Error && !(i.message in Ve) && (Ve[i.message] = !0, Q(u), D("Failed %s type: %s", t, i.message), Q(null));
+            a && !(a instanceof Error) && (Q(u), D("%s: type specification of %s `%s` is invalid; the type checker function must return `null` or an `Error` but returned a %s. You may have forgotten to pass an argument to the type checker creator (arrayOf, instanceOf, objectOf, oneOf, oneOfType, and shape all require an argument).", s || "React class", t, l, typeof a), Q(null)), a instanceof Error && !(a.message in Ve) && (Ve[a.message] = !0, Q(u), D("Failed %s type: %s", t, a.message), Q(null));
           }
       }
     }
@@ -350,7 +350,7 @@ function Fo() {
         return t;
       }
     }
-    function io(e) {
+    function ao(e) {
       try {
         return Fe(e), !1;
       } catch {
@@ -361,16 +361,16 @@ function Fo() {
       return "" + e;
     }
     function Oe(e) {
-      if (io(e))
+      if (ao(e))
         return D("The provided key is an unsupported type %s. This value must be coerced to a string before before using it here.", so(e)), Fe(e);
     }
-    var Y = N.ReactCurrentOwner, ao = {
+    var Y = N.ReactCurrentOwner, io = {
       key: !0,
       ref: !0,
       __self: !0,
       __source: !0
-    }, Ue, Le, ge;
-    ge = {};
+    }, Ue, Le, pe;
+    pe = {};
     function lo(e) {
       if (M.call(e, "ref")) {
         var r = Object.getOwnPropertyDescriptor(e, "ref").get;
@@ -390,7 +390,7 @@ function Fo() {
     function co(e, r) {
       if (typeof e.ref == "string" && Y.current && r && Y.current.stateNode !== r) {
         var t = C(Y.current.type);
-        ge[t] || (D('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', C(Y.current.type), e.ref), ge[t] = !0);
+        pe[t] || (D('Component "%s" contains the string ref "%s". Support for string refs will be removed in a future major release. This case cannot be automatically converted to an arrow function. We ask you to manually fix this case by using useRef() or createRef() instead. Learn more about using refs safely here: https://reactjs.org/link/strict-mode-string-ref', C(Y.current.type), e.ref), pe[t] = !0);
       }
     }
     function mo(e, r) {
@@ -415,10 +415,10 @@ function Fo() {
         });
       }
     }
-    var go = function(e, r, t, s, u, f, l) {
-      var i = {
+    var po = function(e, r, t, s, u, f, l) {
+      var a = {
         // This tag allows us to uniquely identify this as a React Element
-        $$typeof: a,
+        $$typeof: i,
         // Built-in properties that belong on the element
         type: e,
         key: r,
@@ -427,42 +427,42 @@ function Fo() {
         // Record the component responsible for creating this element.
         _owner: f
       };
-      return i._store = {}, Object.defineProperty(i._store, "validated", {
+      return a._store = {}, Object.defineProperty(a._store, "validated", {
         configurable: !1,
         enumerable: !1,
         writable: !0,
         value: !1
-      }), Object.defineProperty(i, "_self", {
+      }), Object.defineProperty(a, "_self", {
         configurable: !1,
         enumerable: !1,
         writable: !1,
         value: s
-      }), Object.defineProperty(i, "_source", {
+      }), Object.defineProperty(a, "_source", {
         configurable: !1,
         enumerable: !1,
         writable: !1,
         value: u
-      }), Object.freeze && (Object.freeze(i.props), Object.freeze(i)), i;
+      }), Object.freeze && (Object.freeze(a.props), Object.freeze(a)), a;
     };
-    function po(e, r, t, s, u) {
+    function go(e, r, t, s, u) {
       {
-        var f, l = {}, i = null, R = null;
-        t !== void 0 && (Oe(t), i = "" + t), uo(r) && (Oe(r.key), i = "" + r.key), lo(r) && (R = r.ref, co(r, u));
+        var f, l = {}, a = null, P = null;
+        t !== void 0 && (Oe(t), a = "" + t), uo(r) && (Oe(r.key), a = "" + r.key), lo(r) && (P = r.ref, co(r, u));
         for (f in r)
-          M.call(r, f) && !ao.hasOwnProperty(f) && (l[f] = r[f]);
+          M.call(r, f) && !io.hasOwnProperty(f) && (l[f] = r[f]);
         if (e && e.defaultProps) {
           var b = e.defaultProps;
           for (f in b)
             l[f] === void 0 && (l[f] = b[f]);
         }
-        if (i || R) {
+        if (a || P) {
           var k = typeof e == "function" ? e.displayName || e.name || "Unknown" : e;
-          i && mo(l, k), R && fo(l, k);
+          a && mo(l, k), P && fo(l, k);
         }
-        return go(e, i, R, u, s, Y.current, l);
+        return po(e, a, P, u, s, Y.current, l);
       }
     }
-    var pe = N.ReactCurrentOwner, Ae = N.ReactDebugCurrentFrame;
+    var ge = N.ReactCurrentOwner, Ae = N.ReactDebugCurrentFrame;
     function I(e) {
       if (e) {
         var r = e._owner, t = Z(e.type, e._source, r ? r.type : null);
@@ -473,12 +473,12 @@ function Fo() {
     var ve;
     ve = !1;
     function xe(e) {
-      return typeof e == "object" && e !== null && e.$$typeof === a;
+      return typeof e == "object" && e !== null && e.$$typeof === i;
     }
     function We() {
       {
-        if (pe.current) {
-          var e = C(pe.current.type);
+        if (ge.current) {
+          var e = C(ge.current.type);
           if (e)
             return `
 
@@ -521,7 +521,7 @@ Check the top-level render call using <` + t + ">.");
           return;
         Ie[t] = !0;
         var s = "";
-        e && e._owner && e._owner !== pe.current && (s = " It was passed a child from " + C(e._owner.type) + "."), I(e), D('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', t, s), I(null);
+        e && e._owner && e._owner !== ge.current && (s = " It was passed a child from " + C(e._owner.type) + "."), I(e), D('Each child in a list should have a unique "key" prop.%s%s See https://reactjs.org/link/warning-keys for more information.', t, s), I(null);
       }
     }
     function Be(e, r) {
@@ -551,7 +551,7 @@ Check the top-level render call using <` + t + ">.");
         var t;
         if (typeof r == "function")
           t = r.propTypes;
-        else if (typeof r == "object" && (r.$$typeof === p || // Note: Memo only checks outer props here.
+        else if (typeof r == "object" && (r.$$typeof === g || // Note: Memo only checks outer props here.
         // Inner props are checked in the reconciler.
         r.$$typeof === O))
           t = r.propTypes;
@@ -585,14 +585,14 @@ Check the top-level render call using <` + t + ">.");
       {
         var l = q(e);
         if (!l) {
-          var i = "";
-          (e === void 0 || typeof e == "object" && e !== null && Object.keys(e).length === 0) && (i += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.");
-          var R = vo(u);
-          R ? i += R : i += We();
+          var a = "";
+          (e === void 0 || typeof e == "object" && e !== null && Object.keys(e).length === 0) && (a += " You likely forgot to export your component from the file it's defined in, or you might have mixed up default and named imports.");
+          var P = vo(u);
+          P ? a += P : a += We();
           var b;
-          e === null ? b = "null" : fe(e) ? b = "array" : e !== void 0 && e.$$typeof === a ? (b = "<" + (C(e.type) || "Unknown") + " />", i = " Did you accidentally export a JSX literal instead of a component?") : b = typeof e, D("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", b, i);
+          e === null ? b = "null" : fe(e) ? b = "array" : e !== void 0 && e.$$typeof === i ? (b = "<" + (C(e.type) || "Unknown") + " />", a = " Did you accidentally export a JSX literal instead of a component?") : b = typeof e, D("React.jsx: type is invalid -- expected a string (for built-in components) or a class/function (for composite components) but got: %s.%s", b, a);
         }
-        var k = po(e, r, t, u, f);
+        var k = go(e, r, t, u, f);
         if (k == null)
           return k;
         if (l) {
@@ -634,10 +634,30 @@ function Oo() {
   return Ge || (Ge = 1, process.env.NODE_ENV === "production" ? ee.exports = _o() : ee.exports = Fo()), ee.exports;
 }
 var n = Oo();
-const He = ({
+const Uo = () => ({
+  // Company branding
+  companyName: "Lumora",
+  tagline: "Secure authentication made simple",
+  // Visual styling
+  primaryColor: "#1976d2",
+  secondaryColor: "#42a5f5",
+  backgroundColor: "#ffffff",
+  textColor: "#333333",
+  // Logo configuration
+  logoHeight: 48,
+  logo: "https://via.placeholder.com/200x80/1976d2/ffffff?text=Lumora",
+  // Forget password messaging
+  forgetPasswordTitle: "Reset Your Password",
+  forgetPasswordDescription: "Enter your email address and we will send you a secure link to reset your password.",
+  forgetPasswordSuccessTitle: "Check Your Inbox",
+  forgetPasswordSuccessDescription: "We have sent you a password reset link. Please check your email and follow the instructions to reset your password."
+}), Lo = (o) => ({
+  ...Uo(),
+  ...o
+}), He = ({
   brandConfig: o,
-  title: a,
-  subtitle: d
+  title: i,
+  subtitle: m
 }) => /* @__PURE__ */ n.jsxDEV(S, { sx: { textAlign: "center", mb: 4 }, children: [
   o.logo && /* @__PURE__ */ n.jsxDEV(S, { sx: { mb: 2 }, children: typeof o.logo == "string" ? /* @__PURE__ */ n.jsxDEV(
     "img",
@@ -663,7 +683,7 @@ const He = ({
     lineNumber: 19,
     columnNumber: 5
   }, void 0),
-  a && /* @__PURE__ */ n.jsxDEV(
+  i && /* @__PURE__ */ n.jsxDEV(
     A,
     {
       variant: "h4",
@@ -674,7 +694,7 @@ const He = ({
         fontWeight: 600,
         fontSize: { xs: "1.75rem", sm: "2rem" }
       },
-      children: a
+      children: i
     },
     void 0,
     !1,
@@ -685,7 +705,7 @@ const He = ({
     },
     void 0
   ),
-  d && /* @__PURE__ */ n.jsxDEV(
+  m && /* @__PURE__ */ n.jsxDEV(
     A,
     {
       variant: "body1",
@@ -694,7 +714,7 @@ const He = ({
         opacity: 0.7,
         fontSize: "0.95rem"
       },
-      children: d
+      children: m
     },
     void 0,
     !1,
@@ -710,52 +730,52 @@ const He = ({
   lineNumber: 17,
   columnNumber: 3
 }, void 0);
-function Ke(o, a, d) {
-  return d === void 0 && (d = {}), function(x, E, g) {
+function Ke(o, i, m) {
+  return m === void 0 && (m = {}), function(x, E, p) {
     try {
       return Promise.resolve((function(c, y) {
         try {
-          var p = (a != null && a.context && process.env.NODE_ENV === "development" && console.warn("You should not used the yup options context. Please, use the 'useForm' context object instead"), Promise.resolve(o[d.mode === "sync" ? "validateSync" : "validate"](x, Object.assign({ abortEarly: !1 }, a, { context: E }))).then(function(m) {
-            return g.shouldUseNativeValidation && To({}, g), { values: d.raw ? Object.assign({}, x) : m, errors: {} };
+          var g = (i != null && i.context && process.env.NODE_ENV === "development" && console.warn("You should not used the yup options context. Please, use the 'useForm' context object instead"), Promise.resolve(o[m.mode === "sync" ? "validateSync" : "validate"](x, Object.assign({ abortEarly: !1 }, i, { context: E }))).then(function(d) {
+            return p.shouldUseNativeValidation && To({}, p), { values: m.raw ? Object.assign({}, x) : d, errors: {} };
           }));
-        } catch (m) {
-          return y(m);
+        } catch (d) {
+          return y(d);
         }
-        return p && p.then ? p.then(void 0, y) : p;
+        return g && g.then ? g.then(void 0, y) : g;
       })(0, function(c) {
         if (!c.inner) throw c;
-        return { values: {}, errors: So((y = c, p = !g.shouldUseNativeValidation && g.criteriaMode === "all", (y.inner || []).reduce(function(m, h) {
-          if (m[h.path] || (m[h.path] = { message: h.message, type: h.type }), p) {
-            var O = m[h.path].types, w = O && O[h.type];
-            m[h.path] = Po(h.path, p, m, h.type, w ? [].concat(w, h.message) : h.message);
+        return { values: {}, errors: So((y = c, g = !p.shouldUseNativeValidation && p.criteriaMode === "all", (y.inner || []).reduce(function(d, h) {
+          if (d[h.path] || (d[h.path] = { message: h.message, type: h.type }), g) {
+            var O = d[h.path].types, w = O && O[h.type];
+            d[h.path] = Ro(h.path, g, d, h.type, w ? [].concat(w, h.message) : h.message);
           }
-          return m;
-        }, {})), g) };
-        var y, p;
+          return d;
+        }, {})), p) };
+        var y, g;
       }));
     } catch (c) {
       return Promise.reject(c);
     }
   };
 }
-const Uo = z.object({
+const Ao = z.object({
   email: z.string().email("Please enter a valid email address").required("Email is required"),
   password: z.string().min(6, "Password must be at least 6 characters").required("Password is required")
-}), Lo = ({
+}), Wo = ({
   brandConfig: o,
-  loginState: a,
-  onSubmit: d,
+  loginState: i,
+  onSubmit: m,
   onForgetPassword: x,
   enableForgetPassword: E = !0
 }) => {
-  const [g, c] = Ne(!1), {
+  const [p, c] = Ne(!1), {
     register: y,
-    handleSubmit: p,
-    formState: { errors: m }
+    handleSubmit: g,
+    formState: { errors: d }
   } = Xe({
-    resolver: Ke(Uo)
-  }), h = a === "loading" || a === "google-loading";
-  return /* @__PURE__ */ n.jsxDEV(S, { component: "form", onSubmit: p(d), children: /* @__PURE__ */ n.jsxDEV(ke, { spacing: 3, children: [
+    resolver: Ke(Ao)
+  }), h = i === "loading" || i === "google-loading";
+  return /* @__PURE__ */ n.jsxDEV(S, { component: "form", onSubmit: g(m), children: /* @__PURE__ */ n.jsxDEV(ke, { spacing: 3, children: [
     /* @__PURE__ */ n.jsxDEV(
       be,
       {
@@ -764,8 +784,8 @@ const Uo = z.object({
         label: "Email Address",
         type: "email",
         placeholder: "Enter your email",
-        error: !!m.email,
-        helperText: m.email?.message,
+        error: !!d.email,
+        helperText: d.email?.message,
         disabled: h,
         sx: {
           "& .MuiOutlinedInput-root": {
@@ -797,10 +817,10 @@ const Uo = z.object({
         ...y("password"),
         fullWidth: !0,
         label: "Password",
-        type: g ? "text" : "password",
+        type: p ? "text" : "password",
         placeholder: "Enter your password",
-        error: !!m.password,
-        helperText: m.password?.message,
+        error: !!d.password,
+        helperText: d.password?.message,
         disabled: h,
         sx: {
           "& .MuiOutlinedInput-root": {
@@ -822,7 +842,7 @@ const Uo = z.object({
               U,
               {
                 size: "small",
-                onClick: () => c(!g),
+                onClick: () => c(!p),
                 disabled: h,
                 sx: {
                   color: o.primaryColor,
@@ -832,7 +852,7 @@ const Uo = z.object({
                     backgroundColor: `${o.primaryColor}10`
                   }
                 },
-                children: g ? "Hide" : "Show"
+                children: p ? "Hide" : "Show"
               },
               void 0,
               !1,
@@ -879,7 +899,7 @@ const Uo = z.object({
             backgroundColor: `${o.primaryColor}60`
           }
         },
-        children: a === "loading" ? /* @__PURE__ */ n.jsxDEV(Ee, { size: 24, color: "inherit" }, void 0, !1, {
+        children: i === "loading" ? /* @__PURE__ */ n.jsxDEV(Ee, { size: 24, color: "inherit" }, void 0, !1, {
           fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LoginForm.tsx",
           lineNumber: 147,
           columnNumber: 7
@@ -933,13 +953,13 @@ const Uo = z.object({
     lineNumber: 48,
     columnNumber: 3
   }, void 0);
-}, Ao = ({
+}, Io = ({
   brandConfig: o,
-  loginState: a,
-  onClick: d,
+  loginState: i,
+  onClick: m,
   showDivider: x = !1
 }) => {
-  const E = a === "loading" || a === "google-loading";
+  const E = i === "loading" || i === "google-loading";
   return /* @__PURE__ */ n.jsxDEV(n.Fragment, { children: [
     x && /* @__PURE__ */ n.jsxDEV(wo, { sx: { my: 1 }, children: /* @__PURE__ */ n.jsxDEV(
       A,
@@ -972,7 +992,7 @@ const Uo = z.object({
         fullWidth: !0,
         variant: "outlined",
         size: "large",
-        startIcon: a === "google-loading" ? /* @__PURE__ */ n.jsxDEV(Ee, { size: 20, color: "inherit" }, void 0, !1, {
+        startIcon: i === "google-loading" ? /* @__PURE__ */ n.jsxDEV(Ee, { size: 20, color: "inherit" }, void 0, !1, {
           fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/GoogleSignInButton.tsx",
           lineNumber: 46,
           columnNumber: 7
@@ -981,7 +1001,7 @@ const Uo = z.object({
           lineNumber: 48,
           columnNumber: 7
         }, void 0),
-        onClick: d,
+        onClick: m,
         disabled: E,
         sx: {
           py: 1.5,
@@ -1014,7 +1034,7 @@ const Uo = z.object({
             color: o.textColor
           }
         },
-        children: a === "google-loading" ? "Signing in..." : "Continue with Google"
+        children: i === "google-loading" ? "Signing in..." : "Continue with Google"
       },
       void 0,
       !1,
@@ -1030,25 +1050,25 @@ const Uo = z.object({
     lineNumber: 23,
     columnNumber: 3
   }, void 0);
-}, Wo = z.object({
+}, $o = z.object({
   email: z.string().email("Please enter a valid email address").required("Email is required")
-}), Io = ({
+}), Bo = ({
   brandConfig: o,
-  loginState: a,
-  error: d,
+  loginState: i,
+  error: m,
   onSubmit: x,
   onBackToLogin: E,
-  onCloseError: g
+  onCloseError: p
 }) => {
   const {
     register: c,
     handleSubmit: y,
-    formState: { errors: p }
+    formState: { errors: g }
   } = Xe({
-    resolver: Ke(Wo)
-  }), m = a === "forget-password-loading";
+    resolver: Ke($o)
+  }), d = i === "forget-password-loading";
   return /* @__PURE__ */ n.jsxDEV(n.Fragment, { children: [
-    d && /* @__PURE__ */ n.jsxDEV(Je, { severity: "error", sx: { mb: 3 }, onClose: g, children: d.message }, void 0, !1, {
+    m && /* @__PURE__ */ n.jsxDEV(Je, { severity: "error", sx: { mb: 3 }, onClose: p, children: m.message }, void 0, !1, {
       fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/ForgetPasswordForm.tsx",
       lineNumber: 58,
       columnNumber: 5
@@ -1111,9 +1131,9 @@ const Uo = z.object({
           label: "Email Address",
           type: "email",
           placeholder: "Enter your email",
-          error: !!p.email,
-          helperText: p.email?.message,
-          disabled: m,
+          error: !!g.email,
+          helperText: g.email?.message,
+          disabled: d,
           sx: {
             "& .MuiOutlinedInput-root": {
               borderRadius: 1.4,
@@ -1145,7 +1165,7 @@ const Uo = z.object({
           fullWidth: !0,
           variant: "contained",
           size: "large",
-          disabled: m,
+          disabled: d,
           sx: {
             py: 1.5,
             backgroundColor: o.primaryColor,
@@ -1162,7 +1182,7 @@ const Uo = z.object({
               backgroundColor: `${o.primaryColor}60`
             }
           },
-          children: m ? /* @__PURE__ */ n.jsxDEV(Ee, { size: 24, color: "inherit" }, void 0, !1, {
+          children: d ? /* @__PURE__ */ n.jsxDEV(Ee, { size: 24, color: "inherit" }, void 0, !1, {
             fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/ForgetPasswordForm.tsx",
             lineNumber: 143,
             columnNumber: 8
@@ -1183,7 +1203,7 @@ const Uo = z.object({
           fullWidth: !0,
           variant: "text",
           onClick: E,
-          disabled: m,
+          disabled: d,
           sx: {
             textTransform: "none",
             color: o.primaryColor,
@@ -1217,13 +1237,13 @@ const Uo = z.object({
     lineNumber: 56,
     columnNumber: 3
   }, void 0);
-}, $o = ({
+}, Mo = ({
   brandConfig: o,
-  loginState: a,
-  onVerify: d,
+  loginState: i,
+  onVerify: m,
   onVerifySuccess: x,
   onVerifyError: E,
-  onResend: g,
+  onResend: p,
   onBackToSignIn: c
 }) => /* @__PURE__ */ n.jsxDEV(n.Fragment, { children: [
   /* @__PURE__ */ n.jsxDEV(S, { sx: { textAlign: "center", mb: 3 }, children: [
@@ -1280,10 +1300,10 @@ const Uo = z.object({
   /* @__PURE__ */ n.jsxDEV(
     Vo,
     {
-      onVerify: d,
+      onVerify: m,
       onVerifySuccess: x,
       onVerifyError: E,
-      onResend: g,
+      onResend: p,
       instructionText: "Please enter the 6-digit code sent to your email",
       showResend: !0,
       resendCooldown: 60,
@@ -1299,7 +1319,7 @@ const Uo = z.object({
     },
     void 0
   ),
-  a === "otp-error" && /* @__PURE__ */ n.jsxDEV(S, { textAlign: "center", sx: { mt: 3 }, children: /* @__PURE__ */ n.jsxDEV(
+  i === "otp-error" && /* @__PURE__ */ n.jsxDEV(S, { textAlign: "center", sx: { mt: 3 }, children: /* @__PURE__ */ n.jsxDEV(
     U,
     {
       variant: "text",
@@ -1331,9 +1351,9 @@ const Uo = z.object({
   fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/OTPVerification.tsx",
   lineNumber: 26,
   columnNumber: 3
-}, void 0), Bo = ({
+}, void 0), Yo = ({
   brandConfig: o,
-  onBackToLogin: a
+  onBackToLogin: i
 }) => /* @__PURE__ */ n.jsxDEV(n.Fragment, { children: [
   /* @__PURE__ */ n.jsxDEV(S, { sx: { textAlign: "center", mb: 3 }, children: [
     o.logo && /* @__PURE__ */ n.jsxDEV(S, { sx: { mb: 2 }, children: typeof o.logo == "string" ? /* @__PURE__ */ n.jsxDEV(
@@ -1412,7 +1432,7 @@ const Uo = z.object({
     U,
     {
       variant: "contained",
-      onClick: a,
+      onClick: i,
       sx: {
         py: 1.5,
         px: 4,
@@ -1448,7 +1468,7 @@ const Uo = z.object({
   columnNumber: 3
 }, void 0), ne = ({
   children: o,
-  brandConfig: a
+  brandConfig: i
 }) => /* @__PURE__ */ n.jsxDEV(
   S,
   {
@@ -1467,7 +1487,7 @@ const Uo = z.object({
       },
       borderRadius: { xs: 0, sm: 2 },
       border: { xs: "none", sm: "1px solid rgba(0, 0, 0, 0.08)" },
-      background: a.backgroundColor,
+      background: i.backgroundColor,
       display: "flex",
       flexDirection: "column",
       // Prevent horizontal overflow
@@ -1507,26 +1527,16 @@ const Uo = z.object({
     columnNumber: 3
   },
   void 0
-), Mo = () => ({
-  primaryColor: "#1976d2",
-  secondaryColor: "#42a5f5",
-  backgroundColor: "#ffffff",
-  textColor: "#333333",
-  logoHeight: 48,
-  logo: "https://via.placeholder.com/200x80/1976d2/ffffff?text=Lumora"
-}), Yo = (o) => ({
-  ...Mo(),
-  ...o
-}), zo = ({
+), zo = ({
   onGoogleLogin: o,
-  onLoginError: a,
-  setLoginState: d,
+  onLoginError: i,
+  setLoginState: m,
   setError: x,
   googleLoginRef: E
 }) => {
-  const g = Ro({
+  const p = Po({
     onSuccess: (c) => {
-      d("google-loading"), x(null);
+      m("google-loading"), x(null);
       try {
         const y = {
           access_token: c.access_token,
@@ -1535,52 +1545,52 @@ const Uo = z.object({
           token_type: c.token_type
         };
         o(y), setTimeout(() => {
-          d("otp-required");
+          m("otp-required");
         }, 1e3);
       } catch (y) {
-        const p = y;
-        x({ message: p.message, type: "google" }), d("error"), a(p);
+        const g = y;
+        x({ message: g.message, type: "google" }), m("error"), i(g);
       }
     },
     onError: (c) => {
       x({
         message: c.error_description || "Google sign-in failed",
         type: "google"
-      }), d("error"), a(
+      }), m("error"), i(
         new Error(c.error_description || "Google sign-in failed")
       );
     }
   });
   return ye.useEffect(() => {
-    E.current = g;
-  }, [g, E]), null;
+    E.current = p;
+  }, [p, E]), null;
 }, qe = ({
   onLocalLogin: o,
-  onGoogleLogin: a,
-  onLoginSuccess: d,
+  onGoogleLogin: i,
+  onLoginSuccess: m,
   onLoginError: x,
   onForgetPassword: E,
-  enableRecaptcha: g = !1,
+  enableRecaptcha: p = !1,
   recaptchaSiteKey: c,
   googleClientId: y,
-  enableGoogleSignIn: p = !0,
-  enableLocalSignIn: m = !0,
+  enableGoogleSignIn: g = !0,
+  enableLocalSignIn: d = !0,
   enableForgetPassword: h = !0,
   branding: O
 }) => {
-  const [w, P] = Ne("idle"), [L, j] = Ne(null), B = ye.useRef(null), N = Yo(O);
-  if (!m && !p)
+  const [w, R] = Ne("idle"), [L, j] = Ne(null), B = ye.useRef(null), N = Lo(O);
+  if (!d && !g)
     throw new Error(
       "At least one sign-in method must be enabled (enableLocalSignIn or enableGoogleSignIn)"
     );
-  if (g && !c)
+  if (p && !c)
     throw new Error(
       "recaptchaSiteKey is required when enableRecaptcha is true"
     );
   const D = () => window.grecaptcha.execute(c, { action: "login" }).catch(() => {
     throw new Error("reCAPTCHA verification failed");
   }), G = async () => {
-    if (!g || !c)
+    if (!p || !c)
       return "";
     if (typeof window > "u" || !window.grecaptcha)
       throw new Error("reCAPTCHA is not loaded");
@@ -1591,27 +1601,27 @@ const Uo = z.object({
       window.grecaptcha.ready(F);
     });
   }, te = async (v) => {
-    P("loading"), j(null);
+    R("loading"), j(null);
     try {
-      g && await G(), await o(v.email, v.password), P("otp-required");
+      p && await G(), await o(v.email, v.password), R("otp-required");
     } catch (V) {
       const F = V;
-      j({ message: F.message, type: "local" }), P("error"), x(F);
+      j({ message: F.message, type: "local" }), R("error"), x(F);
     }
   }, se = () => {
     B.current && B.current();
-  }, ie = async (v) => {
+  }, ae = async (v) => {
     if (await new Promise((V) => setTimeout(V, 1e3)), v === "123456")
       return { success: !0, token: "verified-token" };
     throw new Error("Invalid OTP code");
-  }, ae = (v) => {
-    P("success"), d(v);
+  }, ie = (v) => {
+    R("success"), m(v);
   }, le = (v) => {
-    j({ message: v.message, type: "otp" }), P("otp-error");
+    j({ message: v.message, type: "otp" }), R("otp-error");
   }, H = () => {
     console.log("Resending OTP..."), L && L.type === "otp" && j(null);
   }, q = () => {
-    j(null), P("idle");
+    j(null), R("idle");
   }, ue = async (v) => {
     if (!E) {
       j({
@@ -1620,33 +1630,51 @@ const Uo = z.object({
       });
       return;
     }
-    P("forget-password-loading"), j(null);
+    R("forget-password-loading"), j(null);
     try {
-      g && await G(), await E(v.email), P("forget-password-success");
+      p && await G(), await E(v.email), R("forget-password-success");
     } catch (V) {
       const F = V;
-      j({ message: F.message, type: "forget-password" }), P("forget-password"), x(F);
+      j({ message: F.message, type: "forget-password" }), R("forget-password"), x(F);
     }
   }, J = () => {
-    j(null), P("forget-password");
+    j(null), R("forget-password");
   }, C = () => {
-    j(null), P("idle");
+    j(null), R("idle");
   };
   return Do(() => {
-    if (g && c && typeof window < "u") {
+    if (p && c && typeof window < "u") {
       const v = document.createElement("script");
       v.src = `https://www.google.com/recaptcha/enterprise.js?render=${c}`, v.async = !0, v.defer = !0, document.head.appendChild(v);
     }
-  }, [g, c]), w === "otp-required" || w === "otp-error" ? /* @__PURE__ */ n.jsxDEV(ne, { brandConfig: N, children: /* @__PURE__ */ n.jsxDEV(
-    $o,
+  }, [p, c]), w === "otp-required" || w === "otp-error" ? /* @__PURE__ */ n.jsxDEV(ne, { brandConfig: N, children: /* @__PURE__ */ n.jsxDEV(
+    Mo,
     {
       brandConfig: N,
       loginState: w,
-      onVerify: ie,
-      onVerifySuccess: ae,
+      onVerify: ae,
+      onVerifySuccess: ie,
       onVerifyError: le,
       onResend: H,
       onBackToSignIn: q
+    },
+    void 0,
+    !1,
+    {
+      fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
+      lineNumber: 297,
+      columnNumber: 5
+    },
+    void 0
+  ) }, void 0, !1, {
+    fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
+    lineNumber: 296,
+    columnNumber: 4
+  }, void 0) : w === "forget-password-success" ? /* @__PURE__ */ n.jsxDEV(ne, { brandConfig: N, children: /* @__PURE__ */ n.jsxDEV(
+    Yo,
+    {
+      brandConfig: N,
+      onBackToLogin: C
     },
     void 0,
     !1,
@@ -1660,32 +1688,14 @@ const Uo = z.object({
     fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
     lineNumber: 313,
     columnNumber: 4
-  }, void 0) : w === "forget-password-success" ? /* @__PURE__ */ n.jsxDEV(ne, { brandConfig: N, children: /* @__PURE__ */ n.jsxDEV(
-    Bo,
-    {
-      brandConfig: N,
-      onBackToLogin: C
-    },
-    void 0,
-    !1,
-    {
-      fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-      lineNumber: 331,
-      columnNumber: 5
-    },
-    void 0
-  ) }, void 0, !1, {
-    fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 330,
-    columnNumber: 4
   }, void 0) : w === "forget-password" || w === "forget-password-loading" ? /* @__PURE__ */ n.jsxDEV(ne, { brandConfig: N, children: [
     /* @__PURE__ */ n.jsxDEV(He, { brandConfig: N }, void 0, !1, {
       fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-      lineNumber: 346,
+      lineNumber: 329,
       columnNumber: 5
     }, void 0),
     /* @__PURE__ */ n.jsxDEV(
-      Io,
+      Bo,
       {
         brandConfig: N,
         loginState: w,
@@ -1698,14 +1708,14 @@ const Uo = z.object({
       !1,
       {
         fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-        lineNumber: 347,
+        lineNumber: 330,
         columnNumber: 5
       },
       void 0
     )
   ] }, void 0, !0, {
     fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 345,
+    lineNumber: 328,
     columnNumber: 4
   }, void 0) : /* @__PURE__ */ n.jsxDEV(ne, { brandConfig: N, children: [
     /* @__PURE__ */ n.jsxDEV(
@@ -1719,7 +1729,7 @@ const Uo = z.object({
       !1,
       {
         fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-        lineNumber: 362,
+        lineNumber: 345,
         columnNumber: 4
       },
       void 0
@@ -1736,14 +1746,14 @@ const Uo = z.object({
       !1,
       {
         fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-        lineNumber: 373,
+        lineNumber: 356,
         columnNumber: 5
       },
       void 0
     ),
     /* @__PURE__ */ n.jsxDEV(ke, { spacing: 3, children: [
-      m && /* @__PURE__ */ n.jsxDEV(
-        Lo,
+      d && /* @__PURE__ */ n.jsxDEV(
+        Wo,
         {
           brandConfig: N,
           loginState: w,
@@ -1755,24 +1765,24 @@ const Uo = z.object({
         !1,
         {
           fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-          lineNumber: 384,
+          lineNumber: 367,
           columnNumber: 6
         },
         void 0
       ),
-      p && y && /* @__PURE__ */ n.jsxDEV(
-        Ao,
+      g && y && /* @__PURE__ */ n.jsxDEV(
+        Io,
         {
           brandConfig: N,
           loginState: w,
           onClick: se,
-          showDivider: m
+          showDivider: d
         },
         void 0,
         !1,
         {
           fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-          lineNumber: 398,
+          lineNumber: 381,
           columnNumber: 6
         },
         void 0
@@ -1798,22 +1808,22 @@ const Uo = z.object({
         !1,
         {
           fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-          lineNumber: 407,
+          lineNumber: 390,
           columnNumber: 6
         },
         void 0
       )
     ] }, void 0, !0, {
       fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-      lineNumber: 382,
+      lineNumber: 365,
       columnNumber: 4
     }, void 0),
-    p && y && /* @__PURE__ */ n.jsxDEV(
+    g && y && /* @__PURE__ */ n.jsxDEV(
       zo,
       {
-        onGoogleLogin: a,
+        onGoogleLogin: i,
         onLoginError: x,
-        setLoginState: P,
+        setLoginState: R,
         setError: j,
         googleLoginRef: B
       },
@@ -1821,32 +1831,34 @@ const Uo = z.object({
       !1,
       {
         fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-        lineNumber: 428,
+        lineNumber: 411,
         columnNumber: 5
       },
       void 0
     )
   ] }, void 0, !0, {
     fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 361,
+    lineNumber: 344,
     columnNumber: 3
   }, void 0);
 }, Qo = (o) => {
-  const { googleClientId: a, enableGoogleSignIn: d } = o;
-  return d && a ? /* @__PURE__ */ n.jsxDEV(jo, { clientId: a, children: /* @__PURE__ */ n.jsxDEV(qe, { ...o }, void 0, !1, {
+  const { googleClientId: i, enableGoogleSignIn: m } = o;
+  return m && i ? /* @__PURE__ */ n.jsxDEV(jo, { clientId: i, children: /* @__PURE__ */ n.jsxDEV(qe, { ...o }, void 0, !1, {
     fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 448,
+    lineNumber: 431,
     columnNumber: 5
   }, void 0) }, void 0, !1, {
     fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 447,
+    lineNumber: 430,
     columnNumber: 4
   }, void 0) : /* @__PURE__ */ n.jsxDEV(qe, { ...o }, void 0, !1, {
     fileName: "/Users/koddiangeloevangelista/Desktop/Nova/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 454,
+    lineNumber: 437,
     columnNumber: 9
   }, void 0);
 };
 export {
-  Qo as LumoraLogin
+  Qo as LumoraLogin,
+  Lo as getBrandingConfig,
+  Uo as getDefaultBranding
 };

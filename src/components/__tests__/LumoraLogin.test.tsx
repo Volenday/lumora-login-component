@@ -81,7 +81,7 @@ describe('LumoraLogin Component', () => {
 			renderWithTheme(props);
 
 			expect(
-				screen.getByRole('heading', { name: 'Sign In' })
+				screen.getByRole('heading', { name: 'Welcome to Lumora' })
 			).toBeInTheDocument();
 			expect(screen.getByLabelText('Email Address')).toBeInTheDocument();
 			expect(screen.getByLabelText('Password')).toBeInTheDocument();
@@ -423,7 +423,7 @@ describe('LumoraLogin Component', () => {
 
 			// The component should render without errors with custom branding
 			expect(
-				screen.getByRole('heading', { name: 'Sign In' })
+				screen.getByRole('heading', { name: 'Welcome to Lumora' })
 			).toBeInTheDocument();
 		});
 
@@ -436,7 +436,7 @@ describe('LumoraLogin Component', () => {
 			});
 			renderWithTheme(props);
 
-			const logoImage = screen.getByAltText('Company Logo');
+			const logoImage = screen.getByAltText('Lumora');
 			expect(logoImage).toBeInTheDocument();
 			expect(logoImage).toHaveAttribute(
 				'src',
@@ -744,11 +744,11 @@ describe('LumoraLogin Component', () => {
 			await user.click(forgetPasswordLink);
 
 			expect(
-				screen.getByRole('heading', { name: 'Reset Password' })
+				screen.getByRole('heading', { name: 'Reset Your Password' })
 			).toBeInTheDocument();
 			expect(
 				screen.getByText(
-					'Enter your email address and we will send you a link to reset your password.'
+					'Enter your email address and we will send you a secure link to reset your password.'
 				)
 			).toBeInTheDocument();
 		});
@@ -894,7 +894,7 @@ describe('LumoraLogin Component', () => {
 
 			await waitFor(() => {
 				expect(
-					screen.getByRole('heading', { name: 'Check Your Email' })
+					screen.getByRole('heading', { name: 'Check Your Inbox' })
 				).toBeInTheDocument();
 				expect(
 					screen.getByText(
@@ -961,7 +961,7 @@ describe('LumoraLogin Component', () => {
 			await user.click(backButton);
 
 			expect(
-				screen.getByRole('heading', { name: 'Sign In' })
+				screen.getByRole('heading', { name: 'Welcome to Lumora' })
 			).toBeInTheDocument();
 		});
 
@@ -993,7 +993,7 @@ describe('LumoraLogin Component', () => {
 			// Wait for success screen
 			await waitFor(() => {
 				expect(
-					screen.getByRole('heading', { name: 'Check Your Email' })
+					screen.getByRole('heading', { name: 'Check Your Inbox' })
 				).toBeInTheDocument();
 			});
 
@@ -1004,7 +1004,7 @@ describe('LumoraLogin Component', () => {
 			await user.click(backButton);
 
 			expect(
-				screen.getByRole('heading', { name: 'Sign In' })
+				screen.getByRole('heading', { name: 'Welcome to Lumora' })
 			).toBeInTheDocument();
 		});
 

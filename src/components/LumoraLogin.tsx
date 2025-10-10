@@ -8,9 +8,9 @@ import {
 	ForgetPasswordFormData,
 	LoginState,
 	ErrorState,
-	BrandingConfig,
 	GoogleOAuthResponse
 } from '../types';
+import { getBrandingConfig } from '../utils/branding';
 
 // Import sub-components
 import BrandingHeader from './BrandingHeader';
@@ -20,24 +20,6 @@ import ForgetPasswordForm from './ForgetPasswordForm';
 import OTPVerification from './OTPVerification';
 import ForgetPasswordSuccess from './ForgetPasswordSuccess';
 import LoginContainer from './LoginContainer';
-
-// Default branding configuration
-const getDefaultBranding = (): BrandingConfig => ({
-	primaryColor: '#1976d2',
-	secondaryColor: '#42a5f5',
-	backgroundColor: '#ffffff',
-	textColor: '#333333',
-	logoHeight: 48,
-	logo: 'https://via.placeholder.com/200x80/1976d2/ffffff?text=Lumora'
-});
-
-// Merge custom branding with defaults
-const getBrandingConfig = (
-	customBranding?: BrandingConfig
-): BrandingConfig => ({
-	...getDefaultBranding(),
-	...customBranding
-});
 
 // Component that handles Google OAuth functionality when enabled
 const GoogleOAuthHandler: React.FC<{
