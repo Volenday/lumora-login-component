@@ -47,12 +47,23 @@ const App: React.FC = () => {
 	const [enableForgetPassword, setEnableForgetPassword] = useState(true);
 	const [enableOtp, setEnableOtp] = useState(true);
 
-	// State for API configuration
-	const [authConfig, setAuthConfig] = useState<LumoraAuthConfig>({
-		apiBaseUrl: 'https://dev.api.lumora.capital',
-		apiKey: 'demo-api-key',
-		googleRedirectUri: 'http://localhost:3001/auth/callback'
-	});
+	// Auto-detect configuration from environment variables
+	const apiBaseUrl = import.meta.env.VITE_API_URL || 
+	                   import.meta.env.API_URL || 
+	                   'https://dev.api.lumora.capital';
+	
+	const apiKey = import.meta.env.VITE_API_KEY || 
+	               import.meta.env.API_KEY;
+	
+	// Auto-detect redirect URI: current origin + /auth/callback
+	const googleRedirectUri = `${window.location.origin}/auth/callback`;
+
+	// API configuration (auto-detected, no user input needed)
+	const authConfig: LumoraAuthConfig = {
+		apiBaseUrl,
+		apiKey,
+		googleRedirectUri
+	};
 
 	// State for branding configuration
 	const [branding, setBranding] = useState<BrandingConfig>({
@@ -161,11 +172,14 @@ const App: React.FC = () => {
 							>
 								Lumora Login Component Demo
 							</Typography>
-							<Typography variant="body2" color="text.secondary">
+							<Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
 								This demo showcases the Lumora Login Component using
-								the Lumora Capital API for authentication. Configure
-								the settings below to test different features.
+								the Lumora Capital API for authentication.
 							</Typography>
+
+							<Alert severity="success" sx={{ mb: 2 }}>
+								✅ Connected to: {authConfig.apiBaseUrl}
+							</Alert>
 
 							{lastAction && (
 								<Alert
@@ -189,7 +203,7 @@ const App: React.FC = () => {
 							</Box>
 						</Paper>
 
-						{/* API Configuration */}
+						{/* API Configuration - Auto-detected */}
 						<Paper sx={{ padding: 3 }}>
 							<Typography
 								variant="h6"
@@ -198,46 +212,37 @@ const App: React.FC = () => {
 							>
 								API Configuration
 							</Typography>
+							
+							<Alert severity="info" sx={{ mb: 2 }}>
+								Configuration auto-detected from environment variables
+							</Alert>
 
 							<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
 								<TextField
 									label="API Base URL"
 									value={authConfig.apiBaseUrl}
-									onChange={e =>
-										setAuthConfig(prev => ({
-											...prev,
-											apiBaseUrl: e.target.value
-										}))
-									}
 									fullWidth
 									size="small"
+									disabled
+									helperText="From VITE_API_URL or API_URL env variable"
 								/>
 
 								<TextField
-									label="API Key (Optional)"
-									value={authConfig.apiKey || ''}
-									onChange={e =>
-										setAuthConfig(prev => ({
-											...prev,
-											apiKey: e.target.value
-										}))
-									}
+									label="API Key"
+									value={authConfig.apiKey ? '••••••••••••••••' : 'Not set'}
 									fullWidth
 									size="small"
+									disabled
+									helperText="From VITE_API_KEY or API_KEY env variable"
 								/>
 
 								<TextField
 									label="Google Redirect URI"
 									value={authConfig.googleRedirectUri}
-									onChange={e =>
-										setAuthConfig(prev => ({
-											...prev,
-											googleRedirectUri: e.target.value
-										}))
-									}
 									fullWidth
 									size="small"
-									helperText="URL where users are redirected after Google OAuth"
+									disabled
+									helperText="Auto-detected: window.location.origin + /auth/callback"
 								/>
 							</Box>
 						</Paper>
