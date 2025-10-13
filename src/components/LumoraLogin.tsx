@@ -8,8 +8,7 @@ import {
 	ForgetPasswordFormData,
 	LoginState,
 	ErrorState,
-	GoogleOAuthResponse,
-	LumoraAuthConfig
+	GoogleOAuthResponse
 } from '../types';
 import { getBrandingConfig } from '../utils/branding';
 import { TokenStorage } from '../lib/tokenStorage';
@@ -121,15 +120,15 @@ const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 	const envApiKey = import.meta.env.VITE_API_KEY || import.meta.env.API_KEY;
 	
 	// Debug logging (remove in production)
-	console.log('LumoraLogin mode detection:', { 
-		authConfig, 
-		isApiMode, 
-		enableGoogleSignIn,
-		envGoogleClientId,
-		envGoogleCallbackUrl,
-		envApiBaseUrl,
-		envApiKey
-	});
+	// console.log('LumoraLogin mode detection:', { 
+	// 	authConfig, 
+	// 	isApiMode, 
+	// 	enableGoogleSignIn,
+	// 	envGoogleClientId,
+	// 	envGoogleCallbackUrl,
+	// 	envApiBaseUrl,
+	// 	envApiKey
+	// });
 
 	// Initialize API client if in API mode
 	React.useEffect(() => {

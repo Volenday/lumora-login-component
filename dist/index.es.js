@@ -48,7 +48,7 @@ function ot() {
           return "Profiler";
         case w:
           return "StrictMode";
-        case B:
+        case H:
           return "Suspense";
         case _:
           return "SuspenseList";
@@ -61,14 +61,14 @@ function ot() {
         ), d.$$typeof) {
           case g:
             return "Portal";
-          case k:
+          case O:
             return d.displayName || "Context";
           case N:
             return (d._context.displayName || "Context") + ".Consumer";
-          case D:
+          case C:
             var y = d.render;
             return d = d.displayName, d || (d = y.displayName || y.name || "", d = d !== "" ? "ForwardRef(" + d + ")" : "ForwardRef"), d;
-          case M:
+          case q:
             return y = d.displayName || null, y !== null ? y : e(d.type) || "Memo";
           case $:
             y = d._payload, d = d._init;
@@ -91,11 +91,11 @@ function ot() {
       }
       if (y) {
         y = console;
-        var v = y.error, O = typeof Symbol == "function" && Symbol.toStringTag && d[Symbol.toStringTag] || d.constructor.name || "Object";
+        var v = y.error, k = typeof Symbol == "function" && Symbol.toStringTag && d[Symbol.toStringTag] || d.constructor.name || "Object";
         return v.call(
           y,
           "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.",
-          O
+          k
         ), r(d);
       }
     }
@@ -142,14 +142,14 @@ function ot() {
         "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
       )), d = this.props.ref, d !== void 0 ? d : null;
     }
-    function u(d, y, v, O, x, A) {
+    function u(d, y, v, k, x, A) {
       var T = v.ref;
       return d = {
         $$typeof: m,
         type: d,
         key: y,
         props: v,
-        _owner: O
+        _owner: k
       }, (T !== void 0 ? T : null) !== null ? Object.defineProperty(d, "ref", {
         enumerable: !1,
         get: f
@@ -175,13 +175,13 @@ function ot() {
         value: A
       }), Object.freeze && (Object.freeze(d.props), Object.freeze(d)), d;
     }
-    function c(d, y, v, O, x, A) {
+    function c(d, y, v, k, x, A) {
       var T = y.children;
       if (T !== void 0)
-        if (O)
+        if (k)
           if (W(T)) {
-            for (O = 0; O < T.length; O++)
-              b(T[O]);
+            for (k = 0; k < T.length; k++)
+              b(T[k]);
             Object.freeze && Object.freeze(T);
           } else
             console.error(
@@ -190,21 +190,21 @@ function ot() {
         else b(T);
       if (z.call(y, "key")) {
         T = e(d);
-        var H = Object.keys(y).filter(function(Wr) {
+        var V = Object.keys(y).filter(function(Wr) {
           return Wr !== "key";
         });
-        O = 0 < H.length ? "{key: someKey, " + H.join(": ..., ") + ": ...}" : "{key: someKey}", ie[T + O] || (H = 0 < H.length ? "{" + H.join(": ..., ") + ": ...}" : "{}", console.error(
+        k = 0 < V.length ? "{key: someKey, " + V.join(": ..., ") + ": ...}" : "{key: someKey}", ie[T + k] || (V = 0 < V.length ? "{" + V.join(": ..., ") + ": ...}" : "{}", console.error(
           `A props object containing a "key" prop is being spread into JSX:
   let props = %s;
   <%s {...props} />
 React keys must be passed directly to JSX without using spread:
   let props = %s;
   <%s key={someKey} {...props} />`,
-          O,
+          k,
           T,
-          H,
+          V,
           T
-        ), ie[T + O] = !0);
+        ), ie[T + k] = !0);
       }
       if (T = null, v !== void 0 && (t(v), T = "" + v), s(y) && (t(y.key), T = "" + y.key), "key" in y) {
         v = {};
@@ -229,7 +229,7 @@ React keys must be passed directly to JSX without using spread:
     function R(d) {
       return typeof d == "object" && d !== null && d.$$typeof === m;
     }
-    var S = Pe, m = Symbol.for("react.transitional.element"), g = Symbol.for("react.portal"), h = Symbol.for("react.fragment"), w = Symbol.for("react.strict_mode"), U = Symbol.for("react.profiler"), N = Symbol.for("react.consumer"), k = Symbol.for("react.context"), D = Symbol.for("react.forward_ref"), B = Symbol.for("react.suspense"), _ = Symbol.for("react.suspense_list"), M = Symbol.for("react.memo"), $ = Symbol.for("react.lazy"), Y = Symbol.for("react.activity"), de = Symbol.for("react.client.reference"), X = S.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, z = Object.prototype.hasOwnProperty, W = Array.isArray, se = console.createTask ? console.createTask : function() {
+    var S = Pe, m = Symbol.for("react.transitional.element"), g = Symbol.for("react.portal"), h = Symbol.for("react.fragment"), w = Symbol.for("react.strict_mode"), U = Symbol.for("react.profiler"), N = Symbol.for("react.consumer"), O = Symbol.for("react.context"), C = Symbol.for("react.forward_ref"), H = Symbol.for("react.suspense"), _ = Symbol.for("react.suspense_list"), q = Symbol.for("react.memo"), $ = Symbol.for("react.lazy"), Y = Symbol.for("react.activity"), de = Symbol.for("react.client.reference"), X = S.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, z = Object.prototype.hasOwnProperty, W = Array.isArray, se = console.createTask ? console.createTask : function() {
       return null;
     };
     S = {
@@ -237,18 +237,18 @@ React keys must be passed directly to JSX without using spread:
         return d();
       }
     };
-    var L, ee = {}, V = S.react_stack_bottom_frame.bind(
+    var L, ee = {}, B = S.react_stack_bottom_frame.bind(
       S,
       a
     )(), ae = se(o(a)), ie = {};
-    Te.Fragment = h, Te.jsxDEV = function(d, y, v, O) {
+    Te.Fragment = h, Te.jsxDEV = function(d, y, v, k) {
       var x = 1e4 > X.recentlyCreatedOwnerStacks++;
       return c(
         d,
         y,
         v,
-        O,
-        x ? Error("react-stack-top-frame") : V,
+        k,
+        x ? Error("react-stack-top-frame") : B,
         x ? se(o(d)) : ae
       );
     };
@@ -318,11 +318,11 @@ function wr(e, r) {
 const { toString: it } = Object.prototype, { getPrototypeOf: Je } = Object, { iterator: Ue, toStringTag: Nr } = Symbol, De = /* @__PURE__ */ ((e) => (r) => {
   const t = it.call(r);
   return e[t] || (e[t] = t.slice(8, -1).toLowerCase());
-})(/* @__PURE__ */ Object.create(null)), q = (e) => (e = e.toLowerCase(), (r) => De(r) === e), Ce = (e) => (r) => typeof r === e, { isArray: ce } = Array, le = Ce("undefined");
+})(/* @__PURE__ */ Object.create(null)), M = (e) => (e = e.toLowerCase(), (r) => De(r) === e), Ce = (e) => (r) => typeof r === e, { isArray: ce } = Array, le = Ce("undefined");
 function be(e) {
   return e !== null && !le(e) && e.constructor !== null && !le(e.constructor) && j(e.constructor.isBuffer) && e.constructor.isBuffer(e);
 }
-const Tr = q("ArrayBuffer");
+const Tr = M("ArrayBuffer");
 function lt(e) {
   let r;
   return typeof ArrayBuffer < "u" && ArrayBuffer.isView ? r = ArrayBuffer.isView(e) : r = e && e.buffer && Tr(e.buffer), r;
@@ -340,11 +340,11 @@ const ct = Ce("string"), j = Ce("function"), Rr = Ce("number"), ye = (e) => e !=
   } catch {
     return !1;
   }
-}, mt = q("Date"), ft = q("File"), pt = q("Blob"), ht = q("FileList"), gt = (e) => ye(e) && j(e.pipe), bt = (e) => {
+}, mt = M("Date"), ft = M("File"), pt = M("Blob"), ht = M("FileList"), gt = (e) => ye(e) && j(e.pipe), bt = (e) => {
   let r;
   return e && (typeof FormData == "function" && e instanceof FormData || j(e.append) && ((r = De(e)) === "formdata" || // detect form-data instance
   r === "object" && j(e.toString) && e.toString() === "[object FormData]"));
-}, yt = q("URLSearchParams"), [Et, xt, wt, Nt] = ["ReadableStream", "Request", "Response", "Headers"].map(q), Tt = (e) => e.trim ? e.trim() : e.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "");
+}, yt = M("URLSearchParams"), [Et, xt, wt, Nt] = ["ReadableStream", "Request", "Response", "Headers"].map(M), Tt = (e) => e.trim ? e.trim() : e.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "");
 function Ee(e, r, { allOwnKeys: t = !1 } = {}) {
   if (e === null || typeof e > "u")
     return;
@@ -424,12 +424,12 @@ const Rt = (e, r, t, { allOwnKeys: o } = {}) => (Ee(r, (n, a) => {
   for (; (t = e.exec(r)) !== null; )
     o.push(t);
   return o;
-}, Dt = q("HTMLFormElement"), Ct = (e) => e.toLowerCase().replace(
+}, Dt = M("HTMLFormElement"), Ct = (e) => e.toLowerCase().replace(
   /[-_\s]([a-z\d])(\w*)/g,
   function(t, o, n) {
     return o.toUpperCase() + n;
   }
-), er = (({ hasOwnProperty: e }) => (r, t) => e.call(r, t))(Object.prototype), Lt = q("RegExp"), kr = (e, r) => {
+), er = (({ hasOwnProperty: e }) => (r, t) => e.call(r, t))(Object.prototype), Lt = M("RegExp"), kr = (e, r) => {
   const t = Object.getOwnPropertyDescriptors(e), o = {};
   Ee(t, (n, a) => {
     let s;
@@ -481,7 +481,7 @@ const Ht = (e) => {
     return o;
   };
   return t(e, 0);
-}, Mt = q("AsyncFunction"), qt = (e) => e && (ye(e) || j(e)) && j(e.then) && j(e.catch), Or = ((e, r) => e ? setImmediate : r ? ((t, o) => (re.addEventListener("message", ({ source: n, data: a }) => {
+}, Mt = M("AsyncFunction"), qt = (e) => e && (ye(e) || j(e)) && j(e.then) && j(e.catch), Or = ((e, r) => e ? setImmediate : r ? ((t, o) => (re.addEventListener("message", ({ source: n, data: a }) => {
   n === re && a === t && o.length && o.shift()();
 }, !1), (n) => {
   o.push(n), re.postMessage(t, "*");
@@ -522,7 +522,7 @@ const Ht = (e) => {
   inherits: St,
   toFlatObject: kt,
   kindOf: De,
-  kindOfTest: q,
+  kindOfTest: M,
   endsWith: Ot,
   toArray: At,
   forEachEntry: _t,
@@ -647,10 +647,10 @@ function Le(e, r, t) {
       if (i.endsWith(g, "{}"))
         g = o ? g : g.slice(0, -2), m = JSON.stringify(m);
       else if (i.isArray(m) && Gt(m) || (i.isFileList(m) || i.endsWith(g, "[]")) && (w = i.toArray(m)))
-        return g = _r(g), w.forEach(function(N, k) {
+        return g = _r(g), w.forEach(function(N, O) {
           !(i.isUndefined(N) || N === null) && r.append(
             // eslint-disable-next-line no-nested-ternary
-            s === !0 ? rr([g], k, a) : s === null ? g : g + "[]",
+            s === !0 ? rr([g], O, a) : s === null ? g : g + "[]",
             u(N)
           );
         }), !1;
@@ -802,14 +802,14 @@ self instanceof WorkerGlobalScope && typeof self.importScripts == "function", to
   hasStandardBrowserWebWorkerEnv: ro,
   navigator: qe,
   origin: to
-}, Symbol.toStringTag, { value: "Module" })), C = {
+}, Symbol.toStringTag, { value: "Module" })), D = {
   ...oo,
   ...Qt
 };
 function no(e, r) {
-  return Le(e, new C.classes.URLSearchParams(), {
+  return Le(e, new D.classes.URLSearchParams(), {
     visitor: function(t, o, n, a) {
-      return C.isNode && i.isBuffer(t) ? (this.append(o, t.toString("base64")), !1) : a.defaultVisitor.apply(this, arguments);
+      return D.isNode && i.isBuffer(t) ? (this.append(o, t.toString("base64")), !1) : a.defaultVisitor.apply(this, arguments);
     },
     ...r
   });
@@ -904,8 +904,8 @@ const xe = {
   maxContentLength: -1,
   maxBodyLength: -1,
   env: {
-    FormData: C.classes.FormData,
-    Blob: C.classes.Blob
+    FormData: D.classes.FormData,
+    Blob: D.classes.Blob
   },
   validateStatus: function(r) {
     return r >= 200 && r < 300;
@@ -1205,10 +1205,10 @@ const _e = (e, r, t = 3) => {
     total: e,
     loaded: o
   }), r[1]];
-}, ar = (e) => (...r) => i.asap(() => e(...r)), yo = C.hasStandardBrowserEnv ? /* @__PURE__ */ ((e, r) => (t) => (t = new URL(t, C.origin), e.protocol === t.protocol && e.host === t.host && (r || e.port === t.port)))(
-  new URL(C.origin),
-  C.navigator && /(msie|trident)/i.test(C.navigator.userAgent)
-) : () => !0, Eo = C.hasStandardBrowserEnv ? (
+}, ar = (e) => (...r) => i.asap(() => e(...r)), yo = D.hasStandardBrowserEnv ? /* @__PURE__ */ ((e, r) => (t) => (t = new URL(t, D.origin), e.protocol === t.protocol && e.host === t.host && (r || e.port === t.port)))(
+  new URL(D.origin),
+  D.navigator && /(msie|trident)/i.test(D.navigator.userAgent)
+) : () => !0, Eo = D.hasStandardBrowserEnv ? (
   // Standard browser envs support document.cookie
   {
     write(e, r, t, o, n, a) {
@@ -1317,7 +1317,7 @@ const Br = (e) => {
     "Authorization",
     "Basic " + btoa((l.username || "") + ":" + (l.password ? unescape(encodeURIComponent(l.password)) : ""))
   ), i.isFormData(t)) {
-    if (C.hasStandardBrowserEnv || C.hasStandardBrowserWebWorkerEnv)
+    if (D.hasStandardBrowserEnv || D.hasStandardBrowserWebWorkerEnv)
       s.setContentType(void 0);
     else if (i.isFunction(t.getHeaders)) {
       const f = t.getHeaders(), u = ["content-type", "content-length"];
@@ -1326,7 +1326,7 @@ const Br = (e) => {
       });
     }
   }
-  if (C.hasStandardBrowserEnv && (o && i.isFunction(o) && (o = o(r)), o || o !== !1 && yo(r.url))) {
+  if (D.hasStandardBrowserEnv && (o && i.isFunction(o) && (o = o(r)), o || o !== !1 && yo(r.url))) {
     const f = n && a && Eo.read(a);
     f && s.set(n, f);
   }
@@ -1347,7 +1347,7 @@ const Br = (e) => {
         return;
       const N = I.from(
         "getAllResponseHeaders" in h && h.getAllResponseHeaders()
-      ), D = {
+      ), C = {
         data: !l || l === "text" || l === "json" ? h.responseText : h.response,
         status: h.status,
         statusText: h.statusText,
@@ -1359,31 +1359,31 @@ const Br = (e) => {
         t(_), g();
       }, function(_) {
         o(_), g();
-      }, D), h = null;
+      }, C), h = null;
     }
     "onloadend" in h ? h.onloadend = w : h.onreadystatechange = function() {
       !h || h.readyState !== 4 || h.status === 0 && !(h.responseURL && h.responseURL.indexOf("file:") === 0) || setTimeout(w);
     }, h.onabort = function() {
       h && (o(new E("Request aborted", E.ECONNABORTED, e, h)), h = null);
-    }, h.onerror = function(k) {
-      const D = k && k.message ? k.message : "Network Error", B = new E(D, E.ERR_NETWORK, e, h);
-      B.event = k || null, o(B), h = null;
+    }, h.onerror = function(O) {
+      const C = O && O.message ? O.message : "Network Error", H = new E(C, E.ERR_NETWORK, e, h);
+      H.event = O || null, o(H), h = null;
     }, h.ontimeout = function() {
-      let k = n.timeout ? "timeout of " + n.timeout + "ms exceeded" : "timeout exceeded";
-      const D = n.transitional || Cr;
-      n.timeoutErrorMessage && (k = n.timeoutErrorMessage), o(new E(
-        k,
-        D.clarifyTimeoutError ? E.ETIMEDOUT : E.ECONNABORTED,
+      let O = n.timeout ? "timeout of " + n.timeout + "ms exceeded" : "timeout exceeded";
+      const C = n.transitional || Cr;
+      n.timeoutErrorMessage && (O = n.timeoutErrorMessage), o(new E(
+        O,
+        C.clarifyTimeoutError ? E.ETIMEDOUT : E.ECONNABORTED,
         e,
         h
       )), h = null;
-    }, a === void 0 && s.setContentType(null), "setRequestHeader" in h && i.forEach(s.toJSON(), function(k, D) {
-      h.setRequestHeader(D, k);
+    }, a === void 0 && s.setContentType(null), "setRequestHeader" in h && i.forEach(s.toJSON(), function(O, C) {
+      h.setRequestHeader(C, O);
     }), i.isUndefined(n.withCredentials) || (h.withCredentials = !!n.withCredentials), l && l !== "json" && (h.responseType = n.responseType), u && ([R, m] = _e(u, !0), h.addEventListener("progress", R)), f && h.upload && ([b, S] = _e(f), h.upload.addEventListener("progress", b), h.upload.addEventListener("loadend", S)), (n.cancelToken || n.signal) && (c = (N) => {
       h && (o(!N || N.type ? new ue(null, e, h) : N), h.abort(), h = null);
     }, n.cancelToken && n.cancelToken.subscribe(c), n.signal && (n.signal.aborted ? c() : n.signal.addEventListener("abort", c)));
     const U = ho(n.url);
-    if (U && C.protocols.indexOf(U) === -1) {
+    if (U && D.protocols.indexOf(U) === -1) {
       o(new E("Unsupported protocol " + U + ":", E.ERR_BAD_REQUEST, e));
       return;
     }
@@ -1490,7 +1490,7 @@ const Br = (e) => {
     return !1;
   const l = n && Re(ur), f = n && (typeof dr == "function" ? /* @__PURE__ */ ((m) => (g) => m.encode(g))(new dr()) : async (m) => new Uint8Array(await new t(m).arrayBuffer())), u = a && l && mr(() => {
     let m = !1;
-    const g = new t(C.origin, {
+    const g = new t(D.origin, {
       body: new ur(),
       method: "POST",
       get duplex() {
@@ -1515,7 +1515,7 @@ const Br = (e) => {
     if (i.isBlob(m))
       return m.size;
     if (i.isSpecCompliantForm(m))
-      return (await new t(C.origin, {
+      return (await new t(D.origin, {
         method: "POST",
         body: m
       }).arrayBuffer()).byteLength;
@@ -1534,33 +1534,33 @@ const Br = (e) => {
       data: w,
       signal: U,
       cancelToken: N,
-      timeout: k,
-      onDownloadProgress: D,
-      onUploadProgress: B,
+      timeout: O,
+      onDownloadProgress: C,
+      onUploadProgress: H,
       responseType: _,
-      headers: M,
+      headers: q,
       withCredentials: $ = "same-origin",
       fetchOptions: Y
     } = Br(m), de = r || fetch;
     _ = _ ? (_ + "").toLowerCase() : "text";
-    let X = Ro([U, N && N.toAbortSignal()], k), z = null;
+    let X = Ro([U, N && N.toAbortSignal()], O), z = null;
     const W = X && X.unsubscribe && (() => {
       X.unsubscribe();
     });
     let se;
     try {
-      if (B && u && h !== "get" && h !== "head" && (se = await S(M, w)) !== 0) {
+      if (H && u && h !== "get" && h !== "head" && (se = await S(q, w)) !== 0) {
         let d = new t(g, {
           method: "POST",
           body: w,
           duplex: "half"
         }), y;
-        if (i.isFormData(w) && (y = d.headers.get("content-type")) && M.setContentType(y), d.body) {
-          const [v, O] = sr(
+        if (i.isFormData(w) && (y = d.headers.get("content-type")) && q.setContentType(y), d.body) {
+          const [v, k] = sr(
             se,
-            _e(ar(B))
+            _e(ar(H))
           );
-          w = lr(d.body, cr, v, O);
+          w = lr(d.body, cr, v, k);
         }
       }
       i.isString($) || ($ = $ ? "include" : "omit");
@@ -1568,38 +1568,38 @@ const Br = (e) => {
         ...Y,
         signal: X,
         method: h.toUpperCase(),
-        headers: M.normalize().toJSON(),
+        headers: q.normalize().toJSON(),
         body: w,
         duplex: "half",
         credentials: L ? $ : void 0
       };
       z = a && new t(g, ee);
-      let V = await (a ? de(z, Y) : de(g, ee));
+      let B = await (a ? de(z, Y) : de(g, ee));
       const ae = c && (_ === "stream" || _ === "response");
-      if (c && (D || ae && W)) {
+      if (c && (C || ae && W)) {
         const d = {};
         ["status", "statusText", "headers"].forEach((x) => {
-          d[x] = V[x];
+          d[x] = B[x];
         });
-        const y = i.toFiniteNumber(V.headers.get("content-length")), [v, O] = D && sr(
+        const y = i.toFiniteNumber(B.headers.get("content-length")), [v, k] = C && sr(
           y,
-          _e(ar(D), !0)
+          _e(ar(C), !0)
         ) || [];
-        V = new o(
-          lr(V.body, cr, v, () => {
-            O && O(), W && W();
+        B = new o(
+          lr(B.body, cr, v, () => {
+            k && k(), W && W();
           }),
           d
         );
       }
       _ = _ || "text";
-      let ie = await b[i.findKey(b, _) || "text"](V, m);
+      let ie = await b[i.findKey(b, _) || "text"](B, m);
       return !ae && W && W(), await new Promise((d, y) => {
         jr(d, y, {
           data: ie,
-          headers: I.from(V.headers),
-          status: V.status,
-          statusText: V.statusText,
+          headers: I.from(B.headers),
+          status: B.status,
+          statusText: B.statusText,
           config: m,
           request: z
         });
@@ -3155,24 +3155,16 @@ const Io = pe.object({
   enableOtp: R = !0,
   branding: S
 }) => {
-  const [m, g] = ge("idle"), [h, w] = ge(null), U = Pe.useRef(null), N = at(S), k = e?.useApiIntegration && e?.apiBaseUrl, D = void 0, B = void 0, _ = void 0, M = void 0;
-  if (console.log("LumoraLogin mode detection:", {
-    authConfig: e,
-    isApiMode: k,
-    enableGoogleSignIn: u,
-    envGoogleClientId: D,
-    envGoogleCallbackUrl: B,
-    envApiBaseUrl: _,
-    envApiKey: M
-  }), Pe.useEffect(() => {
-    if (k)
+  const [m, g] = ge("idle"), [h, w] = ge(null), U = Pe.useRef(null), N = at(S), O = e?.useApiIntegration && e?.apiBaseUrl, C = void 0, H = void 0, _ = void 0, q = void 0;
+  if (Pe.useEffect(() => {
+    if (O)
       try {
-        const x = e?.apiBaseUrl || _, A = e?.apiKey || M;
+        const x = e?.apiBaseUrl || _, A = e?.apiKey || q;
         x && te(x, A);
       } catch (x) {
         console.error("Failed to initialize API client:", x);
       }
-  }, [k, e?.apiBaseUrl, e?.apiKey, _, M]), !c && !u)
+  }, [O, e?.apiBaseUrl, e?.apiKey, _, q]), !c && !u)
     throw new Error(
       "At least one sign-in method must be enabled (enableLocalSignIn or enableGoogleSignIn)"
     );
@@ -3193,16 +3185,16 @@ const Io = pe.object({
       };
       window.grecaptcha.ready(T);
     });
-  }, z = k ? async (x) => {
+  }, z = O ? async (x) => {
     g("loading"), w(null);
     try {
       s && await Y();
-      const A = e?.apiBaseUrl || _, T = e?.apiKey || M;
+      const A = e?.apiBaseUrl || _, T = e?.apiKey || q;
       A && T && te(A, T);
-      const H = await he.login(x.email, x.password);
-      J.setTokens(H.accessToken, H.refreshToken);
+      const V = await he.login(x.email, x.password);
+      J.setTokens(V.accessToken, V.refreshToken);
       const me = await he.getCurrentUser();
-      R ? g("otp-required") : (g("success"), o({ user: me, tokens: H }));
+      R ? g("otp-required") : (g("success"), o({ user: me, tokens: V }));
     } catch (A) {
       const T = A;
       w({ message: T.message, type: "local" }), g("error"), n(T);
@@ -3215,14 +3207,14 @@ const Io = pe.object({
       const T = A;
       w({ message: T.message, type: "local" }), g("error"), n(T);
     }
-  }, L = k ? () => {
-    const x = e?.apiBaseUrl || _, A = e?.googleRedirectUri || B, T = e?.apiKey || M;
+  }, L = O ? () => {
+    const x = e?.apiBaseUrl || _, A = e?.googleRedirectUri || H, T = e?.apiKey || q;
     if (x && A) {
       if (T)
         try {
           te(x, T);
-        } catch (H) {
-          console.error("Failed to initialize API client for Google OAuth:", H);
+        } catch (V) {
+          console.error("Failed to initialize API client for Google OAuth:", V);
         }
       he.initiateGoogleOAuth(A, x);
     } else
@@ -3233,7 +3225,7 @@ const Io = pe.object({
     if (await new Promise((A) => setTimeout(A, 1e3)), x === "123456")
       return { success: !0, token: "verified-token" };
     throw new Error("Invalid OTP code");
-  }, V = (x) => {
+  }, B = (x) => {
     g("success"), o(x);
   }, ae = (x) => {
     w({ message: x.message, type: "otp" }), g("otp-error");
@@ -3258,7 +3250,7 @@ const Io = pe.object({
     }
   }, v = () => {
     w(null), g("forget-password");
-  }, O = () => {
+  }, k = () => {
     w(null), g("idle");
   };
   return yr(() => {
@@ -3272,7 +3264,7 @@ const Io = pe.object({
       brandConfig: N,
       loginState: m,
       onVerify: ee,
-      onVerifySuccess: V,
+      onVerifySuccess: B,
       onVerifyError: ae,
       onResend: ie,
       onBackToSignIn: d
@@ -3281,36 +3273,36 @@ const Io = pe.object({
     !1,
     {
       fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-      lineNumber: 414,
+      lineNumber: 413,
       columnNumber: 5
     },
     void 0
   ) }, void 0, !1, {
     fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 413,
+    lineNumber: 412,
     columnNumber: 4
   }, void 0) : m === "forget-password-success" ? /* @__PURE__ */ p.jsxDEV(Se, { brandConfig: N, children: /* @__PURE__ */ p.jsxDEV(
     $o,
     {
       brandConfig: N,
-      onBackToLogin: O
+      onBackToLogin: k
     },
     void 0,
     !1,
     {
       fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-      lineNumber: 431,
+      lineNumber: 430,
       columnNumber: 5
     },
     void 0
   ) }, void 0, !1, {
     fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 430,
+    lineNumber: 429,
     columnNumber: 4
   }, void 0) : m === "forget-password" || m === "forget-password-loading" ? /* @__PURE__ */ p.jsxDEV(Se, { brandConfig: N, children: [
     /* @__PURE__ */ p.jsxDEV(gr, { brandConfig: N }, void 0, !1, {
       fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-      lineNumber: 446,
+      lineNumber: 445,
       columnNumber: 5
     }, void 0),
     /* @__PURE__ */ p.jsxDEV(
@@ -3320,21 +3312,21 @@ const Io = pe.object({
         loginState: m,
         error: h,
         onSubmit: y,
-        onBackToLogin: O,
+        onBackToLogin: k,
         onCloseError: () => w(null)
       },
       void 0,
       !1,
       {
         fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-        lineNumber: 447,
+        lineNumber: 446,
         columnNumber: 5
       },
       void 0
     )
   ] }, void 0, !0, {
     fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 445,
+    lineNumber: 444,
     columnNumber: 4
   }, void 0) : /* @__PURE__ */ p.jsxDEV(Se, { brandConfig: N, children: [
     /* @__PURE__ */ p.jsxDEV(
@@ -3348,7 +3340,7 @@ const Io = pe.object({
       !1,
       {
         fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-        lineNumber: 462,
+        lineNumber: 461,
         columnNumber: 4
       },
       void 0
@@ -3365,7 +3357,7 @@ const Io = pe.object({
       !1,
       {
         fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-        lineNumber: 473,
+        lineNumber: 472,
         columnNumber: 5
       },
       void 0
@@ -3384,7 +3376,7 @@ const Io = pe.object({
         !1,
         {
           fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-          lineNumber: 484,
+          lineNumber: 483,
           columnNumber: 6
         },
         void 0
@@ -3401,7 +3393,7 @@ const Io = pe.object({
         !1,
         {
           fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-          lineNumber: 498,
+          lineNumber: 497,
           columnNumber: 6
         },
         void 0
@@ -3427,17 +3419,17 @@ const Io = pe.object({
         !1,
         {
           fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-          lineNumber: 507,
+          lineNumber: 506,
           columnNumber: 6
         },
         void 0
       )
     ] }, void 0, !0, {
       fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-      lineNumber: 482,
+      lineNumber: 481,
       columnNumber: 4
     }, void 0),
-    !k && u && (f || D) && /* @__PURE__ */ p.jsxDEV(
+    !O && u && (f || C) && /* @__PURE__ */ p.jsxDEV(
       zo,
       {
         onGoogleLogin: t,
@@ -3450,29 +3442,29 @@ const Io = pe.object({
       !1,
       {
         fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-        lineNumber: 529,
+        lineNumber: 528,
         columnNumber: 5
       },
       void 0
     )
   ] }, void 0, !0, {
     fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 461,
+    lineNumber: 460,
     columnNumber: 3
   }, void 0);
 }, yn = (e) => {
   const { googleClientId: r, enableGoogleSignIn: t, authConfig: o } = e, a = r || void 0;
   return !(o?.useApiIntegration && o?.apiBaseUrl) && t && a ? /* @__PURE__ */ p.jsxDEV(Kr, { clientId: a, children: /* @__PURE__ */ p.jsxDEV(br, { ...e }, void 0, !1, {
     fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 557,
+    lineNumber: 556,
     columnNumber: 5
   }, void 0) }, void 0, !1, {
     fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 556,
+    lineNumber: 555,
     columnNumber: 4
   }, void 0) : /* @__PURE__ */ p.jsxDEV(br, { ...e }, void 0, !1, {
     fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 563,
+    lineNumber: 562,
     columnNumber: 9
   }, void 0);
 }, En = (e) => {

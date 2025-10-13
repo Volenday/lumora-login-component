@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosInstance, AxiosResponse } from 'axios';
 import { TokenStorage } from './tokenStorage';
 import { API_CONSTANTS, ERROR_MESSAGES } from './constants';
 import { LumoraAuthTokens } from '../types';
@@ -21,7 +21,7 @@ export const createApiClient = (baseURL: string, apiKey?: string): AxiosInstance
 
 	// Request interceptor to attach access token
 	client.interceptors.request.use(
-		(config: AxiosRequestConfig) => {
+		(config) => {
 			const accessToken = TokenStorage.getAccessToken();
 			if (accessToken && config.headers) {
 				config.headers.Authorization = `Bearer ${accessToken}`;
