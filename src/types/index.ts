@@ -14,10 +14,9 @@ export interface BrandingConfig {
 }
 
 export interface LumoraAuthConfig {
-	apiBaseUrl?: string;
+	apiBaseUrl: string;
 	apiKey?: string;
-	googleRedirectUri?: string;
-	useApiIntegration?: boolean;
+	googleRedirectUri: string;
 }
 
 export interface LumoraAuthTokens {
@@ -29,6 +28,8 @@ export interface LumoraUser {
 	id: string;
 	email: string;
 	name?: string;
+	profilePicture?: string;
+	role?: string;
 	// Add other user fields based on API response
 }
 
@@ -40,26 +41,22 @@ export interface GoogleOAuthResponse {
 }
 
 export interface LumoraLoginProps {
-	// New API-based props
-	authConfig?: LumoraAuthConfig;
+	// Required API configuration
+	authConfig: LumoraAuthConfig;
 	
-	// Legacy callback props (maintain for backward compatibility)
-	onLocalLogin?: (email: string, password: string) => Promise<unknown>;
-	onGoogleLogin?: (response: GoogleOAuthResponse) => void;
-	
-	// Common props
-	onLoginSuccess: (response: unknown) => void;
+	// Success/Error callbacks
+	onLoginSuccess: (response: { user: LumoraUser; tokens: LumoraAuthTokens }) => void;
 	onLoginError: (error: Error) => void;
-	onForgetPassword?: (email: string) => Promise<unknown>;
 	
-	// Existing props remain unchanged
+	// Feature toggles
 	enableRecaptcha?: boolean;
 	recaptchaSiteKey?: string;
-	googleClientId?: string;
 	enableGoogleSignIn?: boolean;
 	enableLocalSignIn?: boolean;
 	enableForgetPassword?: boolean;
-	enableOtp?: boolean; // New: control OTP feature
+	enableOtp?: boolean;
+	
+	// Styling
 	branding?: BrandingConfig;
 }
 

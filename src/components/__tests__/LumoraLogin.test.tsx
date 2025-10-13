@@ -38,12 +38,13 @@ const testTheme = createTheme();
 const createMockProps = (
 	overrides: Partial<LumoraLoginProps> = {}
 ): LumoraLoginProps => ({
-	onLocalLogin: jest.fn().mockResolvedValue({ success: true }),
-	onGoogleLogin: jest.fn(),
+	authConfig: {
+		apiBaseUrl: 'https://test-api.lumora.capital',
+		apiKey: 'test-api-key',
+		googleRedirectUri: 'http://localhost:3000/callback'
+	},
 	onLoginSuccess: jest.fn(),
 	onLoginError: jest.fn(),
-	onForgetPassword: jest.fn().mockResolvedValue({ success: true }),
-	googleClientId: 'test-google-client-id',
 	enableGoogleSignIn: true,
 	enableLocalSignIn: true,
 	enableForgetPassword: true,

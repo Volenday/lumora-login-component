@@ -13,10 +13,9 @@ export interface BrandingConfig {
     forgetPasswordSuccessDescription?: string;
 }
 export interface LumoraAuthConfig {
-    apiBaseUrl?: string;
+    apiBaseUrl: string;
     apiKey?: string;
-    googleRedirectUri?: string;
-    useApiIntegration?: boolean;
+    googleRedirectUri: string;
 }
 export interface LumoraAuthTokens {
     accessToken: string;
@@ -26,6 +25,8 @@ export interface LumoraUser {
     id: string;
     email: string;
     name?: string;
+    profilePicture?: string;
+    role?: string;
 }
 export interface GoogleOAuthResponse {
     access_token: string;
@@ -34,15 +35,14 @@ export interface GoogleOAuthResponse {
     token_type: string;
 }
 export interface LumoraLoginProps {
-    authConfig?: LumoraAuthConfig;
-    onLocalLogin?: (email: string, password: string) => Promise<unknown>;
-    onGoogleLogin?: (response: GoogleOAuthResponse) => void;
-    onLoginSuccess: (response: unknown) => void;
+    authConfig: LumoraAuthConfig;
+    onLoginSuccess: (response: {
+        user: LumoraUser;
+        tokens: LumoraAuthTokens;
+    }) => void;
     onLoginError: (error: Error) => void;
-    onForgetPassword?: (email: string) => Promise<unknown>;
     enableRecaptcha?: boolean;
     recaptchaSiteKey?: string;
-    googleClientId?: string;
     enableGoogleSignIn?: boolean;
     enableLocalSignIn?: boolean;
     enableForgetPassword?: boolean;

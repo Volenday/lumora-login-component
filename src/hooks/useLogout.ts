@@ -14,8 +14,8 @@ export const useLogout = (authConfig?: LumoraAuthConfig) => {
 	const logout = useCallback(async () => {
 		const refreshToken = TokenStorage.getRefreshToken();
 		
-		// Call API logout if in API integration mode
-		if (authConfig?.useApiIntegration && authConfig?.apiBaseUrl && refreshToken) {
+		// Call API logout if API configuration is provided
+		if (authConfig?.apiBaseUrl && refreshToken) {
 			try {
 				await authService.logout(refreshToken);
 			} catch (error) {
@@ -29,7 +29,7 @@ export const useLogout = (authConfig?: LumoraAuthConfig) => {
 		
 		// Redirect to login or home
 		window.location.href = '/login';
-	}, [authConfig?.useApiIntegration, authConfig?.apiBaseUrl]);
+	}, [authConfig?.apiBaseUrl]);
 	
 	return { logout };
 };
