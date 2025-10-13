@@ -19,6 +19,7 @@ import {
 	ToggleButtonGroup
 } from '@mui/material';
 import { LumoraLogin, BrandingConfig, GoogleOAuthResponse, LumoraAuthConfig } from '../index';
+import CallbackPage from './CallbackPage';
 
 // Create Material-UI theme for the demo
 const theme = createTheme({
@@ -29,6 +30,20 @@ const theme = createTheme({
 
 // Main demo application component
 const App: React.FC = () => {
+	// Check if on callback route
+	const isCallbackRoute = window.location.pathname === '/auth/callback' || 
+	                        window.location.pathname === '/callback';
+	
+	// If on callback route, show the callback page
+	if (isCallbackRoute) {
+		return (
+			<ThemeProvider theme={theme}>
+				<CssBaseline />
+				<CallbackPage />
+			</ThemeProvider>
+		);
+	}
+	
 	// State for mode selection
 	const [mode, setMode] = useState<'legacy' | 'api'>('legacy');
 	
