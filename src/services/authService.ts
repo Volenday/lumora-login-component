@@ -105,8 +105,11 @@ export const authService = {
 	 * @param apiBaseUrl - The base URL of the Lumora API
 	 */
 	initiateGoogleOAuth: (redirectUri: string, apiBaseUrl: string): void => {
-		const googleAuthUrl = `${apiBaseUrl}${API_CONSTANTS.ENDPOINTS.GOOGLE_AUTH}?redirect_uri=${encodeURIComponent(redirectUri)}`;
-		console.log('Redirecting to Google OAuth:', googleAuthUrl);
+		// Add prompt=select_account to force Google to show account selection
+		const googleAuthUrl = `${apiBaseUrl}${API_CONSTANTS.ENDPOINTS.GOOGLE_AUTH}?redirect_uri=${encodeURIComponent(redirectUri)}&prompt=select_account`;
+		console.log('🚀 Initiating Google OAuth redirect...');
+		console.log('📍 Redirect URL:', googleAuthUrl);
+		console.log('🔙 Callback URL:', redirectUri);
 		window.location.href = googleAuthUrl;
 	}
 };

@@ -51,7 +51,7 @@ const App: React.FC = () => {
 	const [authConfig, setAuthConfig] = useState<LumoraAuthConfig>({
 		apiBaseUrl: 'https://dev.api.lumora.capital',
 		apiKey: 'demo-api-key',
-		googleRedirectUri: 'http://localhost:3000/auth/callback'
+		googleRedirectUri: 'http://localhost:3001/auth/callback'
 	});
 
 	// State for branding configuration

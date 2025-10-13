@@ -45,7 +45,7 @@ function et() {
           return "Fragment";
         case C:
           return "Profiler";
-        case R:
+        case S:
           return "StrictMode";
         case H:
           return "Suspense";
@@ -90,8 +90,8 @@ function et() {
       }
       if (y) {
         y = console;
-        var S = y.error, O = typeof Symbol == "function" && Symbol.toStringTag && m[Symbol.toStringTag] || m.constructor.name || "Object";
-        return S.call(
+        var R = y.error, O = typeof Symbol == "function" && Symbol.toStringTag && m[Symbol.toStringTag] || m.constructor.name || "Object";
+        return R.call(
           y,
           "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.",
           O
@@ -124,14 +124,14 @@ function et() {
       return m.key !== void 0;
     }
     function l(m, y) {
-      function S() {
+      function R() {
         B || (B = !0, console.error(
           "%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)",
           y
         ));
       }
-      S.isReactWarning = !0, Object.defineProperty(m, "key", {
-        get: S,
+      R.isReactWarning = !0, Object.defineProperty(m, "key", {
+        get: R,
         configurable: !0
       });
     }
@@ -141,13 +141,13 @@ function et() {
         "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
       )), m = this.props.ref, m !== void 0 ? m : null;
     }
-    function u(m, y, S, O, z, De) {
-      var P = S.ref;
+    function u(m, y, R, O, z, De) {
+      var P = R.ref;
       return m = {
         $$typeof: d,
         type: m,
         key: y,
-        props: S,
+        props: R,
         _owner: O
       }, (P !== void 0 ? P : null) !== null ? Object.defineProperty(m, "ref", {
         enumerable: !1,
@@ -174,7 +174,7 @@ function et() {
         value: De
       }), Object.freeze && (Object.freeze(m.props), Object.freeze(m)), m;
     }
-    function c(m, y, S, O, z, De) {
+    function c(m, y, R, O, z, De) {
       var P = y.children;
       if (P !== void 0)
         if (O)
@@ -205,18 +205,18 @@ React keys must be passed directly to JSX without using spread:
           P
         ), Ee[P + O] = !0);
       }
-      if (P = null, S !== void 0 && (t(S), P = "" + S), s(y) && (t(y.key), P = "" + y.key), "key" in y) {
-        S = {};
+      if (P = null, R !== void 0 && (t(R), P = "" + R), s(y) && (t(y.key), P = "" + y.key), "key" in y) {
+        R = {};
         for (var Fe in y)
-          Fe !== "key" && (S[Fe] = y[Fe]);
-      } else S = y;
+          Fe !== "key" && (R[Fe] = y[Fe]);
+      } else R = y;
       return P && l(
-        S,
+        R,
         typeof m == "function" ? m.displayName || m.name || "Unknown" : m
       ), u(
         m,
         P,
-        S,
+        R,
         n(),
         z,
         De
@@ -228,7 +228,7 @@ React keys must be passed directly to JSX without using spread:
     function E(m) {
       return typeof m == "object" && m !== null && m.$$typeof === d;
     }
-    var x = zr, d = Symbol.for("react.transitional.element"), b = Symbol.for("react.portal"), g = Symbol.for("react.fragment"), R = Symbol.for("react.strict_mode"), C = Symbol.for("react.profiler"), k = Symbol.for("react.consumer"), _ = Symbol.for("react.context"), F = Symbol.for("react.forward_ref"), H = Symbol.for("react.suspense"), U = Symbol.for("react.suspense_list"), X = Symbol.for("react.memo"), q = Symbol.for("react.lazy"), Z = Symbol.for("react.activity"), N = Symbol.for("react.client.reference"), T = x.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, A = Object.prototype.hasOwnProperty, G = Array.isArray, ie = console.createTask ? console.createTask : function() {
+    var x = zr, d = Symbol.for("react.transitional.element"), b = Symbol.for("react.portal"), g = Symbol.for("react.fragment"), S = Symbol.for("react.strict_mode"), C = Symbol.for("react.profiler"), k = Symbol.for("react.consumer"), _ = Symbol.for("react.context"), F = Symbol.for("react.forward_ref"), H = Symbol.for("react.suspense"), U = Symbol.for("react.suspense_list"), X = Symbol.for("react.memo"), q = Symbol.for("react.lazy"), Z = Symbol.for("react.activity"), N = Symbol.for("react.client.reference"), T = x.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, A = Object.prototype.hasOwnProperty, G = Array.isArray, ie = console.createTask ? console.createTask : function() {
       return null;
     };
     x = {
@@ -240,12 +240,12 @@ React keys must be passed directly to JSX without using spread:
       x,
       a
     )(), be = ie(o(a)), Ee = {};
-    xe.Fragment = g, xe.jsxDEV = function(m, y, S, O) {
+    xe.Fragment = g, xe.jsxDEV = function(m, y, R, O) {
       var z = 1e4 > T.recentlyCreatedOwnerStacks++;
       return c(
         m,
         y,
-        S,
+        R,
         O,
         z ? Error("react-stack-top-frame") : $,
         z ? ie(o(m)) : be
@@ -326,7 +326,7 @@ function st(e) {
   let r;
   return typeof ArrayBuffer < "u" && ArrayBuffer.isView ? r = ArrayBuffer.isView(e) : r = e && e.buffer && xr(e.buffer), r;
 }
-const at = _e("string"), j = _e("function"), Nr = _e("number"), pe = (e) => e !== null && typeof e == "object", it = (e) => e === !0 || e === !1, Re = (e) => {
+const at = _e("string"), j = _e("function"), Nr = _e("number"), pe = (e) => e !== null && typeof e == "object", it = (e) => e === !0 || e === !1, Se = (e) => {
   if (Pe(e) !== "object")
     return !1;
   const r = Je(e);
@@ -371,11 +371,11 @@ function Tr(e, r) {
       return n;
   return null;
 }
-const Q = typeof globalThis < "u" ? globalThis : typeof self < "u" ? self : typeof window < "u" ? window : global, Sr = (e) => !ne(e) && e !== Q;
+const Q = typeof globalThis < "u" ? globalThis : typeof self < "u" ? self : typeof window < "u" ? window : global, Rr = (e) => !ne(e) && e !== Q;
 function He() {
-  const { caseless: e, skipUndefined: r } = Sr(this) && this || {}, t = {}, o = (n, a) => {
+  const { caseless: e, skipUndefined: r } = Rr(this) && this || {}, t = {}, o = (n, a) => {
     const s = e && Tr(t, a) || a;
-    Re(t[s]) && Re(n) ? t[s] = He(t[s], n) : Re(n) ? t[s] = He({}, n) : se(n) ? t[s] = n.slice() : (!r || !ne(n)) && (t[s] = n);
+    Se(t[s]) && Se(n) ? t[s] = He(t[s], n) : Se(n) ? t[s] = He({}, n) : se(n) ? t[s] = n.slice() : (!r || !ne(n)) && (t[s] = n);
   };
   for (let n = 0, a = arguments.length; n < a; n++)
     arguments[n] && he(arguments[n], o);
@@ -387,7 +387,7 @@ const xt = (e, r, t, { allOwnKeys: o } = {}) => (he(r, (n, a) => {
   e.prototype = Object.create(r.prototype, o), e.prototype.constructor = e, Object.defineProperty(e, "super", {
     value: r.prototype
   }), t && Object.assign(e.prototype, t);
-}, St = (e, r, t, o) => {
+}, Rt = (e, r, t, o) => {
   let n, a, s;
   const l = {};
   if (r = r || {}, e == null) return r;
@@ -397,7 +397,7 @@ const xt = (e, r, t, { allOwnKeys: o } = {}) => (he(r, (n, a) => {
     e = t !== !1 && Je(e);
   } while (e && (!t || t(e, r)) && e !== Object.prototype);
   return r;
-}, Rt = (e, r, t) => {
+}, St = (e, r, t) => {
   e = String(e), (t === void 0 || t > e.length) && (t = e.length), t -= r.length;
   const o = e.indexOf(r, t);
   return o !== -1 && o === t;
@@ -428,14 +428,14 @@ const xt = (e, r, t, { allOwnKeys: o } = {}) => (he(r, (n, a) => {
   function(t, o, n) {
     return o.toUpperCase() + n;
   }
-), er = (({ hasOwnProperty: e }) => (r, t) => e.call(r, t))(Object.prototype), Ut = M("RegExp"), Rr = (e, r) => {
+), er = (({ hasOwnProperty: e }) => (r, t) => e.call(r, t))(Object.prototype), Ut = M("RegExp"), Sr = (e, r) => {
   const t = Object.getOwnPropertyDescriptors(e), o = {};
   he(t, (n, a) => {
     let s;
     (s = r(n, a, e)) !== !1 && (o[a] = s || n);
   }), Object.defineProperties(e, o);
 }, Ct = (e) => {
-  Rr(e, (r, t) => {
+  Sr(e, (r, t) => {
     if (j(e) && ["arguments", "caller", "callee"].indexOf(t) !== -1)
       return !1;
     const o = e[t];
@@ -497,7 +497,7 @@ const It = (e) => {
   isNumber: Nr,
   isBoolean: it,
   isObject: pe,
-  isPlainObject: Re,
+  isPlainObject: Se,
   isEmptyObject: lt,
   isReadableStream: gt,
   isRequest: bt,
@@ -519,10 +519,10 @@ const It = (e) => {
   trim: wt,
   stripBOM: Nt,
   inherits: Tt,
-  toFlatObject: St,
+  toFlatObject: Rt,
   kindOf: Pe,
   kindOfTest: M,
-  endsWith: Rt,
+  endsWith: St,
   toArray: kt,
   forEachEntry: Ot,
   matchAll: At,
@@ -530,7 +530,7 @@ const It = (e) => {
   hasOwnProperty: er,
   hasOwnProp: er,
   // an alias to avoid ESLint no-prototype-builtins detection
-  reduceDescriptors: Rr,
+  reduceDescriptors: Sr,
   freezeMethods: Ct,
   toObjectSet: Dt,
   toCamelCase: _t,
@@ -538,7 +538,7 @@ const It = (e) => {
   toFiniteNumber: Lt,
   findKey: Tr,
   global: Q,
-  isContextDefined: Sr,
+  isContextDefined: Rr,
   isSpecCompliantForm: jt,
   toJSONObject: It,
   isAsyncFn: Bt,
@@ -641,12 +641,12 @@ function Ue(e, r, t) {
     return i.isArrayBuffer(d) || i.isTypedArray(d) ? f && typeof Blob == "function" ? new Blob([d]) : Buffer.from(d) : d;
   }
   function c(d, b, g) {
-    let R = d;
+    let S = d;
     if (d && !g && typeof d == "object") {
       if (i.endsWith(b, "{}"))
         b = o ? b : b.slice(0, -2), d = JSON.stringify(d);
-      else if (i.isArray(d) && $t(d) || (i.isFileList(d) || i.endsWith(b, "[]")) && (R = i.toArray(d)))
-        return b = Ar(b), R.forEach(function(k, _) {
+      else if (i.isArray(d) && $t(d) || (i.isFileList(d) || i.endsWith(b, "[]")) && (S = i.toArray(d)))
+        return b = Ar(b), S.forEach(function(k, _) {
           !(i.isUndefined(k) || k === null) && r.append(
             // eslint-disable-next-line no-nested-ternary
             s === !0 ? rr([b], _, a) : s === null ? b : b + "[]",
@@ -665,14 +665,14 @@ function Ue(e, r, t) {
     if (!i.isUndefined(d)) {
       if (p.indexOf(d) !== -1)
         throw Error("Circular reference detected in " + b.join("."));
-      p.push(d), i.forEach(d, function(R, C) {
-        (!(i.isUndefined(R) || R === null) && n.call(
+      p.push(d), i.forEach(d, function(S, C) {
+        (!(i.isUndefined(S) || S === null) && n.call(
           r,
-          R,
+          S,
           i.isString(C) ? C.trim() : C,
           b,
           E
-        )) === !0 && x(R, b ? b.concat(C) : [C]);
+        )) === !0 && x(S, b ? b.concat(C) : [C]);
       }), p.pop();
     }
   }
@@ -1341,7 +1341,7 @@ const jr = (e) => {
     }
     let g = new XMLHttpRequest();
     g.open(n.method.toUpperCase(), n.url, !0), g.timeout = n.timeout;
-    function R() {
+    function S() {
       if (!g)
         return;
       const k = I.from(
@@ -1360,8 +1360,8 @@ const jr = (e) => {
         o(U), b();
       }, F), g = null;
     }
-    "onloadend" in g ? g.onloadend = R : g.onreadystatechange = function() {
-      !g || g.readyState !== 4 || g.status === 0 && !(g.responseURL && g.responseURL.indexOf("file:") === 0) || setTimeout(R);
+    "onloadend" in g ? g.onloadend = S : g.onreadystatechange = function() {
+      !g || g.readyState !== 4 || g.status === 0 && !(g.responseURL && g.responseURL.indexOf("file:") === 0) || setTimeout(S);
     }, g.onabort = function() {
       g && (o(new w("Request aborted", w.ECONNABORTED, e, g)), g = null);
     }, g.onerror = function(_) {
@@ -1421,9 +1421,9 @@ const jr = (e) => {
   for (; o < t; )
     n = o + r, yield e.slice(o, n), o = n;
 }, To = async function* (e, r) {
-  for await (const t of So(e))
+  for await (const t of Ro(e))
     yield* No(t, r);
-}, So = async function* (e) {
+}, Ro = async function* (e) {
   if (e[Symbol.asyncIterator]) {
     yield* e;
     return;
@@ -1468,7 +1468,7 @@ const jr = (e) => {
   }, {
     highWaterMark: 2
   });
-}, cr = 64 * 1024, { isFunction: Ne } = i, Ro = (({ Request: e, Response: r }) => ({
+}, cr = 64 * 1024, { isFunction: Ne } = i, So = (({ Request: e, Response: r }) => ({
   Request: e,
   Response: r
 }))(i.global), {
@@ -1483,7 +1483,7 @@ const jr = (e) => {
 }, ko = (e) => {
   e = i.merge.call({
     skipUndefined: !0
-  }, Ro, e);
+  }, So, e);
   const { fetch: r, Request: t, Response: o } = e, n = r ? Ne(r) : typeof fetch == "function", a = Ne(t), s = Ne(o);
   if (!n)
     return !1;
@@ -1502,9 +1502,9 @@ const jr = (e) => {
   };
   n && ["text", "arrayBuffer", "blob", "formData", "stream"].forEach((d) => {
     !p[d] && (p[d] = (b, g) => {
-      let R = b && b[d];
-      if (R)
-        return R.call(b);
+      let S = b && b[d];
+      if (S)
+        return S.call(b);
       throw new w(`Response type '${d}' is not supported`, w.ERR_NOT_SUPPORT, g);
     });
   });
@@ -1530,7 +1530,7 @@ const jr = (e) => {
     let {
       url: b,
       method: g,
-      data: R,
+      data: S,
       signal: C,
       cancelToken: k,
       timeout: _,
@@ -1548,18 +1548,18 @@ const jr = (e) => {
     });
     let ie;
     try {
-      if (H && u && g !== "get" && g !== "head" && (ie = await x(X, R)) !== 0) {
+      if (H && u && g !== "get" && g !== "head" && (ie = await x(X, S)) !== 0) {
         let m = new t(b, {
           method: "POST",
-          body: R,
+          body: S,
           duplex: "half"
         }), y;
-        if (i.isFormData(R) && (y = m.headers.get("content-type")) && X.setContentType(y), m.body) {
-          const [S, O] = sr(
+        if (i.isFormData(S) && (y = m.headers.get("content-type")) && X.setContentType(y), m.body) {
+          const [R, O] = sr(
             ie,
             Oe(ar(H))
           );
-          R = lr(m.body, cr, S, O);
+          S = lr(m.body, cr, R, O);
         }
       }
       i.isString(q) || (q = q ? "include" : "omit");
@@ -1568,7 +1568,7 @@ const jr = (e) => {
         signal: T,
         method: g.toUpperCase(),
         headers: X.normalize().toJSON(),
-        body: R,
+        body: S,
         duplex: "half",
         credentials: B ? q : void 0
       };
@@ -1580,12 +1580,12 @@ const jr = (e) => {
         ["status", "statusText", "headers"].forEach((z) => {
           m[z] = $[z];
         });
-        const y = i.toFiniteNumber($.headers.get("content-length")), [S, O] = F && sr(
+        const y = i.toFiniteNumber($.headers.get("content-length")), [R, O] = F && sr(
           y,
           Oe(ar(F), !0)
         ) || [];
         $ = new o(
-          lr($.body, cr, S, () => {
+          lr($.body, cr, R, () => {
             O && O(), G && G();
           }),
           m
@@ -2225,8 +2225,8 @@ const ue = (e, r) => {
    * @param apiBaseUrl - The base URL of the Lumora API
    */
   initiateGoogleOAuth: (e, r) => {
-    const t = `${r}${K.ENDPOINTS.GOOGLE_AUTH}?redirect_uri=${encodeURIComponent(e)}`;
-    console.log("Redirecting to Google OAuth:", t), window.location.href = t;
+    const t = `${r}${K.ENDPOINTS.GOOGLE_AUTH}?redirect_uri=${encodeURIComponent(e)}&prompt=select_account`;
+    console.log("🚀 Initiating Google OAuth redirect..."), console.log("📍 Redirect URL:", t), console.log("🔙 Callback URL:", e), window.location.href = t;
   }
 }, gr = ({
   brandConfig: e,
@@ -3040,7 +3040,7 @@ const Fo = de.object({
   fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/ForgetPasswordSuccess.tsx",
   lineNumber: 15,
   columnNumber: 3
-}, void 0), Se = ({
+}, void 0), Re = ({
   children: e,
   brandConfig: r
 }) => /* @__PURE__ */ h.jsxDEV(
@@ -3141,7 +3141,7 @@ const Fo = de.object({
       };
       window.grecaptcha.ready(A);
     });
-  }, R = async (N) => {
+  }, S = async (N) => {
     p("loading"), x(null);
     try {
       o && await g();
@@ -3155,10 +3155,12 @@ const Fo = de.object({
     }
   }, C = () => {
     try {
-      ee.initiateGoogleOAuth(
-        e.googleRedirectUri,
-        e.apiBaseUrl
-      );
+      p("google-loading"), x(null), setTimeout(() => {
+        ee.initiateGoogleOAuth(
+          e.googleRedirectUri,
+          e.apiBaseUrl
+        );
+      }, 300);
     } catch (N) {
       const T = N;
       x({ message: T.message, type: "google" }), p("error"), t(T);
@@ -3202,7 +3204,7 @@ const Fo = de.object({
       const N = document.createElement("script");
       N.src = `https://www.google.com/recaptcha/enterprise.js?render=${n}`, N.async = !0, N.defer = !0, document.head.appendChild(N);
     }
-  }, [o, n]), c === "otp-required" || c === "otp-error" ? /* @__PURE__ */ h.jsxDEV(Se, { brandConfig: d, children: /* @__PURE__ */ h.jsxDEV(
+  }, [o, n]), c === "otp-required" || c === "otp-error" ? /* @__PURE__ */ h.jsxDEV(Re, { brandConfig: d, children: /* @__PURE__ */ h.jsxDEV(
     Vo,
     {
       brandConfig: d,
@@ -3217,15 +3219,15 @@ const Fo = de.object({
     !1,
     {
       fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-      lineNumber: 265,
+      lineNumber: 272,
       columnNumber: 5
     },
     void 0
   ) }, void 0, !1, {
     fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 264,
+    lineNumber: 271,
     columnNumber: 4
-  }, void 0) : c === "forget-password-success" ? /* @__PURE__ */ h.jsxDEV(Se, { brandConfig: d, children: /* @__PURE__ */ h.jsxDEV(
+  }, void 0) : c === "forget-password-success" ? /* @__PURE__ */ h.jsxDEV(Re, { brandConfig: d, children: /* @__PURE__ */ h.jsxDEV(
     Ho,
     {
       brandConfig: d,
@@ -3235,18 +3237,18 @@ const Fo = de.object({
     !1,
     {
       fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-      lineNumber: 282,
+      lineNumber: 289,
       columnNumber: 5
     },
     void 0
   ) }, void 0, !1, {
     fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 281,
+    lineNumber: 288,
     columnNumber: 4
-  }, void 0) : c === "forget-password" || c === "forget-password-loading" ? /* @__PURE__ */ h.jsxDEV(Se, { brandConfig: d, children: [
+  }, void 0) : c === "forget-password" || c === "forget-password-loading" ? /* @__PURE__ */ h.jsxDEV(Re, { brandConfig: d, children: [
     /* @__PURE__ */ h.jsxDEV(gr, { brandConfig: d }, void 0, !1, {
       fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-      lineNumber: 297,
+      lineNumber: 304,
       columnNumber: 5
     }, void 0),
     /* @__PURE__ */ h.jsxDEV(
@@ -3263,16 +3265,16 @@ const Fo = de.object({
       !1,
       {
         fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-        lineNumber: 298,
+        lineNumber: 305,
         columnNumber: 5
       },
       void 0
     )
   ] }, void 0, !0, {
     fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 296,
+    lineNumber: 303,
     columnNumber: 4
-  }, void 0) : /* @__PURE__ */ h.jsxDEV(Se, { brandConfig: d, children: [
+  }, void 0) : /* @__PURE__ */ h.jsxDEV(Re, { brandConfig: d, children: [
     /* @__PURE__ */ h.jsxDEV(
       gr,
       {
@@ -3284,7 +3286,7 @@ const Fo = de.object({
       !1,
       {
         fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-        lineNumber: 313,
+        lineNumber: 320,
         columnNumber: 4
       },
       void 0
@@ -3301,7 +3303,7 @@ const Fo = de.object({
       !1,
       {
         fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-        lineNumber: 324,
+        lineNumber: 331,
         columnNumber: 5
       },
       void 0
@@ -3312,7 +3314,7 @@ const Fo = de.object({
         {
           brandConfig: d,
           loginState: c,
-          onSubmit: R,
+          onSubmit: S,
           onForgetPassword: l ? q : void 0,
           enableForgetPassword: l
         },
@@ -3320,7 +3322,7 @@ const Fo = de.object({
         !1,
         {
           fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-          lineNumber: 335,
+          lineNumber: 342,
           columnNumber: 6
         },
         void 0
@@ -3337,7 +3339,7 @@ const Fo = de.object({
         !1,
         {
           fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-          lineNumber: 349,
+          lineNumber: 356,
           columnNumber: 6
         },
         void 0
@@ -3363,19 +3365,19 @@ const Fo = de.object({
         !1,
         {
           fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-          lineNumber: 358,
+          lineNumber: 365,
           columnNumber: 6
         },
         void 0
       )
     ] }, void 0, !0, {
       fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-      lineNumber: 333,
+      lineNumber: 340,
       columnNumber: 4
     }, void 0)
   ] }, void 0, !0, {
     fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
-    lineNumber: 312,
+    lineNumber: 319,
     columnNumber: 3
   }, void 0);
 }, pn = (e) => {
