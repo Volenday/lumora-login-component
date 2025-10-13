@@ -12,7 +12,14 @@ export interface UseAuthCallbackConfig {
 
 /**
  * Hook for handling OAuth callback from Lumora API
- * Extracts tokens from URL parameters and stores them in localStorage
+ * Extracts tokens and user data from URL parameters and stores them in localStorage
+ * 
+ * Supports both parameter formats:
+ * - access_token / refresh_token (underscore format from API)
+ * - accessToken / refreshToken (camelCase format)
+ * 
+ * If user data is included in the URL, it will be parsed directly.
+ * Otherwise, it will fetch user data from the API.
  * 
  * @param config - Configuration object for the callback handler
  * @returns Object with loading state and error state
@@ -26,8 +33,11 @@ export const useAuthCallback = (config?: UseAuthCallbackConfig) => {
 			try {
 				// Parse URL parameters sent by Lumora API after OAuth completion
 				const params = new URLSearchParams(window.location.search);
-				const accessToken = params.get('accessToken');
-				const refreshToken = params.get('refreshToken');
+				
+				// Support both camelCase and underscore formats for compatibility
+				const accessToken = params.get('access_token') || params.get('accessToken');
+				const refreshToken = params.get('refresh_token') || params.get('refreshToken');
+				const userParam = params.get('user');
 				const errorParam = params.get('error');
 				
 				// Check for error parameter from OAuth flow
@@ -43,8 +53,22 @@ export const useAuthCallback = (config?: UseAuthCallbackConfig) => {
 				// Store tokens in localStorage
 				TokenStorage.setTokens(accessToken, refreshToken);
 				
-				// Fetch user profile using the new access token
-				const user = await authService.getCurrentUser();
+				// Parse user data from URL if available, otherwise fetch from API
+				let user: LumoraUser;
+				if (userParam) {
+					try {
+						// Decode and parse the user JSON from URL parameter
+						const decodedUser = decodeURIComponent(userParam);
+						user = JSON.parse(decodedUser);
+					} catch (parseError) {
+						console.warn('Failed to parse user from URL, fetching from API:', parseError);
+						// Fallback to API call if parsing fails
+						user = await authService.getCurrentUser();
+					}
+				} else {
+					// Fetch user profile using the new access token if not in URL
+					user = await authService.getCurrentUser();
+				}
 				
 				// Call success callback
 				config?.onSuccess?.({ accessToken, refreshToken }, user);

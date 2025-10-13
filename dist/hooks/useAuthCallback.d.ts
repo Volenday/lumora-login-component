@@ -7,7 +7,14 @@ export interface UseAuthCallbackConfig {
 }
 /**
  * Hook for handling OAuth callback from Lumora API
- * Extracts tokens from URL parameters and stores them in localStorage
+ * Extracts tokens and user data from URL parameters and stores them in localStorage
+ *
+ * Supports both parameter formats:
+ * - access_token / refresh_token (underscore format from API)
+ * - accessToken / refreshToken (camelCase format)
+ *
+ * If user data is included in the URL, it will be parsed directly.
+ * Otherwise, it will fetch user data from the API.
  *
  * @param config - Configuration object for the callback handler
  * @returns Object with loading state and error state
