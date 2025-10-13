@@ -12,9 +12,13 @@ import {
 	Button,
 	Divider,
 	Alert,
-	Slider
+	Slider,
+	Card,
+	CardContent,
+	ToggleButton,
+	ToggleButtonGroup
 } from '@mui/material';
-import { LumoraLogin, BrandingConfig, GoogleOAuthResponse } from '../index';
+import { LumoraLogin, BrandingConfig, GoogleOAuthResponse, LumoraAuthConfig } from '../index';
 
 // Create Material-UI theme for the demo
 const theme = createTheme({
@@ -25,13 +29,25 @@ const theme = createTheme({
 
 // Main demo application component
 const App: React.FC = () => {
+	// State for mode selection
+	const [mode, setMode] = useState<'legacy' | 'api'>('legacy');
+	
 	// State for all LumoraLogin props
 	const [enableLocalSignIn, setEnableLocalSignIn] = useState(true);
 	const [enableGoogleSignIn, setEnableGoogleSignIn] = useState(true);
 	const [enableForgetPassword, setEnableForgetPassword] = useState(true);
+	const [enableOtp, setEnableOtp] = useState(true);
 	const [googleClientId, setGoogleClientId] = useState(
 		'1077414399410-1k1hg3liscujlq0rlnkgjguh4iblt7f7.apps.googleusercontent.com'
 	);
+	
+	// State for API configuration
+	const [authConfig, setAuthConfig] = useState<LumoraAuthConfig>({
+		apiBaseUrl: 'https://dev.api.lumora.capital',
+		apiKey: 'demo-api-key',
+		googleRedirectUri: 'http://localhost:3000/auth/callback',
+		useApiIntegration: false
+	});
 
 	// State for branding configuration
 	const [branding, setBranding] = useState<BrandingConfig>({
@@ -55,13 +71,13 @@ const App: React.FC = () => {
 	const [lastAction, setLastAction] = useState<string>('');
 	const [loginAttempts, setLoginAttempts] = useState(0);
 
-	// Handle local login simulation
+	// Handle local login simulation (Legacy mode)
 	const handleLocalLogin = async (email: string, password: string) => {
-		setLastAction(`Local login attempt with email: ${email}`);
+		setLastAction(`[LEGACY] Local login attempt with email: ${email}`);
 		setLoginAttempts(prev => prev + 1);
 
 		// Simulate API call
-		console.log('Local login attempt:', { email, password });
+		console.log('Legacy local login attempt:', { email, password });
 
 		// Simulate network delay
 		await new Promise(resolve => setTimeout(resolve, 1000));
@@ -77,41 +93,44 @@ const App: React.FC = () => {
 		};
 	};
 
-	// Handle Google login simulation
+	// Handle Google login simulation (Legacy mode)
 	const handleGoogleLogin = (response: GoogleOAuthResponse) => {
 		setLastAction(
-			`Google login successful! Access token: ${response.access_token.substring(
+			`[LEGACY] Google login successful! Access token: ${response.access_token.substring(
 				0,
 				20
 			)}...`
 		);
 		setLoginAttempts(prev => prev + 1);
-		console.log('Google login response:', response);
+		console.log('Legacy Google login response:', response);
 		// In a real implementation, you would send the access token to your backend for verification
 	};
 
 	// Handle successful login
 	const handleLoginSuccess = (response: unknown) => {
-		const responseData = response as { token?: string };
+		const responseData = response as { token?: string; user?: any; tokens?: any };
+		const modeLabel = mode === 'api' ? '[API]' : '[LEGACY]';
 		setLastAction(
-			`Login successful! Token: ${responseData.token || 'N/A'}`
+			`${modeLabel} Login successful! Token: ${responseData.token || responseData.tokens?.accessToken || 'N/A'}`
 		);
-		console.log('Login successful:', response);
+		console.log(`${modeLabel} Login successful:`, response);
 	};
 
 	// Handle login errors
 	const handleLoginError = (error: Error) => {
-		setLastAction(`Login failed: ${error.message}`);
-		console.error('Login error:', error);
+		const modeLabel = mode === 'api' ? '[API]' : '[LEGACY]';
+		setLastAction(`${modeLabel} Login failed: ${error.message}`);
+		console.error(`${modeLabel} Login error:`, error);
 	};
 
-	// Handle forget password simulation
+	// Handle forget password simulation (Legacy mode)
 	const handleForgetPassword = async (email: string) => {
-		setLastAction(`Forget password request for email: ${email}`);
+		const modeLabel = mode === 'api' ? '[API]' : '[LEGACY]';
+		setLastAction(`${modeLabel} Forget password request for email: ${email}`);
 		setLoginAttempts(prev => prev + 1);
 
 		// Simulate API call
-		console.log('Forget password request:', { email });
+		console.log(`${modeLabel} Forget password request:`, { email });
 
 		// Simulate network delay
 		await new Promise(resolve => setTimeout(resolve, 1000));
@@ -134,12 +153,111 @@ const App: React.FC = () => {
 		setBranding((prev: BrandingConfig) => ({ ...prev, ...updates }));
 	};
 
+	// Handle mode change
+	const handleModeChange = (newMode: 'legacy' | 'api') => {
+		setMode(newMode);
+		setAuthConfig(prev => ({
+			...prev,
+			useApiIntegration: newMode === 'api'
+		}));
+		resetDemo();
+	};
+
 	// Render configuration controls
 	const renderControls = () => (
 		<Paper sx={{ p: 3, mb: 3 }}>
 			<Typography variant="h6" gutterBottom>
 				LumoraLogin Configuration
 			</Typography>
+
+			{/* Mode Selection */}
+			<Box sx={{ mb: 3 }}>
+				<Typography variant="subtitle1" gutterBottom>
+					Authentication Mode
+				</Typography>
+				<ToggleButtonGroup
+					value={mode}
+					exclusive
+					onChange={(_, value) => value && handleModeChange(value)}
+					aria-label="authentication mode"
+				>
+					<ToggleButton value="legacy" aria-label="legacy mode">
+						Legacy Callback Mode
+					</ToggleButton>
+					<ToggleButton value="api" aria-label="api mode">
+						API Integration Mode
+					</ToggleButton>
+				</ToggleButtonGroup>
+				<Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
+					{mode === 'legacy' 
+						? 'Uses callback functions for authentication (backward compatible). Can use GOOGLE_CLIENT_ID from environment variables.'
+						: 'Uses direct API integration with Lumora API (new in v1.1.0). Can use GOOGLE_CALLBACK_URL and FRONTEND_URL from environment variables.'
+					}
+				</Typography>
+			</Box>
+
+			<Divider sx={{ mb: 3 }} />
+
+			{/* API Configuration (only show in API mode) */}
+			{mode === 'api' && (
+				<Box sx={{ mb: 3 }}>
+					<Typography variant="subtitle1" gutterBottom>
+						API Configuration
+					</Typography>
+					<Box
+						sx={{
+							display: 'flex',
+							flexDirection: { xs: 'column', md: 'row' },
+							gap: 2
+						}}
+					>
+						<TextField
+							fullWidth
+							label="API Base URL"
+							value={authConfig.apiBaseUrl || ''}
+							onChange={e =>
+								setAuthConfig(prev => ({
+									...prev,
+									apiBaseUrl: e.target.value
+								}))
+							}
+							size="small"
+							helperText="Base URL for Lumora API"
+						/>
+						<TextField
+							fullWidth
+							label="API Key"
+							value={authConfig.apiKey || ''}
+							onChange={e =>
+								setAuthConfig(prev => ({
+									...prev,
+									apiKey: e.target.value
+								}))
+							}
+							size="small"
+							helperText="API key for authentication"
+						/>
+						<TextField
+							fullWidth
+							label="Google Redirect URI"
+							value={authConfig.googleRedirectUri || ''}
+							onChange={e =>
+								setAuthConfig(prev => ({
+									...prev,
+									googleRedirectUri: e.target.value
+								}))
+							}
+							size="small"
+							helperText="OAuth callback URL"
+						/>
+					</Box>
+					<Alert severity="info" sx={{ mt: 2 }}>
+						<strong>API Mode Note:</strong> In API mode, the component will make direct calls to the Lumora API. 
+						For Google OAuth, it will redirect to the API's /auth/google endpoint instead of using popup-based authentication.
+						The component will automatically use API_KEY, GOOGLE_CALLBACK_URL, and FRONTEND_URL from your .env file.
+					</Alert>
+				</Box>
+			)}
 
 			<Box
 				sx={{
@@ -190,22 +308,34 @@ const App: React.FC = () => {
 						}
 						label="Enable Forget Password"
 					/>
-				</Box>
-
-				{/* Google Configuration */}
-				<Box sx={{ flex: 1 }}>
-					<Typography variant="subtitle1" gutterBottom>
-						Google Configuration
-					</Typography>
-					<TextField
-						fullWidth
-						label="Google Client ID"
-						value={googleClientId}
-						onChange={e => setGoogleClientId(e.target.value)}
-						size="small"
-						helperText="Enter your Google OAuth client ID"
+					<br />
+					<FormControlLabel
+						control={
+							<Switch
+								checked={enableOtp}
+								onChange={e => setEnableOtp(e.target.checked)}
+							/>
+						}
+						label="Enable OTP 2FA"
 					/>
 				</Box>
+
+				{/* Google Configuration (only show in legacy mode) */}
+				{mode === 'legacy' && (
+					<Box sx={{ flex: 1 }}>
+						<Typography variant="subtitle1" gutterBottom>
+							Google Configuration
+						</Typography>
+						<TextField
+							fullWidth
+							label="Google Client ID"
+							value={googleClientId}
+							onChange={e => setGoogleClientId(e.target.value)}
+							size="small"
+							helperText="Enter your Google OAuth client ID (Legacy mode only)"
+						/>
+					</Box>
+				)}
 			</Box>
 
 			<Divider sx={{ my: 3 }} />
@@ -390,6 +520,30 @@ const App: React.FC = () => {
 					{lastAction}
 				</Alert>
 			)}
+
+			{/* Mode Status */}
+			<Card sx={{ mt: 2 }}>
+				<CardContent>
+					<Typography variant="h6" gutterBottom>
+						Current Mode: {mode === 'api' ? 'API Integration' : 'Legacy Callback'}
+					</Typography>
+					<Typography variant="body2" color="text.secondary">
+						{mode === 'api' ? (
+							<>
+								<strong>API Integration Mode:</strong> The component will make direct calls to the Lumora API. 
+								Google OAuth will use redirect flow via the API's /auth/google endpoint. 
+								Tokens will be automatically managed and stored in localStorage.
+							</>
+						) : (
+							<>
+								<strong>Legacy Callback Mode:</strong> The component uses callback functions for authentication. 
+								Google OAuth uses popup-based flow with @react-oauth/google. 
+								You handle token management in your callback functions.
+							</>
+						)}
+					</Typography>
+				</CardContent>
+			</Card>
 		</Paper>
 	);
 
@@ -429,15 +583,20 @@ const App: React.FC = () => {
 						}}
 					>
 						<LumoraLogin
-							onLocalLogin={handleLocalLogin}
-							onGoogleLogin={handleGoogleLogin}
+							// Mode-specific props
+							authConfig={mode === 'api' ? authConfig : undefined}
+							onLocalLogin={mode === 'legacy' ? handleLocalLogin : undefined}
+							onGoogleLogin={mode === 'legacy' ? handleGoogleLogin : undefined}
+							onForgetPassword={mode === 'legacy' ? handleForgetPassword : undefined}
+							
+							// Common props
 							onLoginSuccess={handleLoginSuccess}
 							onLoginError={handleLoginError}
-							onForgetPassword={handleForgetPassword}
-							googleClientId={googleClientId || undefined}
+							googleClientId={mode === 'legacy' ? googleClientId || undefined : undefined}
 							enableLocalSignIn={enableLocalSignIn}
 							enableGoogleSignIn={enableGoogleSignIn}
 							enableForgetPassword={enableForgetPassword}
+							enableOtp={enableOtp}
 							enableRecaptcha={true}
 							recaptchaSiteKey="6Le2YeMrAAAAAGRMlDzqrI0aTtFeVMmNp7QpAREf"
 							branding={branding}

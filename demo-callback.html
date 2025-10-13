@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OAuth Callback - Lumora Login Demo</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+        }
+        .code {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            padding: 10px;
+            border-radius: 4px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+        .button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 5px;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>OAuth Callback Handler</h1>
+        <p>This page demonstrates how the <code>useAuthCallback</code> hook would work in a real application.</p>
+        
+        <div id="status" class="status info">
+            <strong>Processing OAuth callback...</strong><br>
+            This page would normally use the <code>useAuthCallback</code> hook to extract tokens from the URL parameters.
+        </div>
+        
+        <div id="url-params" style="display: none;">
+            <h3>URL Parameters Received:</h3>
+            <div id="params-content" class="code"></div>
+        </div>
+        
+        <div id="instructions">
+            <h3>How it works:</h3>
+            <ol>
+                <li>User clicks "Sign in with Google" in API mode</li>
+                <li>Component redirects to <code>GET /auth/google?redirect_uri=this-page-url</code></li>
+                <li>Lumora API handles Google OAuth and redirects back here with tokens</li>
+                <li><code>useAuthCallback</code> hook extracts <code>accessToken</code> and <code>refreshToken</code> from URL</li>
+                <li>Tokens are stored in localStorage and user is redirected to dashboard</li>
+            </ol>
+            
+            <h3>In your React app, you would use:</h3>
+            <div class="code">
+import { useAuthCallback } from '@volenday/lumora-login-component';
+
+const AuthCallbackPage = () => {
+  useAuthCallback({
+    onSuccess: (tokens, user) => {
+      console.log('OAuth successful:', user);
+      window.location.href = '/dashboard';
+    },
+    onError: (error) => {
+      console.error('OAuth failed:', error);
+      window.location.href = '/login';
+    }
+  });
+  
+  return &lt;div&gt;Processing authentication...&lt;/div&gt;;
+};
+            </div>
+        </div>
+        
+        <div style="margin-top: 30px;">
+            <a href="/" class="button">← Back to Demo</a>
+            <button onclick="simulateCallback()" class="button">Simulate OAuth Callback</button>
+        </div>
+    </div>
+
+    <script>
+        // Simulate what useAuthCallback would do
+        function simulateCallback() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const accessToken = urlParams.get('accessToken');
+            const refreshToken = urlParams.get('refreshToken');
+            const error = urlParams.get('error');
+            
+            const statusDiv = document.getElementById('status');
+            const paramsDiv = document.getElementById('url-params');
+            const paramsContent = document.getElementById('params-content');
+            
+            if (error) {
+                statusDiv.className = 'status error';
+                statusDiv.innerHTML = `<strong>OAuth Error:</strong> ${decodeURIComponent(error)}`;
+            } else if (accessToken && refreshToken) {
+                statusDiv.className = 'status success';
+                statusDiv.innerHTML = '<strong>OAuth Successful!</strong> Tokens received and would be stored in localStorage.';
+                
+                paramsDiv.style.display = 'block';
+                paramsContent.innerHTML = `
+accessToken: ${accessToken}<br>
+refreshToken: ${refreshToken}
+                `;
+            } else {
+                statusDiv.className = 'status info';
+                statusDiv.innerHTML = '<strong>No OAuth parameters found.</strong> This is normal when accessing the page directly.';
+            }
+        }
+        
+        // Run simulation on page load
+        simulateCallback();
+    </script>
+</body>
+</html>

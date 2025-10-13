@@ -8,9 +8,13 @@ import {
 	ForgetPasswordFormData,
 	LoginState,
 	ErrorState,
-	GoogleOAuthResponse
+	GoogleOAuthResponse,
+	LumoraAuthConfig
 } from '../types';
 import { getBrandingConfig } from '../utils/branding';
+import { TokenStorage } from '../lib/tokenStorage';
+import { authService } from '../services/authService';
+import { getApiClient } from '../lib/apiClient';
 
 // Import sub-components
 import BrandingHeader from './BrandingHeader';
@@ -82,6 +86,7 @@ const GoogleOAuthHandler: React.FC<{
 
 // Internal component that uses the Google OAuth hook
 const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
+	authConfig,
 	onLocalLogin,
 	onGoogleLogin,
 	onLoginSuccess,
@@ -93,6 +98,7 @@ const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 	enableGoogleSignIn = true,
 	enableLocalSignIn = true,
 	enableForgetPassword = true,
+	enableOtp = true,
 	branding
 }) => {
 	// Component state management
@@ -104,6 +110,43 @@ const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 
 	// Get merged branding configuration
 	const brandConfig = getBrandingConfig(branding);
+
+	// Determine if using API integration or legacy callbacks
+	const isApiMode = authConfig?.useApiIntegration && authConfig?.apiBaseUrl;
+	
+	// Get configuration from environment variables
+	const envGoogleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || import.meta.env.GOOGLE_CLIENT_ID;
+	const envGoogleCallbackUrl = import.meta.env.VITE_GOOGLE_CALLBACK_URL || import.meta.env.GOOGLE_CALLBACK_URL;
+	const envApiBaseUrl = import.meta.env.VITE_LUMORA_API_BASE_URL || import.meta.env.FRONTEND_URL;
+	const envApiKey = import.meta.env.VITE_API_KEY || import.meta.env.API_KEY;
+	
+	// Debug logging (remove in production)
+	console.log('LumoraLogin mode detection:', { 
+		authConfig, 
+		isApiMode, 
+		enableGoogleSignIn,
+		envGoogleClientId,
+		envGoogleCallbackUrl,
+		envApiBaseUrl,
+		envApiKey
+	});
+
+	// Initialize API client if in API mode
+	React.useEffect(() => {
+		if (isApiMode) {
+			try {
+				// Use environment variables if available, otherwise fall back to authConfig
+				const apiBaseUrl = authConfig?.apiBaseUrl || envApiBaseUrl;
+				const apiKey = authConfig?.apiKey || envApiKey;
+				
+				if (apiBaseUrl) {
+					getApiClient(apiBaseUrl, apiKey);
+				}
+			} catch (error) {
+				console.error('Failed to initialize API client:', error);
+			}
+		}
+	}, [isApiMode, authConfig?.apiBaseUrl, authConfig?.apiKey, envApiBaseUrl, envApiKey]);
 
 	// Validate that at least one sign-in method is enabled
 	if (!enableLocalSignIn && !enableGoogleSignIn) {
@@ -156,8 +199,8 @@ const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 		});
 	};
 
-	// Handle local login form submission
-	const handleLocalLogin: SubmitHandler<LoginFormData> = async data => {
+	// API-based local login handler
+	const handleApiLocalLogin: SubmitHandler<LoginFormData> = async data => {
 		setLoginState('loading');
 		setError(null);
 
@@ -167,7 +210,50 @@ const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 				await verifyRecaptcha();
 			}
 
-			await onLocalLogin(data.email, data.password);
+			// Ensure API client is initialized with the correct API key
+			const apiBaseUrl = authConfig?.apiBaseUrl || envApiBaseUrl;
+			const apiKey = authConfig?.apiKey || envApiKey;
+			
+			if (apiBaseUrl && apiKey) {
+				getApiClient(apiBaseUrl, apiKey);
+			}
+
+			// Call API directly
+			const tokens = await authService.login(data.email, data.password);
+
+			// Store tokens in localStorage
+			TokenStorage.setTokens(tokens.accessToken, tokens.refreshToken);
+
+			// Fetch user profile
+			const user = await authService.getCurrentUser();
+
+			// Check if OTP is enabled
+			if (enableOtp) {
+				setLoginState('otp-required');
+			} else {
+				setLoginState('success');
+				onLoginSuccess({ user, tokens });
+			}
+		} catch (err) {
+			const error = err as Error;
+			setError({ message: error.message, type: 'local' });
+			setLoginState('error');
+			onLoginError(error);
+		}
+	};
+
+	// Legacy callback-based local login handler
+	const handleLegacyLocalLogin: SubmitHandler<LoginFormData> = async data => {
+		setLoginState('loading');
+		setError(null);
+
+		try {
+			// Verify reCAPTCHA if enabled
+			if (enableRecaptcha) {
+				await verifyRecaptcha();
+			}
+
+			await onLocalLogin!(data.email, data.password);
 
 			// Simulate 2FA requirement - in real implementation, this would come from the API response
 			setLoginState('otp-required');
@@ -179,12 +265,44 @@ const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 		}
 	};
 
-	// Handle Google OAuth login
-	const handleGoogleLogin = () => {
-		if (googleLoginRef.current) {
-			googleLoginRef.current();
+	// Use appropriate login handler based on mode
+	const handleLocalLogin = isApiMode ? handleApiLocalLogin : handleLegacyLocalLogin;
+
+	// API-based Google OAuth login (redirect flow)
+	const handleApiGoogleLogin = () => {
+		// console.log('API Google login clicked', { authConfig, isApiMode });
+		
+		// Use environment variables if available, otherwise fall back to authConfig
+		const apiBaseUrl = authConfig?.apiBaseUrl || envApiBaseUrl;
+		const googleRedirectUri = authConfig?.googleRedirectUri || envGoogleCallbackUrl;
+		const apiKey = authConfig?.apiKey || envApiKey;
+		
+		if (apiBaseUrl && googleRedirectUri) {
+			// Ensure API client is initialized with the correct API key
+			if (apiKey) {
+				try {
+					getApiClient(apiBaseUrl, apiKey);
+				} catch (error) {
+					console.error('Failed to initialize API client for Google OAuth:', error);
+				}
+			}
+			authService.initiateGoogleOAuth(googleRedirectUri, apiBaseUrl);
+		} else {
+			onLoginError(new Error('Google OAuth configuration is incomplete. Please set GOOGLE_CALLBACK_URL and FRONTEND_URL environment variables or provide authConfig.'));
 		}
 	};
+
+	// Legacy callback-based Google OAuth login (popup flow)
+	const handleLegacyGoogleLogin = () => {
+		if (googleLoginRef.current) {
+			googleLoginRef.current();
+		} else {
+			onLoginError(new Error('Google OAuth is not properly configured for legacy mode. Please set GOOGLE_CLIENT_ID environment variable or provide googleClientId prop.'));
+		}
+	};
+
+	// Use appropriate Google login handler based on mode
+	const handleGoogleLogin = isApiMode ? handleApiGoogleLogin : handleLegacyGoogleLogin;
 
 	// Handle OTP verification
 	const handleOTPVerify = async (otp: string) => {
@@ -376,7 +494,7 @@ const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 					/>
 				)}
 
-				{enableGoogleSignIn && googleClientId && (
+				{enableGoogleSignIn && (
 					<GoogleSignInButton
 						brandConfig={brandConfig}
 						loginState={loginState}
@@ -405,10 +523,11 @@ const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 				)}
 			</Stack>
 
-			{/* Google OAuth Handler - only render when Google sign-in is enabled */}
-			{enableGoogleSignIn && googleClientId && (
+			{/* Google OAuth Handler - only render in legacy mode */}
+			{/* In API mode, we use redirect-based OAuth through Lumora API instead */}
+			{!isApiMode && enableGoogleSignIn && (googleClientId || envGoogleClientId) && (
 				<GoogleOAuthHandler
-					onGoogleLogin={onGoogleLogin}
+					onGoogleLogin={onGoogleLogin!}
 					onLoginError={onLoginError}
 					setLoginState={setLoginState}
 					setError={setError}
@@ -419,20 +538,28 @@ const LumoraLoginInternal: React.FC<LumoraLoginProps> = ({
 	);
 };
 
-// Main LumoraLogin component with GoogleOAuthProvider wrapper
+// Main LumoraLogin component with conditional GoogleOAuthProvider wrapper
 const LumoraLogin: React.FC<LumoraLoginProps> = props => {
-	const { googleClientId, enableGoogleSignIn } = props;
-
-	// If Google Sign-In is enabled and clientId is provided, wrap with GoogleOAuthProvider
-	if (enableGoogleSignIn && googleClientId) {
+	const { googleClientId, enableGoogleSignIn, authConfig } = props;
+	
+	// Get Google Client ID from environment variables if not provided as prop
+	const envGoogleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || import.meta.env.GOOGLE_CLIENT_ID;
+	const effectiveGoogleClientId = googleClientId || envGoogleClientId;
+	
+	// Determine if we're in API mode
+	const isApiMode = authConfig?.useApiIntegration && authConfig?.apiBaseUrl;
+	
+	// If Google Sign-In is enabled in LEGACY mode, wrap with GoogleOAuthProvider
+	// In API mode, we don't need the provider since we use Lumora API redirect flow
+	if (!isApiMode && enableGoogleSignIn && effectiveGoogleClientId) {
 		return (
-			<GoogleOAuthProvider clientId={googleClientId}>
+			<GoogleOAuthProvider clientId={effectiveGoogleClientId}>
 				<LumoraLoginInternal {...props} />
 			</GoogleOAuthProvider>
 		);
 	}
-
-	// Otherwise, render the internal component directly
+	
+	// Otherwise, render internal component directly (API mode or local login only)
 	return <LumoraLoginInternal {...props} />;
 };
 
