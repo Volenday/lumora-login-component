@@ -46,7 +46,7 @@ function ot() {
           return "Fragment";
         case U:
           return "Profiler";
-        case w:
+        case N:
           return "StrictMode";
         case H:
           return "Suspense";
@@ -59,11 +59,11 @@ function ot() {
         switch (typeof d.tag == "number" && console.error(
           "Received an unexpected object in getComponentNameFromType(). This is likely a bug in React. Please file an issue."
         ), d.$$typeof) {
-          case b:
+          case g:
             return "Portal";
           case O:
             return d.displayName || "Context";
-          case N:
+          case T:
             return (d._context.displayName || "Context") + ".Consumer";
           case D:
             var y = d.render;
@@ -91,8 +91,8 @@ function ot() {
       }
       if (y) {
         y = console;
-        var S = y.error, k = typeof Symbol == "function" && Symbol.toStringTag && d[Symbol.toStringTag] || d.constructor.name || "Object";
-        return S.call(
+        var v = y.error, k = typeof Symbol == "function" && Symbol.toStringTag && d[Symbol.toStringTag] || d.constructor.name || "Object";
+        return v.call(
           y,
           "The provided key is an unsupported type %s. This value must be coerced to a string before using it here.",
           k
@@ -125,14 +125,14 @@ function ot() {
       return d.key !== void 0;
     }
     function l(d, y) {
-      function S() {
+      function v() {
         L || (L = !0, console.error(
           "%s: `key` is not a prop. Trying to access it will result in `undefined` being returned. If you need to access the same value within the child component, you should pass it as a different prop. (https://react.dev/link/special-props)",
           y
         ));
       }
-      S.isReactWarning = !0, Object.defineProperty(d, "key", {
-        get: S,
+      v.isReactWarning = !0, Object.defineProperty(d, "key", {
+        get: v,
         configurable: !0
       });
     }
@@ -142,13 +142,13 @@ function ot() {
         "Accessing element.ref was removed in React 19. ref is now a regular prop. It will be removed from the JSX Element type in a future release."
       )), d = this.props.ref, d !== void 0 ? d : null;
     }
-    function u(d, y, S, k, x, A) {
-      var R = S.ref;
+    function u(d, y, v, k, x, A) {
+      var R = v.ref;
       return d = {
         $$typeof: m,
         type: d,
         key: y,
-        props: S,
+        props: v,
         _owner: k
       }, (R !== void 0 ? R : null) !== null ? Object.defineProperty(d, "ref", {
         enumerable: !1,
@@ -175,19 +175,19 @@ function ot() {
         value: A
       }), Object.freeze && (Object.freeze(d.props), Object.freeze(d)), d;
     }
-    function c(d, y, S, k, x, A) {
+    function c(d, y, v, k, x, A) {
       var R = y.children;
       if (R !== void 0)
         if (k)
           if (W(R)) {
             for (k = 0; k < R.length; k++)
-              g(R[k]);
+              b(R[k]);
             Object.freeze && Object.freeze(R);
           } else
             console.error(
               "React.jsx: Static children should always be an array. You are likely explicitly calling React.jsxs or React.jsxDEV. Use the Babel transform instead."
             );
-        else g(R);
+        else b(R);
       if (z.call(y, "key")) {
         R = e(d);
         var V = Object.keys(y).filter(function(Wr) {
@@ -206,47 +206,47 @@ React keys must be passed directly to JSX without using spread:
           R
         ), ie[R + k] = !0);
       }
-      if (R = null, S !== void 0 && (t(S), R = "" + S), s(y) && (t(y.key), R = "" + y.key), "key" in y) {
-        S = {};
+      if (R = null, v !== void 0 && (t(v), R = "" + v), s(y) && (t(y.key), R = "" + y.key), "key" in y) {
+        v = {};
         for (var fe in y)
-          fe !== "key" && (S[fe] = y[fe]);
-      } else S = y;
+          fe !== "key" && (v[fe] = y[fe]);
+      } else v = y;
       return R && l(
-        S,
+        v,
         typeof d == "function" ? d.displayName || d.name || "Unknown" : d
       ), u(
         d,
         R,
-        S,
+        v,
         n(),
         x,
         A
       );
     }
-    function g(d) {
-      T(d) ? d._store && (d._store.validated = 1) : typeof d == "object" && d !== null && d.$$typeof === $ && (d._payload.status === "fulfilled" ? T(d._payload.value) && d._payload.value._store && (d._payload.value._store.validated = 1) : d._store && (d._store.validated = 1));
+    function b(d) {
+      w(d) ? d._store && (d._store.validated = 1) : typeof d == "object" && d !== null && d.$$typeof === $ && (d._payload.status === "fulfilled" ? w(d._payload.value) && d._payload.value._store && (d._payload.value._store.validated = 1) : d._store && (d._store.validated = 1));
     }
-    function T(d) {
+    function w(d) {
       return typeof d == "object" && d !== null && d.$$typeof === m;
     }
-    var v = Pe, m = Symbol.for("react.transitional.element"), b = Symbol.for("react.portal"), h = Symbol.for("react.fragment"), w = Symbol.for("react.strict_mode"), U = Symbol.for("react.profiler"), N = Symbol.for("react.consumer"), O = Symbol.for("react.context"), D = Symbol.for("react.forward_ref"), H = Symbol.for("react.suspense"), _ = Symbol.for("react.suspense_list"), q = Symbol.for("react.memo"), $ = Symbol.for("react.lazy"), Y = Symbol.for("react.activity"), me = Symbol.for("react.client.reference"), X = v.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, z = Object.prototype.hasOwnProperty, W = Array.isArray, se = console.createTask ? console.createTask : function() {
+    var S = Pe, m = Symbol.for("react.transitional.element"), g = Symbol.for("react.portal"), h = Symbol.for("react.fragment"), N = Symbol.for("react.strict_mode"), U = Symbol.for("react.profiler"), T = Symbol.for("react.consumer"), O = Symbol.for("react.context"), D = Symbol.for("react.forward_ref"), H = Symbol.for("react.suspense"), _ = Symbol.for("react.suspense_list"), q = Symbol.for("react.memo"), $ = Symbol.for("react.lazy"), Y = Symbol.for("react.activity"), me = Symbol.for("react.client.reference"), X = S.__CLIENT_INTERNALS_DO_NOT_USE_OR_WARN_USERS_THEY_CANNOT_UPGRADE, z = Object.prototype.hasOwnProperty, W = Array.isArray, se = console.createTask ? console.createTask : function() {
       return null;
     };
-    v = {
+    S = {
       react_stack_bottom_frame: function(d) {
         return d();
       }
     };
-    var L, ee = {}, B = v.react_stack_bottom_frame.bind(
-      v,
+    var L, ee = {}, B = S.react_stack_bottom_frame.bind(
+      S,
       a
     )(), ae = se(o(a)), ie = {};
-    Te.Fragment = h, Te.jsxDEV = function(d, y, S, k) {
+    Te.Fragment = h, Te.jsxDEV = function(d, y, v, k) {
       var x = 1e4 > X.recentlyCreatedOwnerStacks++;
       return c(
         d,
         y,
-        S,
+        v,
         k,
         x ? Error("react-stack-top-frame") : B,
         x ? se(o(d)) : ae
@@ -625,8 +625,8 @@ function Le(e, r, t) {
     metaTokens: !0,
     dots: !1,
     indexes: !1
-  }, !1, function(b, h) {
-    return !i.isUndefined(h[b]);
+  }, !1, function(g, h) {
+    return !i.isUndefined(h[g]);
   });
   const o = t.metaTokens, n = t.visitor || c, a = t.dots, s = t.indexes, f = (t.Blob || typeof Blob < "u" && Blob) && i.isSpecCompliantForm(r);
   if (!i.isFunction(n))
@@ -641,45 +641,45 @@ function Le(e, r, t) {
       throw new E("Blob is not supported. Use a Buffer instead.");
     return i.isArrayBuffer(m) || i.isTypedArray(m) ? f && typeof Blob == "function" ? new Blob([m]) : Buffer.from(m) : m;
   }
-  function c(m, b, h) {
-    let w = m;
+  function c(m, g, h) {
+    let N = m;
     if (m && !h && typeof m == "object") {
-      if (i.endsWith(b, "{}"))
-        b = o ? b : b.slice(0, -2), m = JSON.stringify(m);
-      else if (i.isArray(m) && Gt(m) || (i.isFileList(m) || i.endsWith(b, "[]")) && (w = i.toArray(m)))
-        return b = _r(b), w.forEach(function(N, O) {
-          !(i.isUndefined(N) || N === null) && r.append(
+      if (i.endsWith(g, "{}"))
+        g = o ? g : g.slice(0, -2), m = JSON.stringify(m);
+      else if (i.isArray(m) && Gt(m) || (i.isFileList(m) || i.endsWith(g, "[]")) && (N = i.toArray(m)))
+        return g = _r(g), N.forEach(function(T, O) {
+          !(i.isUndefined(T) || T === null) && r.append(
             // eslint-disable-next-line no-nested-ternary
-            s === !0 ? rr([b], O, a) : s === null ? b : b + "[]",
-            u(N)
+            s === !0 ? rr([g], O, a) : s === null ? g : g + "[]",
+            u(T)
           );
         }), !1;
     }
-    return Me(m) ? !0 : (r.append(rr(h, b, a), u(m)), !1);
+    return Me(m) ? !0 : (r.append(rr(h, g, a), u(m)), !1);
   }
-  const g = [], T = Object.assign(Jt, {
+  const b = [], w = Object.assign(Jt, {
     defaultVisitor: c,
     convertValue: u,
     isVisitable: Me
   });
-  function v(m, b) {
+  function S(m, g) {
     if (!i.isUndefined(m)) {
-      if (g.indexOf(m) !== -1)
-        throw Error("Circular reference detected in " + b.join("."));
-      g.push(m), i.forEach(m, function(w, U) {
-        (!(i.isUndefined(w) || w === null) && n.call(
+      if (b.indexOf(m) !== -1)
+        throw Error("Circular reference detected in " + g.join("."));
+      b.push(m), i.forEach(m, function(N, U) {
+        (!(i.isUndefined(N) || N === null) && n.call(
           r,
-          w,
+          N,
           i.isString(U) ? U.trim() : U,
-          b,
-          T
-        )) === !0 && v(w, b ? b.concat(U) : [U]);
-      }), g.pop();
+          g,
+          w
+        )) === !0 && S(N, g ? g.concat(U) : [U]);
+      }), b.pop();
     }
   }
   if (!i.isObject(e))
     throw new TypeError("data must be an object");
-  return v(e), r;
+  return S(e), r;
 }
 function tr(e) {
   const r = {
@@ -994,8 +994,8 @@ let I = class {
       const c = pe(f);
       if (!c)
         throw new Error("header name must be a non-empty string");
-      const g = i.findKey(n, c);
-      (!g || n[g] === void 0 || u === !0 || u === void 0 && n[g] !== !1) && (n[g || f] = Oe(l));
+      const b = i.findKey(n, c);
+      (!b || n[b] === void 0 || u === !0 || u === void 0 && n[b] !== !1) && (n[b || f] = Oe(l));
     }
     const s = (l, f) => i.forEach(l, (u, c) => a(u, c, f));
     if (i.isPlainObject(r) || r instanceof this.constructor)
@@ -1158,13 +1158,13 @@ function go(e, r) {
   return r = r !== void 0 ? r : 1e3, function(f) {
     const u = Date.now(), c = o[a];
     s || (s = u), t[n] = f, o[n] = u;
-    let g = a, T = 0;
-    for (; g !== n; )
-      T += t[g++], g = g % e;
+    let b = a, w = 0;
+    for (; b !== n; )
+      w += t[b++], b = b % e;
     if (n = (n + 1) % e, n === a && (a = (a + 1) % e), u - s < r)
       return;
-    const v = c && u - c;
-    return v ? Math.round(T * 1e3 / v) : void 0;
+    const S = c && u - c;
+    return S ? Math.round(w * 1e3 / S) : void 0;
   };
 }
 function bo(e, r) {
@@ -1173,10 +1173,10 @@ function bo(e, r) {
     t = c, n = null, a && (clearTimeout(a), a = null), e(...u);
   };
   return [(...u) => {
-    const c = Date.now(), g = c - t;
-    g >= o ? s(u, c) : (n = u, a || (a = setTimeout(() => {
+    const c = Date.now(), b = c - t;
+    b >= o ? s(u, c) : (n = u, a || (a = setTimeout(() => {
       a = null, s(n);
-    }, o - g)));
+    }, o - b)));
   }, () => n && s(n)];
 }
 const _e = (e, r, t = 3) => {
@@ -1185,7 +1185,7 @@ const _e = (e, r, t = 3) => {
   return bo((a) => {
     const s = a.loaded, l = a.lengthComputable ? a.total : void 0, f = s - o, u = n(f), c = s <= l;
     o = s;
-    const g = {
+    const b = {
       loaded: s,
       total: l,
       progress: l ? s / l : void 0,
@@ -1196,7 +1196,7 @@ const _e = (e, r, t = 3) => {
       lengthComputable: l != null,
       [r ? "download" : "upload"]: !0
     };
-    e(g);
+    e(b);
   }, t);
 }, sr = (e, r) => {
   const t = e != null;
@@ -1249,14 +1249,14 @@ const ir = (e) => e instanceof I ? { ...e } : e;
 function ne(e, r) {
   r = r || {};
   const t = {};
-  function o(u, c, g, T) {
-    return i.isPlainObject(u) && i.isPlainObject(c) ? i.merge.call({ caseless: T }, u, c) : i.isPlainObject(c) ? i.merge({}, c) : i.isArray(c) ? c.slice() : c;
+  function o(u, c, b, w) {
+    return i.isPlainObject(u) && i.isPlainObject(c) ? i.merge.call({ caseless: w }, u, c) : i.isPlainObject(c) ? i.merge({}, c) : i.isArray(c) ? c.slice() : c;
   }
-  function n(u, c, g, T) {
+  function n(u, c, b, w) {
     if (i.isUndefined(c)) {
       if (!i.isUndefined(u))
-        return o(void 0, u, g, T);
-    } else return o(u, c, g, T);
+        return o(void 0, u, b, w);
+    } else return o(u, c, b, w);
   }
   function a(u, c) {
     if (!i.isUndefined(c))
@@ -1268,10 +1268,10 @@ function ne(e, r) {
         return o(void 0, u);
     } else return o(void 0, c);
   }
-  function l(u, c, g) {
-    if (g in r)
+  function l(u, c, b) {
+    if (b in r)
       return o(u, c);
-    if (g in e)
+    if (b in e)
       return o(void 0, u);
   }
   const f = {
@@ -1303,11 +1303,11 @@ function ne(e, r) {
     socketPath: s,
     responseEncoding: s,
     validateStatus: l,
-    headers: (u, c, g) => n(ir(u), ir(c), g, !0)
+    headers: (u, c, b) => n(ir(u), ir(c), b, !0)
   };
   return i.forEach(Object.keys({ ...e, ...r }), function(c) {
-    const g = f[c] || n, T = g(e[c], r[c], c);
-    i.isUndefined(T) && g !== l || (t[c] = T);
+    const b = f[c] || n, w = b(e[c], r[c], c);
+    i.isUndefined(w) && b !== l || (t[c] = w);
   }), t;
 }
 const Br = (e) => {
@@ -1321,8 +1321,8 @@ const Br = (e) => {
       s.setContentType(void 0);
     else if (i.isFunction(t.getHeaders)) {
       const f = t.getHeaders(), u = ["content-type", "content-length"];
-      Object.entries(f).forEach(([c, g]) => {
-        u.includes(c.toLowerCase()) && s.set(c, g);
+      Object.entries(f).forEach(([c, b]) => {
+        u.includes(c.toLowerCase()) && s.set(c, b);
       });
     }
   }
@@ -1336,33 +1336,33 @@ const Br = (e) => {
     const n = Br(e);
     let a = n.data;
     const s = I.from(n.headers).normalize();
-    let { responseType: l, onUploadProgress: f, onDownloadProgress: u } = n, c, g, T, v, m;
-    function b() {
-      v && v(), m && m(), n.cancelToken && n.cancelToken.unsubscribe(c), n.signal && n.signal.removeEventListener("abort", c);
+    let { responseType: l, onUploadProgress: f, onDownloadProgress: u } = n, c, b, w, S, m;
+    function g() {
+      S && S(), m && m(), n.cancelToken && n.cancelToken.unsubscribe(c), n.signal && n.signal.removeEventListener("abort", c);
     }
     let h = new XMLHttpRequest();
     h.open(n.method.toUpperCase(), n.url, !0), h.timeout = n.timeout;
-    function w() {
+    function N() {
       if (!h)
         return;
-      const N = I.from(
+      const T = I.from(
         "getAllResponseHeaders" in h && h.getAllResponseHeaders()
       ), D = {
         data: !l || l === "text" || l === "json" ? h.responseText : h.response,
         status: h.status,
         statusText: h.statusText,
-        headers: N,
+        headers: T,
         config: e,
         request: h
       };
       jr(function(_) {
-        t(_), b();
+        t(_), g();
       }, function(_) {
-        o(_), b();
+        o(_), g();
       }, D), h = null;
     }
-    "onloadend" in h ? h.onloadend = w : h.onreadystatechange = function() {
-      !h || h.readyState !== 4 || h.status === 0 && !(h.responseURL && h.responseURL.indexOf("file:") === 0) || setTimeout(w);
+    "onloadend" in h ? h.onloadend = N : h.onreadystatechange = function() {
+      !h || h.readyState !== 4 || h.status === 0 && !(h.responseURL && h.responseURL.indexOf("file:") === 0) || setTimeout(N);
     }, h.onabort = function() {
       h && (o(new E("Request aborted", E.ECONNABORTED, e, h)), h = null);
     }, h.onerror = function(O) {
@@ -1379,8 +1379,8 @@ const Br = (e) => {
       )), h = null;
     }, a === void 0 && s.setContentType(null), "setRequestHeader" in h && i.forEach(s.toJSON(), function(O, D) {
       h.setRequestHeader(D, O);
-    }), i.isUndefined(n.withCredentials) || (h.withCredentials = !!n.withCredentials), l && l !== "json" && (h.responseType = n.responseType), u && ([T, m] = _e(u, !0), h.addEventListener("progress", T)), f && h.upload && ([g, v] = _e(f), h.upload.addEventListener("progress", g), h.upload.addEventListener("loadend", v)), (n.cancelToken || n.signal) && (c = (N) => {
-      h && (o(!N || N.type ? new de(null, e, h) : N), h.abort(), h = null);
+    }), i.isUndefined(n.withCredentials) || (h.withCredentials = !!n.withCredentials), l && l !== "json" && (h.responseType = n.responseType), u && ([w, m] = _e(u, !0), h.addEventListener("progress", w)), f && h.upload && ([b, S] = _e(f), h.upload.addEventListener("progress", b), h.upload.addEventListener("loadend", S)), (n.cancelToken || n.signal) && (c = (T) => {
+      h && (o(!T || T.type ? new de(null, e, h) : T), h.abort(), h = null);
     }, n.cancelToken && n.cancelToken.subscribe(c), n.signal && (n.signal.aborted ? c() : n.signal.addEventListener("abort", c)));
     const U = ho(n.url);
     if (U && C.protocols.indexOf(U) === -1) {
@@ -1453,10 +1453,10 @@ const Br = (e) => {
           l(), f.close();
           return;
         }
-        let g = c.byteLength;
+        let b = c.byteLength;
         if (t) {
-          let T = a += g;
-          t(T);
+          let w = a += b;
+          t(w);
         }
         f.enqueue(new Uint8Array(c));
       } catch (u) {
@@ -1488,28 +1488,28 @@ const Br = (e) => {
   const { fetch: r, Request: t, Response: o } = e, n = r ? Re(r) : typeof fetch == "function", a = Re(t), s = Re(o);
   if (!n)
     return !1;
-  const l = n && Re(ur), f = n && (typeof dr == "function" ? /* @__PURE__ */ ((m) => (b) => m.encode(b))(new dr()) : async (m) => new Uint8Array(await new t(m).arrayBuffer())), u = a && l && mr(() => {
+  const l = n && Re(ur), f = n && (typeof dr == "function" ? /* @__PURE__ */ ((m) => (g) => m.encode(g))(new dr()) : async (m) => new Uint8Array(await new t(m).arrayBuffer())), u = a && l && mr(() => {
     let m = !1;
-    const b = new t(C.origin, {
+    const g = new t(C.origin, {
       body: new ur(),
       method: "POST",
       get duplex() {
         return m = !0, "half";
       }
     }).headers.has("Content-Type");
-    return m && !b;
-  }), c = s && l && mr(() => i.isReadableStream(new o("").body)), g = {
+    return m && !g;
+  }), c = s && l && mr(() => i.isReadableStream(new o("").body)), b = {
     stream: c && ((m) => m.body)
   };
   n && ["text", "arrayBuffer", "blob", "formData", "stream"].forEach((m) => {
-    !g[m] && (g[m] = (b, h) => {
-      let w = b && b[m];
-      if (w)
-        return w.call(b);
+    !b[m] && (b[m] = (g, h) => {
+      let N = g && g[m];
+      if (N)
+        return N.call(g);
       throw new E(`Response type '${m}' is not supported`, E.ERR_NOT_SUPPORT, h);
     });
   });
-  const T = async (m) => {
+  const w = async (m) => {
     if (m == null)
       return 0;
     if (i.isBlob(m))
@@ -1523,17 +1523,17 @@ const Br = (e) => {
       return m.byteLength;
     if (i.isURLSearchParams(m) && (m = m + ""), i.isString(m))
       return (await f(m)).byteLength;
-  }, v = async (m, b) => {
+  }, S = async (m, g) => {
     const h = i.toFiniteNumber(m.getContentLength());
-    return h ?? T(b);
+    return h ?? w(g);
   };
   return async (m) => {
     let {
-      url: b,
+      url: g,
       method: h,
-      data: w,
+      data: N,
       signal: U,
-      cancelToken: N,
+      cancelToken: T,
       timeout: O,
       onDownloadProgress: D,
       onUploadProgress: H,
@@ -1543,24 +1543,24 @@ const Br = (e) => {
       fetchOptions: Y
     } = Br(m), me = r || fetch;
     _ = _ ? (_ + "").toLowerCase() : "text";
-    let X = Ro([U, N && N.toAbortSignal()], O), z = null;
+    let X = Ro([U, T && T.toAbortSignal()], O), z = null;
     const W = X && X.unsubscribe && (() => {
       X.unsubscribe();
     });
     let se;
     try {
-      if (H && u && h !== "get" && h !== "head" && (se = await v(q, w)) !== 0) {
-        let d = new t(b, {
+      if (H && u && h !== "get" && h !== "head" && (se = await S(q, N)) !== 0) {
+        let d = new t(g, {
           method: "POST",
-          body: w,
+          body: N,
           duplex: "half"
         }), y;
-        if (i.isFormData(w) && (y = d.headers.get("content-type")) && q.setContentType(y), d.body) {
-          const [S, k] = sr(
+        if (i.isFormData(N) && (y = d.headers.get("content-type")) && q.setContentType(y), d.body) {
+          const [v, k] = sr(
             se,
             _e(ar(H))
           );
-          w = lr(d.body, cr, S, k);
+          N = lr(d.body, cr, v, k);
         }
       }
       i.isString($) || ($ = $ ? "include" : "omit");
@@ -1569,31 +1569,31 @@ const Br = (e) => {
         signal: X,
         method: h.toUpperCase(),
         headers: q.normalize().toJSON(),
-        body: w,
+        body: N,
         duplex: "half",
         credentials: L ? $ : void 0
       };
-      z = a && new t(b, ee);
-      let B = await (a ? me(z, Y) : me(b, ee));
+      z = a && new t(g, ee);
+      let B = await (a ? me(z, Y) : me(g, ee));
       const ae = c && (_ === "stream" || _ === "response");
       if (c && (D || ae && W)) {
         const d = {};
         ["status", "statusText", "headers"].forEach((x) => {
           d[x] = B[x];
         });
-        const y = i.toFiniteNumber(B.headers.get("content-length")), [S, k] = D && sr(
+        const y = i.toFiniteNumber(B.headers.get("content-length")), [v, k] = D && sr(
           y,
           _e(ar(D), !0)
         ) || [];
         B = new o(
-          lr(B.body, cr, S, () => {
+          lr(B.body, cr, v, () => {
             k && k(), W && W();
           }),
           d
         );
       }
       _ = _ || "text";
-      let ie = await g[i.findKey(g, _) || "text"](B, m);
+      let ie = await b[i.findKey(b, _) || "text"](B, m);
       return !ae && W && W(), await new Promise((d, y) => {
         jr(d, y, {
           data: ie,
@@ -1804,38 +1804,38 @@ let oe = class {
     ), t.headers = I.concat(s, a);
     const l = [];
     let f = !0;
-    this.interceptors.request.forEach(function(b) {
-      typeof b.runWhen == "function" && b.runWhen(t) === !1 || (f = f && b.synchronous, l.unshift(b.fulfilled, b.rejected));
+    this.interceptors.request.forEach(function(g) {
+      typeof g.runWhen == "function" && g.runWhen(t) === !1 || (f = f && g.synchronous, l.unshift(g.fulfilled, g.rejected));
     });
     const u = [];
-    this.interceptors.response.forEach(function(b) {
-      u.push(b.fulfilled, b.rejected);
+    this.interceptors.response.forEach(function(g) {
+      u.push(g.fulfilled, g.rejected);
     });
-    let c, g = 0, T;
+    let c, b = 0, w;
     if (!f) {
       const m = [pr.bind(this), void 0];
-      for (m.unshift(...l), m.push(...u), T = m.length, c = Promise.resolve(t); g < T; )
-        c = c.then(m[g++], m[g++]);
+      for (m.unshift(...l), m.push(...u), w = m.length, c = Promise.resolve(t); b < w; )
+        c = c.then(m[b++], m[b++]);
       return c;
     }
-    T = l.length;
-    let v = t;
-    for (; g < T; ) {
-      const m = l[g++], b = l[g++];
+    w = l.length;
+    let S = t;
+    for (; b < w; ) {
+      const m = l[b++], g = l[b++];
       try {
-        v = m(v);
+        S = m(S);
       } catch (h) {
-        b.call(this, h);
+        g.call(this, h);
         break;
       }
     }
     try {
-      c = pr.call(this, v);
+      c = pr.call(this, S);
     } catch (m) {
       return Promise.reject(m);
     }
-    for (g = 0, T = u.length; g < T; )
-      c = c.then(u[g++], u[g++]);
+    for (b = 0, w = u.length; b < w; )
+      c = c.then(u[b++], u[b++]);
     return c;
   }
   getUri(r) {
@@ -2321,8 +2321,8 @@ function zr(e, r, t) {
         if (!s.inner) throw s;
         return { values: {}, errors: Qr((l = s, f = !a.shouldUseNativeValidation && a.criteriaMode === "all", (l.inner || []).reduce(function(u, c) {
           if (u[c.path] || (u[c.path] = { message: c.message, type: c.type }), f) {
-            var g = u[c.path].types, T = g && g[c.type];
-            u[c.path] = Xr(c.path, f, u, c.type, T ? [].concat(T, c.message) : c.message);
+            var b = u[c.path].types, w = b && b[c.type];
+            u[c.path] = Xr(c.path, f, u, c.type, w ? [].concat(w, c.message) : c.message);
           }
           return u;
         }, {})), a) };
@@ -3151,11 +3151,11 @@ const Io = he.object({
   googleClientId: f,
   enableGoogleSignIn: u = !0,
   enableLocalSignIn: c = !0,
-  enableForgetPassword: g = !0,
-  enableOtp: T = !0,
-  branding: v
+  enableForgetPassword: b = !0,
+  enableOtp: w = !0,
+  branding: S
 }) => {
-  const [m, b] = ge("idle"), [h, w] = ge(null), U = Pe.useRef(null), N = at(v), O = e?.useApiIntegration && e?.apiBaseUrl, D = void 0, H = void 0, _ = void 0, q = void 0;
+  const [m, g] = ge("idle"), [h, N] = ge(null), U = Pe.useRef(null), T = at(S), O = e?.useApiIntegration && e?.apiBaseUrl, D = void 0, H = void 0, _ = void 0, q = void 0;
   if (Pe.useEffect(() => {
     if (O)
       try {
@@ -3186,7 +3186,7 @@ const Io = he.object({
       window.grecaptcha.ready(R);
     });
   }, z = O ? async (x) => {
-    b("loading"), w(null);
+    g("loading"), N(null);
     try {
       s && await Y();
       const A = e?.apiBaseUrl || _, R = e?.apiKey || q;
@@ -3194,18 +3194,18 @@ const Io = he.object({
       const V = await le.login(x.email, x.password);
       J.setTokens(V.accessToken, V.refreshToken);
       const fe = await le.getCurrentUser();
-      T ? b("otp-required") : (b("success"), o({ user: fe, tokens: V }));
+      w ? g("otp-required") : (g("success"), o({ user: fe, tokens: V }));
     } catch (A) {
       const R = A;
-      w({ message: R.message, type: "local" }), b("error"), n(R);
+      N({ message: R.message, type: "local" }), g("error"), n(R);
     }
   } : async (x) => {
-    b("loading"), w(null);
+    g("loading"), N(null);
     try {
-      s && await Y(), await r(x.email, x.password), b("otp-required");
+      s && await Y(), await r(x.email, x.password), g("otp-required");
     } catch (A) {
       const R = A;
-      w({ message: R.message, type: "local" }), b("error"), n(R);
+      N({ message: R.message, type: "local" }), g("error"), n(R);
     }
   }, L = O ? () => {
     const x = e?.apiBaseUrl || _, A = e?.googleRedirectUri || H, R = e?.apiKey || q;
@@ -3226,42 +3226,42 @@ const Io = he.object({
       return { success: !0, token: "verified-token" };
     throw new Error("Invalid OTP code");
   }, B = (x) => {
-    b("success"), o(x);
+    g("success"), o(x);
   }, ae = (x) => {
-    w({ message: x.message, type: "otp" }), b("otp-error");
+    N({ message: x.message, type: "otp" }), g("otp-error");
   }, ie = () => {
-    console.log("Resending OTP..."), h && h.type === "otp" && w(null);
+    console.log("Resending OTP..."), h && h.type === "otp" && N(null);
   }, d = () => {
-    w(null), b("idle");
+    N(null), g("idle");
   }, y = async (x) => {
     if (!a) {
-      w({
+      N({
         message: "Forget password functionality is not available",
         type: "forget-password"
       });
       return;
     }
-    b("forget-password-loading"), w(null);
+    g("forget-password-loading"), N(null);
     try {
-      s && await Y(), await a(x.email), b("forget-password-success");
+      s && await Y(), await a(x.email), g("forget-password-success");
     } catch (A) {
       const R = A;
-      w({ message: R.message, type: "forget-password" }), b("forget-password"), n(R);
+      N({ message: R.message, type: "forget-password" }), g("forget-password"), n(R);
     }
-  }, S = () => {
-    w(null), b("forget-password");
+  }, v = () => {
+    N(null), g("forget-password");
   }, k = () => {
-    w(null), b("idle");
+    N(null), g("idle");
   };
   return yr(() => {
     if (s && l && typeof window < "u") {
       const x = document.createElement("script");
       x.src = `https://www.google.com/recaptcha/enterprise.js?render=${l}`, x.async = !0, x.defer = !0, document.head.appendChild(x);
     }
-  }, [s, l]), m === "otp-required" || m === "otp-error" ? /* @__PURE__ */ p.jsxDEV(Se, { brandConfig: N, children: /* @__PURE__ */ p.jsxDEV(
+  }, [s, l]), m === "otp-required" || m === "otp-error" ? /* @__PURE__ */ p.jsxDEV(Se, { brandConfig: T, children: /* @__PURE__ */ p.jsxDEV(
     qo,
     {
-      brandConfig: N,
+      brandConfig: T,
       loginState: m,
       onVerify: ee,
       onVerifySuccess: B,
@@ -3281,10 +3281,10 @@ const Io = he.object({
     fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
     lineNumber: 412,
     columnNumber: 4
-  }, void 0) : m === "forget-password-success" ? /* @__PURE__ */ p.jsxDEV(Se, { brandConfig: N, children: /* @__PURE__ */ p.jsxDEV(
+  }, void 0) : m === "forget-password-success" ? /* @__PURE__ */ p.jsxDEV(Se, { brandConfig: T, children: /* @__PURE__ */ p.jsxDEV(
     $o,
     {
-      brandConfig: N,
+      brandConfig: T,
       onBackToLogin: k
     },
     void 0,
@@ -3299,8 +3299,8 @@ const Io = he.object({
     fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
     lineNumber: 429,
     columnNumber: 4
-  }, void 0) : m === "forget-password" || m === "forget-password-loading" ? /* @__PURE__ */ p.jsxDEV(Se, { brandConfig: N, children: [
-    /* @__PURE__ */ p.jsxDEV(gr, { brandConfig: N }, void 0, !1, {
+  }, void 0) : m === "forget-password" || m === "forget-password-loading" ? /* @__PURE__ */ p.jsxDEV(Se, { brandConfig: T, children: [
+    /* @__PURE__ */ p.jsxDEV(gr, { brandConfig: T }, void 0, !1, {
       fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
       lineNumber: 445,
       columnNumber: 5
@@ -3308,12 +3308,12 @@ const Io = he.object({
     /* @__PURE__ */ p.jsxDEV(
       Mo,
       {
-        brandConfig: N,
+        brandConfig: T,
         loginState: m,
         error: h,
         onSubmit: y,
         onBackToLogin: k,
-        onCloseError: () => w(null)
+        onCloseError: () => N(null)
       },
       void 0,
       !1,
@@ -3328,13 +3328,13 @@ const Io = he.object({
     fileName: "/Users/karlaleandravargas/lumora/lumora-login-component/src/components/LumoraLogin.tsx",
     lineNumber: 444,
     columnNumber: 4
-  }, void 0) : /* @__PURE__ */ p.jsxDEV(Se, { brandConfig: N, children: [
+  }, void 0) : /* @__PURE__ */ p.jsxDEV(Se, { brandConfig: T, children: [
     /* @__PURE__ */ p.jsxDEV(
       gr,
       {
-        brandConfig: N,
-        title: N.companyName ? `Welcome to ${N.companyName}` : "Sign In",
-        subtitle: N.tagline
+        brandConfig: T,
+        title: T.companyName ? `Welcome to ${T.companyName}` : "Sign In",
+        subtitle: T.tagline
       },
       void 0,
       !1,
@@ -3350,7 +3350,7 @@ const Io = he.object({
       {
         severity: "error",
         sx: { mb: 3 },
-        onClose: () => w(null),
+        onClose: () => N(null),
         children: h.message
       },
       void 0,
@@ -3366,11 +3366,11 @@ const Io = he.object({
       c && /* @__PURE__ */ p.jsxDEV(
         Bo,
         {
-          brandConfig: N,
+          brandConfig: T,
           loginState: m,
           onSubmit: z,
-          onForgetPassword: a ? S : void 0,
-          enableForgetPassword: g
+          onForgetPassword: a ? v : void 0,
+          enableForgetPassword: b
         },
         void 0,
         !1,
@@ -3384,7 +3384,7 @@ const Io = he.object({
       u && /* @__PURE__ */ p.jsxDEV(
         Vo,
         {
-          brandConfig: N,
+          brandConfig: T,
           loginState: m,
           onClick: L,
           showDivider: c
@@ -3406,11 +3406,11 @@ const Io = he.object({
           onClick: d,
           sx: {
             mt: 1,
-            color: N.primaryColor,
+            color: T.primaryColor,
             textTransform: "none",
             fontWeight: 500,
             "&:hover": {
-              backgroundColor: `${N.primaryColor}08`
+              backgroundColor: `${T.primaryColor}08`
             }
           },
           children: "Try Again"
@@ -3434,8 +3434,8 @@ const Io = he.object({
       {
         onGoogleLogin: t,
         onLoginError: n,
-        setLoginState: b,
-        setError: w,
+        setLoginState: g,
+        setError: N,
         googleLoginRef: U
       },
       void 0,
@@ -3472,25 +3472,27 @@ const Io = he.object({
   return yr(() => {
     (async () => {
       try {
-        const s = new URLSearchParams(window.location.search), l = s.get("access_token") || s.get("accessToken"), f = s.get("refresh_token") || s.get("refreshToken"), u = s.get("user"), c = s.get("error");
-        if (c)
-          throw new Error(decodeURIComponent(c));
+        const s = new URLSearchParams(window.location.search), l = s.get("access_token") || s.get("accessToken"), f = s.get("refresh_token") || s.get("refreshToken"), u = s.get("user"), c = s.get("error"), b = s.get("message");
+        if (c) {
+          const m = decodeURIComponent(b || c);
+          throw new Error(m);
+        }
         if (!l || !f)
           throw new Error("Missing authentication tokens in callback URL");
         J.setTokens(l, f);
-        let g;
+        let w;
         if (u)
           try {
-            const v = decodeURIComponent(u);
-            g = JSON.parse(v);
-          } catch (v) {
-            console.warn("Failed to parse user from URL, fetching from API:", v), g = await le.getCurrentUser();
+            const m = decodeURIComponent(u);
+            w = JSON.parse(m);
+          } catch (m) {
+            console.warn("Failed to parse user from URL, fetching from API:", m), w = await le.getCurrentUser();
           }
         else
-          g = await le.getCurrentUser();
-        e?.onSuccess?.({ accessToken: l, refreshToken: f }, g);
-        const T = e?.redirectPath || "/dashboard";
-        window.history.replaceState({}, document.title, T), t(!1);
+          w = await le.getCurrentUser();
+        e?.onSuccess?.({ accessToken: l, refreshToken: f }, w);
+        const S = e?.redirectPath || "/dashboard";
+        window.history.replaceState({}, document.title, S), t(!1);
       } catch (s) {
         const l = s;
         n(l), e?.onError?.(l), t(!1);

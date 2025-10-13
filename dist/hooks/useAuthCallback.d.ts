@@ -16,6 +16,11 @@ export interface UseAuthCallbackConfig {
  * If user data is included in the URL, it will be parsed directly.
  * Otherwise, it will fetch user data from the API.
  *
+ * Error handling:
+ * - Checks for 'error' parameter in URL
+ * - Uses 'message' parameter for detailed error messages if available
+ * - Falls back to 'error' parameter value if no message provided
+ *
  * @param config - Configuration object for the callback handler
  * @returns Object with loading state and error state
  */

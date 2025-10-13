@@ -21,6 +21,11 @@ export interface UseAuthCallbackConfig {
  * If user data is included in the URL, it will be parsed directly.
  * Otherwise, it will fetch user data from the API.
  * 
+ * Error handling:
+ * - Checks for 'error' parameter in URL
+ * - Uses 'message' parameter for detailed error messages if available
+ * - Falls back to 'error' parameter value if no message provided
+ * 
  * @param config - Configuration object for the callback handler
  * @returns Object with loading state and error state
  */
@@ -39,10 +44,15 @@ export const useAuthCallback = (config?: UseAuthCallbackConfig) => {
 				const refreshToken = params.get('refresh_token') || params.get('refreshToken');
 				const userParam = params.get('user');
 				const errorParam = params.get('error');
+				const messageParam = params.get('message');
 				
 				// Check for error parameter from OAuth flow
+				// Support both 'error' and 'message' parameters for detailed error info
 				if (errorParam) {
-					throw new Error(decodeURIComponent(errorParam));
+					const errorMessage = messageParam 
+						? decodeURIComponent(messageParam) 
+						: decodeURIComponent(errorParam);
+					throw new Error(errorMessage);
 				}
 				
 				// Validate tokens are present in URL
