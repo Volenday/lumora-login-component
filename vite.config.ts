@@ -6,7 +6,10 @@ import dts from 'vite-plugin-dts';
 export default defineConfig(() => {
 	return {
 		plugins: [
-			react(),
+			react({
+				jsxRuntime: 'automatic',
+				jsxImportSource: 'react'
+			}),
 			tsconfigPaths(),
 			dts({
 				insertTypesEntry: true,
@@ -25,6 +28,8 @@ export default defineConfig(() => {
 				external: [
 					'react',
 					'react-dom',
+					'react/jsx-runtime',
+					'react/jsx-dev-runtime',
 					'@emotion/react',
 					'@emotion/styled',
 					'@mui/material',
@@ -38,7 +43,9 @@ export default defineConfig(() => {
 				output: {
 					globals: {
 						react: 'React',
-						'react-dom': 'ReactDOM'
+						'react-dom': 'ReactDOM',
+						'react/jsx-runtime': 'jsxRuntime',
+						'react/jsx-dev-runtime': 'jsxRuntime'
 					}
 				}
 			}
