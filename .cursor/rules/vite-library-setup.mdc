@@ -29,23 +29,41 @@ rules:
 
         - In `vite.config.ts`, configure `build.lib`:
             ```ts
-            build: {
-              lib: {
-                entry: 'src/index.ts',
-                name: 'YourComponentLibrary',
-                formats: ['es', 'cjs'],
-                fileName: (format) => `index.${format}.js`,
-              },
-              rollupOptions: {
-                external: ['react', 'react-dom'],
-                output: {
-                  globals: {
-                    react: 'React',
-                    'react-dom': 'ReactDOM',
+            import { defineConfig } from 'vite';
+            import react from '@vitejs/plugin-react';
+
+            export default defineConfig({
+              plugins: [
+                react({
+                  jsxRuntime: 'automatic',
+                  jsxImportSource: 'react'
+                })
+              ],
+              build: {
+                lib: {
+                  entry: 'src/index.ts',
+                  name: 'YourComponentLibrary',
+                  formats: ['es', 'cjs'],
+                  fileName: (format) => `index.${format}.js`,
+                },
+                rollupOptions: {
+                  external: [
+                    'react', 
+                    'react-dom',
+                    'react/jsx-runtime',
+                    'react/jsx-dev-runtime'
+                  ],
+                  output: {
+                    globals: {
+                      react: 'React',
+                      'react-dom': 'ReactDOM',
+                      'react/jsx-runtime': 'jsxRuntime',
+                      'react/jsx-dev-runtime': 'jsxRuntime'
+                    },
                   },
                 },
-              },
-            }
+              }
+            });
             ```
         - Ensure the library builds cleanly with `vite build`.
 
@@ -69,8 +87,8 @@ rules:
             		"prepublishOnly": "npm run build"
             	},
             	"peerDependencies": {
-            		"react": "^18.0.0",
-            		"react-dom": "^18.0.0"
+            		"react": "^19.0.0",
+            		"react-dom": "^19.0.0"
             	}
             }
             ```
