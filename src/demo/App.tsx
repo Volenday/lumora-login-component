@@ -48,13 +48,13 @@ const App: React.FC = () => {
 	const [enableOtp, setEnableOtp] = useState(true);
 
 	// Auto-detect configuration from environment variables
-	const apiBaseUrl = import.meta.env.VITE_API_URL || 
-	                   import.meta.env.API_URL || 
-	                   'https://dev.api.lumora.capital';
-	
-	const apiKey = import.meta.env.VITE_API_KEY || 
-	               import.meta.env.API_KEY;
-	
+	const apiBaseUrl =
+		import.meta.env.VITE_API_URL ||
+		import.meta.env.API_URL ||
+		'https://dev.api.lumora.capital';
+
+	const apiKey = import.meta.env.VITE_API_KEY || import.meta.env.API_KEY;
+
 	// Auto-detect redirect URI: current origin + /auth/callback
 	const googleRedirectUri = `${window.location.origin}/auth/callback`;
 
@@ -74,7 +74,7 @@ const App: React.FC = () => {
 		backgroundColor: '#ffffff',
 		textColor: '#333333',
 		logoHeight: 48,
-		logo: 'https://lumora.capital/_next/image?url=%2Fimages%2Flumora-logo.png&w=256&q=75',
+		logo: null,
 		forgetPasswordTitle: 'Reset Your Password',
 		forgetPasswordDescription:
 			'Enter your email address and we will send you a secure link to reset your password.',
@@ -94,7 +94,9 @@ const App: React.FC = () => {
 			tokens?: { accessToken: string };
 		};
 		setLastAction(
-			`✅ Login successful! User: ${responseData.user?.name || responseData.user?.email || 'N/A'}`
+			`✅ Login successful! User: ${
+				responseData.user?.name || responseData.user?.email || 'N/A'
+			}`
 		);
 		setLoginAttempts(prev => prev + 1);
 		console.log('Login successful:', response);
@@ -172,9 +174,13 @@ const App: React.FC = () => {
 							>
 								Lumora Login Component Demo
 							</Typography>
-							<Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>
-								This demo showcases the Lumora Login Component using
-								the Lumora Capital API for authentication.
+							<Typography
+								variant="body2"
+								color="text.secondary"
+								sx={{ mb: 2 }}
+							>
+								This demo showcases the Lumora Login Component
+								using the Lumora Capital API for authentication.
 							</Typography>
 
 							<Alert severity="success" sx={{ mb: 2 }}>
@@ -197,7 +203,10 @@ const App: React.FC = () => {
 							)}
 
 							<Box sx={{ mt: 2 }}>
-								<Typography variant="caption" color="text.secondary">
+								<Typography
+									variant="caption"
+									color="text.secondary"
+								>
 									Login Attempts: {loginAttempts}
 								</Typography>
 							</Box>
@@ -212,12 +221,19 @@ const App: React.FC = () => {
 							>
 								API Configuration
 							</Typography>
-							
+
 							<Alert severity="info" sx={{ mb: 2 }}>
-								Configuration auto-detected from environment variables
+								Configuration auto-detected from environment
+								variables
 							</Alert>
 
-							<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+							<Box
+								sx={{
+									display: 'flex',
+									flexDirection: 'column',
+									gap: 2
+								}}
+							>
 								<TextField
 									label="API Base URL"
 									value={authConfig.apiBaseUrl}
@@ -229,7 +245,11 @@ const App: React.FC = () => {
 
 								<TextField
 									label="API Key"
-									value={authConfig.apiKey ? '••••••••••••••••' : 'Not set'}
+									value={
+										authConfig.apiKey
+											? '••••••••••••••••'
+											: 'Not set'
+									}
 									fullWidth
 									size="small"
 									disabled
@@ -257,13 +277,20 @@ const App: React.FC = () => {
 								Feature Toggles
 							</Typography>
 
-							<Box sx={{ display: 'flex', flexDirection: 'column' }}>
+							<Box
+								sx={{
+									display: 'flex',
+									flexDirection: 'column'
+								}}
+							>
 								<FormControlLabel
 									control={
 										<Switch
 											checked={enableLocalSignIn}
 											onChange={e =>
-												setEnableLocalSignIn(e.target.checked)
+												setEnableLocalSignIn(
+													e.target.checked
+												)
 											}
 										/>
 									}
@@ -275,7 +302,9 @@ const App: React.FC = () => {
 										<Switch
 											checked={enableGoogleSignIn}
 											onChange={e =>
-												setEnableGoogleSignIn(e.target.checked)
+												setEnableGoogleSignIn(
+													e.target.checked
+												)
 											}
 										/>
 									}
@@ -287,7 +316,9 @@ const App: React.FC = () => {
 										<Switch
 											checked={enableForgetPassword}
 											onChange={e =>
-												setEnableForgetPassword(e.target.checked)
+												setEnableForgetPassword(
+													e.target.checked
+												)
 											}
 										/>
 									}
@@ -298,7 +329,9 @@ const App: React.FC = () => {
 									control={
 										<Switch
 											checked={enableOtp}
-											onChange={e => setEnableOtp(e.target.checked)}
+											onChange={e =>
+												setEnableOtp(e.target.checked)
+											}
 										/>
 									}
 									label="Enable OTP Verification"
@@ -316,12 +349,20 @@ const App: React.FC = () => {
 								Branding Configuration
 							</Typography>
 
-							<Box sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+							<Box
+								sx={{
+									display: 'flex',
+									flexDirection: 'column',
+									gap: 2
+								}}
+							>
 								<TextField
 									label="Company Name"
 									value={branding.companyName}
 									onChange={e =>
-										updateBranding({ companyName: e.target.value })
+										updateBranding({
+											companyName: e.target.value
+										})
 									}
 									fullWidth
 									size="small"
@@ -331,7 +372,9 @@ const App: React.FC = () => {
 									label="Tagline"
 									value={branding.tagline}
 									onChange={e =>
-										updateBranding({ tagline: e.target.value })
+										updateBranding({
+											tagline: e.target.value
+										})
 									}
 									fullWidth
 									size="small"
@@ -342,7 +385,9 @@ const App: React.FC = () => {
 									type="color"
 									value={branding.primaryColor}
 									onChange={e =>
-										updateBranding({ primaryColor: e.target.value })
+										updateBranding({
+											primaryColor: e.target.value
+										})
 									}
 									fullWidth
 									size="small"
@@ -353,7 +398,9 @@ const App: React.FC = () => {
 									type="color"
 									value={branding.secondaryColor}
 									onChange={e =>
-										updateBranding({ secondaryColor: e.target.value })
+										updateBranding({
+											secondaryColor: e.target.value
+										})
 									}
 									fullWidth
 									size="small"
@@ -374,17 +421,20 @@ const App: React.FC = () => {
 									onClick={() => {
 										setBranding({
 											companyName: 'Lumora',
-											tagline: 'Secure authentication made simple',
+											tagline:
+												'Secure authentication made simple',
 											primaryColor: '#1976d2',
 											secondaryColor: '#42a5f5',
 											backgroundColor: '#ffffff',
 											textColor: '#333333',
 											logoHeight: 48,
 											logo: 'https://lumora.capital/_next/image?url=%2Fimages%2Flumora-logo.png&w=256&q=75',
-											forgetPasswordTitle: 'Reset Your Password',
+											forgetPasswordTitle:
+												'Reset Your Password',
 											forgetPasswordDescription:
 												'Enter your email address and we will send you a secure link to reset your password.',
-											forgetPasswordSuccessTitle: 'Check Your Inbox',
+											forgetPasswordSuccessTitle:
+												'Check Your Inbox',
 											forgetPasswordSuccessDescription:
 												'We have sent you a password reset link. Please check your email and follow the instructions to reset your password.'
 										});

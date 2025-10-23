@@ -26,7 +26,7 @@ const LoginContainer: React.FC<LoginContainerProps> = ({
 					xs: 'none',
 					sm: '0 8px 32px rgba(0, 0, 0, 0.12)'
 				},
-				borderRadius: { xs: 0, sm: 2 },
+				borderRadius: { xs: 0, sm: 2.5 },
 				border: { xs: 'none', sm: '1px solid rgba(0, 0, 0, 0.08)' },
 				background: brandConfig.backgroundColor,
 				display: 'flex',
