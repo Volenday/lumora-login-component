@@ -2,7 +2,16 @@ import React, { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Box, TextField, Button, Stack, CircularProgress } from '@mui/material';
+import {
+	Box,
+	TextField,
+	Button,
+	Stack,
+	CircularProgress,
+	FormControl,
+	FormLabel
+} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { BrandingConfig, LoginFormData, LoginState } from '../types';
 
 const validationSchema = yup.object({
@@ -31,6 +40,8 @@ const LoginForm: React.FC<LoginFormProps> = ({
 	onForgetPassword,
 	enableForgetPassword = true
 }) => {
+	const theme = useTheme();
+
 	const [showPassword, setShowPassword] = useState(false);
 
 	const {
@@ -44,81 +55,104 @@ const LoginForm: React.FC<LoginFormProps> = ({
 	const isDisabled =
 		loginState === 'loading' || loginState === 'google-loading';
 
+	// Align input visuals with the provided design (light gray filled fields
+	// with rounded corners and subtle borders). This style object is reused
+	// for both the email and password inputs to ensure visual consistency.
+	const inputSx = {
+		'& .MuiInputLabel-root': {
+			color: '#5f676d',
+			fontWeight: 600
+		},
+		'& .MuiInputLabel-root.Mui-focused': {
+			color: '#5f676d'
+		},
+		'& .MuiOutlinedInput-root': {
+			borderRadius: 1.4,
+			backgroundColor: '#f3f4f6',
+			'& fieldset': {
+				borderColor: '#e5e7eb'
+			},
+			'&:hover fieldset': {
+				borderColor: brandConfig.primaryColor
+			},
+			'&.Mui-focused fieldset': {
+				borderColor: brandConfig.primaryColor
+			},
+			'&.Mui-disabled': {
+				backgroundColor: '#f3f4f6'
+			}
+		},
+		'& .MuiInputBase-input::placeholder': {
+			color: '#6b7280',
+			opacity: 1
+		}
+	};
+
 	return (
 		<Box component="form" onSubmit={handleSubmit(onSubmit)}>
 			<Stack spacing={3}>
-				<TextField
-					{...register('email')}
-					fullWidth
-					label="Email Address"
-					type="email"
-					placeholder="Enter your email"
-					error={!!errors.email}
-					helperText={errors.email?.message}
-					disabled={isDisabled}
-					sx={{
-						'& .MuiOutlinedInput-root': {
-							borderRadius: 1.4,
-							'&:hover fieldset': {
-								borderColor: brandConfig.primaryColor
-							},
-							'&.Mui-focused fieldset': {
-								borderColor: brandConfig.primaryColor
-							}
-						},
-						'& .MuiInputLabel-root.Mui-focused': {
-							color: brandConfig.primaryColor
-						}
-					}}
-				/>
+				<FormControl fullWidth>
+					<FormLabel
+						htmlFor="lumora-email"
+						sx={{ color: '#5f676d', fontWeight: 700, mb: 0.5 }}
+					>
+						Email Address
+					</FormLabel>
+					<TextField
+						{...register('email')}
+						fullWidth
+						id="lumora-email"
+						type="email"
+						placeholder="Enter your email"
+						error={!!errors.email}
+						helperText={errors.email?.message}
+						disabled={isDisabled}
+						sx={inputSx}
+					/>
+				</FormControl>
 
-				<TextField
-					{...register('password')}
-					fullWidth
-					label="Password"
-					type={showPassword ? 'text' : 'password'}
-					placeholder="Enter your password"
-					error={!!errors.password}
-					helperText={errors.password?.message}
-					disabled={isDisabled}
-					sx={{
-						'& .MuiOutlinedInput-root': {
-							borderRadius: 1.4,
-							'&:hover fieldset': {
-								borderColor: brandConfig.primaryColor
-							},
-							'&.Mui-focused fieldset': {
-								borderColor: brandConfig.primaryColor
-							}
-						},
-						'& .MuiInputLabel-root.Mui-focused': {
-							color: brandConfig.primaryColor
-						}
-					}}
-					slotProps={{
-						input: {
-							endAdornment: (
-								<Button
-									size="small"
-									onClick={() =>
-										setShowPassword(!showPassword)
-									}
-									disabled={isDisabled}
-									sx={{
-										color: brandConfig.primaryColor,
-										textTransform: 'none',
-										fontWeight: 500,
-										'&:hover': {
-											backgroundColor: `${brandConfig.primaryColor}10`
+				<FormControl fullWidth>
+					<FormLabel
+						htmlFor="lumora-password"
+						sx={{ color: '#5f676d', fontWeight: 700, mb: 0.5 }}
+					>
+						Password
+					</FormLabel>
+					<TextField
+						{...register('password')}
+						fullWidth
+						id="lumora-password"
+						type={showPassword ? 'text' : 'password'}
+						placeholder="Enter your password"
+						error={!!errors.password}
+						helperText={errors.password?.message}
+						disabled={isDisabled}
+						sx={inputSx}
+						slotProps={{
+							input: {
+								endAdornment: (
+									<Button
+										size="small"
+										onClick={() =>
+											setShowPassword(!showPassword)
 										}
-									}}
-								>
-									{showPassword ? 'Hide' : 'Show'}
-								</Button>
-							)
-						}
-					}}
-				/>
+										disabled={isDisabled}
+										sx={{
+											color: brandConfig.primaryColor,
+											textTransform: 'none',
+											fontWeight: 500,
+											'&:hover': {
+												backgroundColor: `${brandConfig.primaryColor}10`
+											}
+										}}
+									>
+										{showPassword ? 'Hide' : 'Show'}
+									</Button>
+								)
+							}
+						}}
+					/>
+				</FormControl>
 
 				<Button
 					type="submit"
@@ -132,7 +166,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
 						borderRadius: 1.4,
 						textTransform: 'none',
 						fontWeight: 600,
-						fontSize: '1rem',
+						fontSize: theme.typography.pxToRem(18),
 						boxShadow: `0 4px 12px ${brandConfig.primaryColor}30`,
 						'&:hover': {
 							backgroundColor: brandConfig.secondaryColor,
@@ -151,7 +185,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
 				</Button>
 
 				{enableForgetPassword && onForgetPassword && (
-					<Box textAlign="right" sx={{ mt: 1 }}>
+					<Box textAlign="center" sx={{ mt: 1 }}>
 						<Button
 							variant="text"
 							onClick={onForgetPassword}
@@ -160,7 +194,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
 								textTransform: 'none',
 								color: brandConfig.primaryColor,
 								fontWeight: 500,
-								fontSize: '0.9rem',
+								fontSize: theme.typography.pxToRem(18),
 								'&:hover': {
 									backgroundColor: `${brandConfig.primaryColor}08`
 								}

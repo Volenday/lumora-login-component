@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Typography } from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { BrandingConfig } from '../types';
 
 interface BrandingHeaderProps {
@@ -13,6 +14,8 @@ const BrandingHeader: React.FC<BrandingHeaderProps> = ({
 	title,
 	subtitle
 }) => {
+	const theme = useTheme();
+
 	return (
 		<Box sx={{ textAlign: 'center', mb: 4 }}>
 			{brandConfig.logo && (
@@ -40,8 +43,10 @@ const BrandingHeader: React.FC<BrandingHeaderProps> = ({
 					sx={{
 						mb: 1,
 						color: brandConfig.textColor,
-						fontWeight: 600,
-						fontSize: { xs: '1.75rem', sm: '2rem' }
+						fontSize: {
+							xs: theme.typography.pxToRem(42),
+							sm: theme.typography.pxToRem(54)
+						}
 					}}
 				>
 					{title}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SubmitHandler } from 'react-hook-form';
-import { Alert, Stack, Button } from '@mui/material';
+import { Box, Alert, Stack, Button } from '@mui/material';
 import {
 	LumoraLoginProps,
 	LoginFormData,
@@ -137,7 +137,7 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 			// Set loading state before redirect
 			setLoginState('google-loading');
 			setError(null);
-			
+
 			// Small delay to show loading state
 			setTimeout(() => {
 				// Initiate Google OAuth flow through Lumora API
@@ -170,21 +170,24 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 	// Handle successful OTP verification
 	const handleOTPSuccess = () => {
 		setLoginState('success');
-		
+
 		// Get tokens and user from localStorage (they were stored during login)
 		const accessToken = TokenStorage.getAccessToken();
 		const refreshToken = TokenStorage.getRefreshToken();
-		
+
 		if (accessToken && refreshToken) {
 			// Fetch user again to ensure we have latest data
-			authService.getCurrentUser().then(user => {
-				onLoginSuccess({
-					user,
-					tokens: { accessToken, refreshToken }
+			authService
+				.getCurrentUser()
+				.then(user => {
+					onLoginSuccess({
+						user,
+						tokens: { accessToken, refreshToken }
+					});
+				})
+				.catch(error => {
+					onLoginError(error);
 				});
-			}).catch(error => {
-				onLoginError(error);
-			});
 		} else {
 			onLoginError(new Error('Session expired. Please login again.'));
 		}
@@ -228,7 +231,7 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 			// Call forget password API endpoint
 			// TODO: Implement forget password API in authService
 			await new Promise(resolve => setTimeout(resolve, 1000));
-			
+
 			setLoginState('forget-password-success');
 		} catch (err) {
 			const error = err as Error;
@@ -316,71 +319,72 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 
 	// Render main login form
 	return (
-		<LoginContainer brandConfig={brandConfig}>
+		<Box>
 			<BrandingHeader
 				brandConfig={brandConfig}
 				title={
 					brandConfig.companyName
-						? `Welcome to ${brandConfig.companyName}`
+						? brandConfig.companyName
 						: 'Sign In'
 				}
 				subtitle={brandConfig.tagline}
 			/>
-
-			{error && (
-				<Alert
-					severity="error"
-					sx={{ mb: 3 }}
-					onClose={() => setError(null)}
-				>
-					{error.message}
-				</Alert>
-			)}
-
-			<Stack spacing={3}>
-				{enableLocalSignIn && (
-					<LoginForm
-						brandConfig={brandConfig}
-						loginState={loginState}
-						onSubmit={handleLocalLogin}
-						onForgetPassword={
-							enableForgetPassword
-								? handleNavigateToForgetPassword
-								: undefined
-						}
-						enableForgetPassword={enableForgetPassword}
-					/>
-				)}
-
-				{enableGoogleSignIn && (
-					<GoogleSignInButton
-						brandConfig={brandConfig}
-						loginState={loginState}
-						onClick={handleGoogleLogin}
-						showDivider={enableLocalSignIn}
-					/>
-				)}
-
-				{loginState === 'error' && (
-					<Button
-						fullWidth
-						variant="text"
-						onClick={handleBackToSignIn}
-						sx={{
-							mt: 1,
-							color: brandConfig.primaryColor,
-							textTransform: 'none',
-							fontWeight: 500,
-							'&:hover': {
-								backgroundColor: `${brandConfig.primaryColor}08`
-							}
-						}}
+			<LoginContainer brandConfig={brandConfig}>
+				{error && (
+					<Alert
+						severity="error"
+						sx={{ mb: 3 }}
+						onClose={() => setError(null)}
 					>
-						Try Again
-					</Button>
+						{error.message}
+					</Alert>
 				)}
-			</Stack>
-		</LoginContainer>
+
+				<Stack spacing={3}>
+					{enableLocalSignIn && (
+						<LoginForm
+							brandConfig={brandConfig}
+							loginState={loginState}
+							onSubmit={handleLocalLogin}
+							onForgetPassword={
+								enableForgetPassword
+									? handleNavigateToForgetPassword
+									: undefined
+							}
+							enableForgetPassword={enableForgetPassword}
+						/>
+					)}
+
+					{enableGoogleSignIn && (
+						<GoogleSignInButton
+							brandConfig={brandConfig}
+							loginState={loginState}
+							onClick={handleGoogleLogin}
+							showDivider={enableLocalSignIn}
+						/>
+					)}
+
+					{loginState === 'error' && (
+						<Button
+							fullWidth
+							variant="text"
+							onClick={handleBackToSignIn}
+							sx={{
+								mt: 1,
+								color: brandConfig.primaryColor,
+								textTransform: 'none',
+								fontWeight: 500,
+								'&:hover': {
+									backgroundColor: `${brandConfig.primaryColor}08`
+								}
+							}}
+						>
+							Try Again
+						</Button>
+					)}
+				</Stack>
+			</LoginContainer>
+		</Box>
 	);
 };
 
