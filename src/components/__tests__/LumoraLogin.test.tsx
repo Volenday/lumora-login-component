@@ -41,7 +41,6 @@ const createMockProps = (
 	authConfig: {
 		apiBaseUrl: 'https://test-api.lumora.capital',
 		apiKey: 'test-api-key',
-		googleRedirectUri: 'http://localhost:3000/callback'
 	},
 	onLoginSuccess: jest.fn(),
 	onLoginError: jest.fn(),

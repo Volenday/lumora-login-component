@@ -56,13 +56,11 @@ const App: React.FC = () => {
 	const apiKey = import.meta.env.VITE_API_KEY || import.meta.env.API_KEY;
 
 	// Auto-detect redirect URI: current origin + /auth/callback
-	const googleRedirectUri = `${window.location.origin}/auth/callback`;
 
 	// API configuration (auto-detected, no user input needed)
 	const authConfig: LumoraAuthConfig = {
 		apiBaseUrl,
 		apiKey,
-		googleRedirectUri
 	};
 
 	// State for branding configuration
@@ -254,15 +252,6 @@ const App: React.FC = () => {
 									size="small"
 									disabled
 									helperText="From VITE_API_KEY or API_KEY env variable"
-								/>
-
-								<TextField
-									label="Google Redirect URI"
-									value={authConfig.googleRedirectUri}
-									fullWidth
-									size="small"
-									disabled
-									helperText="Auto-detected: window.location.origin + /auth/callback"
 								/>
 							</Box>
 						</Paper>
@@ -471,7 +460,8 @@ const App: React.FC = () => {
 <LumoraLogin
   authConfig={{
     apiBaseUrl: 'https://dev.api.lumora.capital',
-    googleRedirectUri: 'https://yourapp.com/callback'
+    apiKey: 'your-api-key'
+    // Google Redirect URI is auto-generated as window.location.origin + '/callback'
   }}
   onLoginSuccess={(response) => {
     console.log('User:', response.user);

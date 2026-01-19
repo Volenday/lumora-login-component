@@ -16,7 +16,6 @@ export interface BrandingConfig {
 export interface LumoraAuthConfig {
 	apiBaseUrl: string;
 	apiKey?: string;
-	googleRedirectUri: string;
 }
 
 export interface LumoraAuthTokens {

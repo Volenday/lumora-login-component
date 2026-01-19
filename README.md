@@ -234,7 +234,6 @@ const LoginPage = () => {
 				authConfig={{
 					apiBaseUrl: 'https://dev.api.lumora.capital',
 					apiKey: 'your-api-key',
-					googleRedirectUri: 'http://localhost:3000/auth/callback',
 					useApiIntegration: true
 				}}
 				onLoginSuccess={response => {
@@ -489,7 +488,6 @@ The component supports Google reCAPTCHA v3 integration for enhanced security:
 | `authConfig`                   | `LumoraAuthConfig`                                  | ❌       | -       | Configuration object for API-integrated mode                                                       |
 | `authConfig.apiBaseUrl`        | `string`                                            | ❌       | -       | Base URL for Lumora API (e.g., https://dev.api.lumora.capital)                                     |
 | `authConfig.apiKey`            | `string`                                            | ❌       | -       | API key for authentication                                                                         |
-| `authConfig.googleRedirectUri` | `string`                                            | ❌       | -       | Full URL where Lumora API redirects after Google OAuth (e.g., http://localhost:3000/auth/callback) |
 | `authConfig.useApiIntegration` | `boolean`                                           | ❌       | `false` | Enable API integration mode (true) or use legacy callbacks (false)                                 |
 | **Legacy Callback Props**      |                                                     |          |         |                                                                                                    |
 | `onLocalLogin`                 | `(email: string, password: string) => Promise<any>` | ❌       | -       | Callback for local email/password login (legacy mode)                                              |
@@ -518,8 +516,8 @@ Configuration object for API integration mode:
 interface LumoraAuthConfig {
 	apiBaseUrl?: string; // Base URL for Lumora API
 	apiKey?: string; // API key for authentication
-	googleRedirectUri?: string; // Redirect URI for Google OAuth callback
 	useApiIntegration?: boolean; // Enable API integration mode
+	// Note: Google Redirect URI is auto-generated as window.location.origin + '/callback'
 }
 ```
 
@@ -1078,7 +1076,6 @@ To use the new API integration features:
       authConfig={{
         apiBaseUrl: 'https://dev.api.lumora.capital',
         apiKey: 'your-api-key',
-        googleRedirectUri: 'http://localhost:3000/auth/callback',
         useApiIntegration: true
       }}
       onLoginSuccess={handleLoginSuccess}

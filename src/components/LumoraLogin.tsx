@@ -138,11 +138,14 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 			setLoginState('google-loading');
 			setError(null);
 
+			// Auto-generate redirect URI
+			const redirectUri = `${window.location.origin}/callback`;
+
 			// Small delay to show loading state
 			setTimeout(() => {
 				// Initiate Google OAuth flow through Lumora API
 				authService.initiateGoogleOAuth(
-					authConfig.googleRedirectUri,
+					redirectUri,
 					authConfig.apiBaseUrl
 				);
 			}, 300);
