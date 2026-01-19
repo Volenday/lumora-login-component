@@ -18,7 +18,6 @@ import BrandingHeader from './BrandingHeader';
 import LoginForm from './LoginForm';
 import GoogleSignInButton from './GoogleSignInButton';
 import ForgetPasswordForm from './ForgetPasswordForm';
-import OTPVerification from './OTPVerification';
 import ForgetPasswordSuccess from './ForgetPasswordSuccess';
 import LoginContainer from './LoginContainer';
 
@@ -35,7 +34,6 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 	enableGoogleSignIn = true,
 	enableLocalSignIn = true,
 	enableForgetPassword = true,
-	enableOtp = true,
 	branding
 }) => {
 	// Component state management
@@ -116,13 +114,9 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 			// Fetch user profile from API
 			const user = await authService.getCurrentUser();
 
-			// Check if OTP is enabled
-			if (enableOtp) {
-				setLoginState('otp-required');
-			} else {
-				setLoginState('success');
-				onLoginSuccess({ user, tokens });
-			}
+			// Set success state and call success callback
+			setLoginState('success');
+			onLoginSuccess({ user, tokens });
 		} catch (err) {
 			const error = err as Error;
 			setError({ message: error.message, type: 'local' });
@@ -154,61 +148,6 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 			setError({ message: error.message, type: 'google' });
 			setLoginState('error');
 			onLoginError(error);
-		}
-	};
-
-	// Handle OTP verification
-	const handleOTPVerify = async (otp: string) => {
-		// Simulate OTP verification - in real implementation, this would call your API
-		await new Promise(resolve => setTimeout(resolve, 1000));
-
-		// Simulate successful verification
-		if (otp === '123456') {
-			return { success: true, token: 'verified-token' };
-		} else {
-			throw new Error('Invalid OTP code');
-		}
-	};
-
-	// Handle successful OTP verification
-	const handleOTPSuccess = () => {
-		setLoginState('success');
-
-		// Get tokens and user from localStorage (they were stored during login)
-		const accessToken = TokenStorage.getAccessToken();
-		const refreshToken = TokenStorage.getRefreshToken();
-
-		if (accessToken && refreshToken) {
-			// Fetch user again to ensure we have latest data
-			authService
-				.getCurrentUser()
-				.then(user => {
-					onLoginSuccess({
-						user,
-						tokens: { accessToken, refreshToken }
-					});
-				})
-				.catch(error => {
-					onLoginError(error);
-				});
-		} else {
-			onLoginError(new Error('Session expired. Please login again.'));
-		}
-	};
-
-	// Handle OTP verification error
-	const handleOTPError = (error: Error) => {
-		setError({ message: error.message, type: 'otp' });
-		setLoginState('otp-error');
-	};
-
-	// Handle OTP resend request
-	const handleOTPResend = () => {
-		// Simulate resending OTP
-		console.log('Resending OTP...');
-		// Clear any existing OTP errors when resending
-		if (error && error.type === 'otp') {
-			setError(null);
 		}
 	};
 
@@ -270,23 +209,6 @@ const LumoraLogin: React.FC<LumoraLoginProps> = ({
 			document.head.appendChild(script);
 		}
 	}, [enableRecaptcha, recaptchaSiteKey]);
-
-	// Render OTP verification screen
-	if (loginState === 'otp-required' || loginState === 'otp-error') {
-		return (
-			<LoginContainer brandConfig={brandConfig}>
-				<OTPVerification
-					brandConfig={brandConfig}
-					loginState={loginState}
-					onVerify={handleOTPVerify}
-					onVerifySuccess={handleOTPSuccess}
-					onVerifyError={handleOTPError}
-					onResend={handleOTPResend}
-					onBackToSignIn={handleBackToSignIn}
-				/>
-			</LoginContainer>
-		);
-	}
 
 	// Render forget password success screen
 	if (loginState === 'forget-password-success') {

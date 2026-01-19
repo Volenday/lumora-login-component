@@ -37,8 +37,7 @@ export default defineConfig(() => {
 					'react-hook-form',
 					'@hookform/resolvers',
 					'yup',
-					'@react-oauth/google',
-					'@volenday/lumora-otp-component'
+					'@react-oauth/google'
 				],
 				output: {
 					globals: {

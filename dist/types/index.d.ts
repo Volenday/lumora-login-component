@@ -45,7 +45,6 @@ export interface LumoraLoginProps {
     enableGoogleSignIn?: boolean;
     enableLocalSignIn?: boolean;
     enableForgetPassword?: boolean;
-    enableOtp?: boolean;
     branding?: BrandingConfig;
 }
 export interface LoginFormData {
@@ -55,10 +54,10 @@ export interface LoginFormData {
 export interface ForgetPasswordFormData {
     email: string;
 }
-export type LoginState = 'idle' | 'loading' | 'google-loading' | 'success' | 'error' | 'otp-required' | 'otp-error' | 'forget-password' | 'forget-password-loading' | 'forget-password-success';
+export type LoginState = 'idle' | 'loading' | 'google-loading' | 'success' | 'error' | 'forget-password' | 'forget-password-loading' | 'forget-password-success';
 export interface ErrorState {
     message: string;
-    type: 'local' | 'google' | 'otp' | 'network' | 'recaptcha' | 'forget-password';
+    type: 'local' | 'google' | 'network' | 'recaptcha' | 'forget-password';
 }
 declare global {
     interface Window {

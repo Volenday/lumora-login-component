@@ -45,7 +45,6 @@ const App: React.FC = () => {
 	const [enableLocalSignIn, setEnableLocalSignIn] = useState(true);
 	const [enableGoogleSignIn, setEnableGoogleSignIn] = useState(true);
 	const [enableForgetPassword, setEnableForgetPassword] = useState(true);
-	const [enableOtp, setEnableOtp] = useState(true);
 
 	// Auto-detect configuration from environment variables
 	const apiBaseUrl =
@@ -150,7 +149,6 @@ const App: React.FC = () => {
 							enableGoogleSignIn={enableGoogleSignIn}
 							enableLocalSignIn={enableLocalSignIn}
 							enableForgetPassword={enableForgetPassword}
-							enableOtp={enableOtp}
 							branding={branding}
 						/>
 					</Box>
@@ -313,18 +311,6 @@ const App: React.FC = () => {
 									}
 									label="Enable Forget Password"
 								/>
-
-								<FormControlLabel
-									control={
-										<Switch
-											checked={enableOtp}
-											onChange={e =>
-												setEnableOtp(e.target.checked)
-											}
-										/>
-									}
-									label="Enable OTP Verification"
-								/>
 							</Box>
 						</Paper>
 
@@ -472,7 +458,6 @@ const App: React.FC = () => {
   }}
   enableGoogleSignIn={true}
   enableLocalSignIn={true}
-  enableOtp={true}
 />`}
 								</Box>
 							</CardContent>

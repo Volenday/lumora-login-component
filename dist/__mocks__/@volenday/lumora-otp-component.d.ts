@@ -1,2 +1,0 @@
-export declare const LumoraOTP: ({ onVerify, onVerifySuccess, onVerifyError, onResend, instructionText }: any) => import("react/jsx-runtime").JSX.Element;
-//# sourceMappingURL=lumora-otp-component.d.ts.map

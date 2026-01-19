@@ -53,7 +53,6 @@ export interface LumoraLoginProps {
 	enableGoogleSignIn?: boolean;
 	enableLocalSignIn?: boolean;
 	enableForgetPassword?: boolean;
-	enableOtp?: boolean;
 	
 	// Styling
 	branding?: BrandingConfig;
@@ -74,8 +73,6 @@ export type LoginState =
 	| 'google-loading'
 	| 'success'
 	| 'error'
-	| 'otp-required'
-	| 'otp-error'
 	| 'forget-password'
 	| 'forget-password-loading'
 	| 'forget-password-success';
@@ -85,7 +82,6 @@ export interface ErrorState {
 	type:
 		| 'local'
 		| 'google'
-		| 'otp'
 		| 'network'
 		| 'recaptcha'
 		| 'forget-password';

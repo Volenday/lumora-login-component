@@ -12,7 +12,6 @@ Create a standardized, reusable, private React login component for internal use,
 -   **Framework:** ReactJS
 -   **UI Libraries:** MUI
 -   **Form Library:** react-hook-form (Used for managing form state, input validation, and handling submissions across all input fields.)
--   **2FA Integration:** @volenday/lumora-otp-component
 
 ## Feature Checklist
 
@@ -24,12 +23,6 @@ The component MUST support the following features:
     -   Submit button to trigger login.
 -   **Social Login:**
     -   Google login button that integrates with Google OAuth (handling redirect or popup flow).
--   **Two-Factor Authentication (2FA):**
-    -   After a successful initial login (onLocalLogin or onGoogleLogin success), the component should automatically render the Lumora OTP Component (@volenday/lumora-otp-component) for OTP verification.
-    -   OTP component is displayed in place of the login form.
-    -   Pass necessary props to Lumora OTP Component
-    -   On successful OTP verification, trigger the parent’s onLoginSuccess callback with the final user session or token.
-    -   On OTP failure, display an error message and allow retry.
 -   **Responsiveness:**
     -   Fully responsive layout that adapts to mobile, tablet, and desktop screens (e.g., using MUI's responsive grid and breakpoints).
 -   **Additional UX:**

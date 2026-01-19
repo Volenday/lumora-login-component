@@ -1,6 +1,6 @@
 # LumoraLogin Component v1.1.0
 
-A reusable React TypeScript login component with local and Google OAuth authentication, 2FA support, forget password functionality, API integration, and responsive design.
+A reusable React TypeScript login component with local and Google OAuth authentication, forget password functionality, API integration, and responsive design.
 
 ## Features
 
@@ -9,7 +9,6 @@ A reusable React TypeScript login component with local and Google OAuth authenti
 -   **Local Login**: Email/password authentication with validation
 -   **Google OAuth**: Integration with Google Sign-In (both popup and redirect flows)
 -   **Forget Password**: Built-in password reset functionality with email verification
--   **Two-Factor Authentication**: Built-in 2FA support using @volenday/lumora-otp-component
 -   **Token Management**: Automatic token refresh and localStorage-based session management
 -   **Responsive Design**: Mobile-first design using MUI breakpoints
 -   **Form Validation**: Powered by react-hook-form and Yup
@@ -246,7 +245,6 @@ const LoginPage = () => {
 				}}
 				enableGoogleSignIn={true}
 				enableLocalSignIn={true}
-				enableOtp={false}
 			/>
 		</ThemeProvider>
 	);
@@ -503,7 +501,6 @@ The component supports Google reCAPTCHA v3 integration for enhanced security:
 | `enableLocalSignIn`            | `boolean`                                           | ❌       | `true`  | Enable/disable local email/password sign-in                                                        |
 | `enableGoogleSignIn`           | `boolean`                                           | ❌       | `true`  | Enable/disable Google OAuth sign-in                                                                |
 | `enableForgetPassword`         | `boolean`                                           | ❌       | `true`  | Enable/disable forget password functionality                                                       |
-| `enableOtp`                    | `boolean`                                           | ❌       | `true`  | Enable/disable OTP 2FA verification feature                                                        |
 | `branding`                     | `BrandingConfig`                                    | ❌       | -       | Custom branding configuration for the component                                                    |
 
 ## TypeScript Interfaces
@@ -567,7 +564,6 @@ interface ErrorState {
 	type:
 		| 'local'
 		| 'google'
-		| 'otp'
 		| 'network'
 		| 'recaptcha'
 		| 'forget-password';
@@ -578,7 +574,6 @@ interface ErrorState {
 
 -   **`local`**: Errors related to email/password authentication
 -   **`google`**: Errors related to Google OAuth authentication
--   **`otp`**: Errors related to 2FA/OTP verification
 -   **`network`**: Network connectivity or server errors
 -   **`recaptcha`**: reCAPTCHA verification errors
 -   **`forget-password`**: Errors related to password reset functionality
@@ -594,8 +589,6 @@ type LoginState =
 	| 'google-loading' // Google OAuth in progress
 	| 'success' // Authentication successful
 	| 'error' // Authentication failed
-	| 'otp-required' // 2FA verification needed
-	| 'otp-error' // 2FA verification failed
 	| 'forget-password' // Forget password form displayed
 	| 'forget-password-loading' // Forget password request in progress
 	| 'forget-password-success'; // Forget password email sent successfully
@@ -699,17 +692,15 @@ The component handles the following states internally:
 -   **Idle**: Default form state with input fields
 -   **Loading**: Shows loading spinner during local authentication
 -   **Google-loading**: Shows loading spinner during Google OAuth
--   **OTP Required**: Displays 2FA component after successful initial login
--   **OTP Error**: Shows error state in OTP verification
 -   **Error**: Shows error message with retry option
 -   **Success**: Triggers onLoginSuccess callback
 
 ### State Flow
 
 ```
-Idle → Loading/Google-loading → OTP Required → Success
-  ↓           ↓                    ↓
-Error ←───────┴────────────────────┘
+Idle → Loading/Google-loading → Success
+  ↓           ↓
+Error ←───────┘
 ```
 
 ## Advanced Usage Examples
@@ -786,36 +777,6 @@ const App = () => {
 };
 ```
 
-## Two-Factor Authentication (2FA)
-
-The component includes built-in 2FA support using the `@volenday/lumora-otp-component`. After successful initial login (local or Google), the component automatically transitions to the OTP verification screen.
-
-### OTP Features
-
--   **6-digit code input**: Clean, user-friendly input interface
--   **Resend functionality**: Users can request a new code with cooldown timer
--   **Expiration timer**: Visual countdown showing code expiration
--   **Error handling**: Clear error messages for invalid codes
--   **Back navigation**: Users can return to the login form if needed
-
-### OTP Configuration
-
-The OTP component is pre-configured with sensible defaults but can be customized by modifying the component's internal OTP props:
-
-```tsx
-<LumoraOTP
-	onVerify={handleOTPVerify}
-	onVerifySuccess={handleOTPSuccess}
-	onVerifyError={handleOTPError}
-	onResend={handleOTPResend}
-	instructionText="Please enter the 6-digit code sent to your email"
-	showResend={true}
-	resendCooldown={60}
-	expirationTime={300}
-	showExpirationTimer={true}
-/>
-```
-
 ## Styling
 
 The component uses Material-UI (MUI) for styling and is fully responsive. You can customize the appearance by:
@@ -840,7 +801,6 @@ The component uses Material-UI (MUI) for styling and is fully responsive. You ca
 -   @hookform/resolvers ^5.2.2
 -   @mui/icons-material ^7.3.4
 -   @react-oauth/google ^0.12.2
--   @volenday/lumora-otp-component ^1.0.3 (for 2FA)
 -   yup ^1.7.1
 
 ## Interactive Demo
@@ -885,7 +845,6 @@ The demo includes configuration controls for:
 -   **API Configuration**: Configure API settings when in API mode
 -   **Sign-in Methods**: Enable/disable local and Google sign-in
 -   **Google OAuth**: Configure client ID and test OAuth flow (Legacy mode) or redirect flow (API mode)
--   **OTP 2FA**: Enable/disable OTP verification feature
 -   **Branding**: Customize company name, logo, colors, and styling
 -   **reCAPTCHA**: Test reCAPTCHA integration (uses test key)
 -   **Error Handling**: Simulate various error scenarios
@@ -978,17 +937,7 @@ The demo application supports the following environment variables:
 -   Ensure `enableRecaptcha` is `true` when using reCAPTCHA
 -   Test with a valid reCAPTCHA site key
 
-#### 3. OTP Component Not Loading
-
-**Problem**: 2FA component doesn't appear after login.
-
-**Solutions**:
-
--   Ensure `@volenday/lumora-otp-component` is properly installed
--   Check GitHub Packages authentication
--   Verify the OTP component is imported correctly
-
-#### 4. Styling Issues
+#### 3. Styling Issues
 
 **Problem**: Component doesn't match your design system.
 
@@ -998,7 +947,7 @@ The demo application supports the following environment variables:
 -   Wrap with a custom MUI theme
 -   Override styles using CSS-in-JS or CSS modules
 
-#### 5. TypeScript Errors
+#### 4. TypeScript Errors
 
 **Problem**: TypeScript compilation errors.
 
@@ -1140,7 +1089,6 @@ To use the new API integration features:
 -   **NEW**: useAuthCallback hook for OAuth callback handling
 -   **NEW**: useLogout hook for programmatic logout with API integration
 -   **NEW**: authConfig prop for comprehensive API configuration
--   **NEW**: enableOtp prop to control OTP feature
 -   **IMPROVED**: Backward compatibility maintained with legacy callback props
 -   **IMPROVED**: Dual-mode architecture (API vs Legacy)
 -   **IMPROVED**: Enhanced documentation with API integration examples
@@ -1171,7 +1119,6 @@ To use the new API integration features:
 
 -   Initial release with basic authentication features
 -   Google OAuth integration
--   2FA support with OTP component
 -   Responsive design implementation
 
 ## License
